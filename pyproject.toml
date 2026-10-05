@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "patchguard"
+version = "0.1.0"
+description = "Verify that an AI coding agent's patch preserves the invariants of the existing codebase outside the patch's intended scope."
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+patchguard = "patchguard.cli:main"
+patchguard-batch = "patchguard.batch_invarbench:main"
+patchguard-hook = "patchguard.hook:main"
+patchguard-benchmark = "patchguard.build_benchmark:main"
+patchguard-agent-patches = "patchguard.agent_patches:main"
+patchguard-agent-report = "patchguard.agent_report:main"
+patchguard-fulltest = "patchguard.fulltest:main"
+patchguard-link = "patchguard.link_regressions:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["patchguard"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

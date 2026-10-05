@@ -1,0 +1,123 @@
+{
+ "20250720_mini-v0.0.0-gpt-4o-2024-11-20": {
+  "instances": 58,
+  "with_findings": 24,
+  "rate": 0.414,
+  "findings_total": 97,
+  "instances_by_class": {
+   "syntax": 14,
+   "read-set": 4,
+   "D": 8,
+   "E": 1
+  },
+  "resolved": {
+   "n": 15,
+   "with_findings": 0,
+   "rate": 0.0
+  },
+  "unresolved": {
+   "n": 43,
+   "with_findings": 24,
+   "rate": 0.558
+  },
+  "reference_same_instances": {
+   "instances": 58,
+   "with_findings": 5,
+   "rate": 0.086,
+   "findings_total": 11,
+   "instances_by_class": {
+    "D": 4,
+    "read-set": 3
+   },
+   "resolved": {
+    "n": 0,
+    "with_findings": 0,
+    "rate": null
+   },
+   "unresolved": {
+    "n": 0,
+    "with_findings": 0,
+    "rate": null
+   }
+  }
+ },
+ "20250807_mini-v1.7.0_gpt-5-mini": {
+  "instances": 59,
+  "with_findings": 7,
+  "rate": 0.119,
+  "findings_total": 12,
+  "instances_by_class": {
+   "read-set": 7
+  },
+  "resolved": {
+   "n": 34,
+   "with_findings": 3,
+   "rate": 0.088
+  },
+  "unresolved": {
+   "n": 25,
+   "with_findings": 4,
+   "rate": 0.16
+  },
+  "reference_same_instances": {
+   "instances": 59,
+   "with_findings": 6,
+   "rate": 0.102,
+   "findings_total": 17,
+   "instances_by_class": {
+    "D": 4,
+    "read-set": 5
+   },
+   "resolved": {
+    "n": 0,
+    "with_findings": 0,
+    "rate": null
+   },
+   "unresolved": {
+    "n": 0,
+    "with_findings": 0,
+    "rate": null
+   }
+  }
+ },
+ "20251124_mini-v1.16.0_claude-opus-4-5-20251101": {
+  "instances": 58,
+  "with_findings": 7,
+  "rate": 0.121,
+  "findings_total": 13,
+  "instances_by_class": {
+   "D": 2,
+   "read-set": 7
+  },
+  "resolved": {
+   "n": 42,
+   "with_findings": 6,
+   "rate": 0.143
+  },
+  "unresolved": {
+   "n": 16,
+   "with_findings": 1,
+   "rate": 0.062
+  },
+  "reference_same_instances": {
+   "instances": 58,
+   "with_findings": 6,
+   "rate": 0.103,
+   "findings_total": 16,
+   "instances_by_class": {
+    "D": 4,
+    "read-set": 4
+   },
+   "resolved": {
+    "n": 0,
+    "with_findings": 0,
+    "rate": null
+   },
+   "unresolved": {
+    "n": 0,
+    "with_findings": 0,
+    "rate": null
+   }
+  }
+ }
+}

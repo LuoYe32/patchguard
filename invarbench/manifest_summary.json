@@ -1,0 +1,58 @@
+{
+ "records": 512,
+ "usable": 404,
+ "instances": 46,
+ "natural_frame_findings": 15,
+ "by_class": {
+  "E": {
+   "n": 45,
+   "oracle_verified": 45,
+   "detected": 45,
+   "caught_by_tests": 0
+  },
+  "read-set": {
+   "n": 40,
+   "oracle_verified": 40,
+   "detected": 40,
+   "caught_by_tests": 1
+  },
+  "D": {
+   "n": 44,
+   "oracle_verified": 44,
+   "detected": 44,
+   "caught_by_tests": 31
+  }
+ },
+ "twins_expected_scope": {
+  "read-set": {
+   "n": 28,
+   "scope": 28,
+   "frame": 0,
+   "unreported": 0
+  },
+  "D": {
+   "n": 38,
+   "scope": 38,
+   "frame": 0,
+   "unreported": 0
+  }
+ },
+ "decoys_expected_unflagged": {
+  "decoy-optional-param": {
+   "n": 56,
+   "flagged": 0
+  },
+  "decoy-reread": {
+   "n": 54,
+   "flagged": 0
+  },
+  "decoy-noop": {
+   "n": 56,
+   "flagged": 0
+  },
+  "decoy-existing-edge": {
+   "n": 57,
+   "flagged": 0
+  }
+ }
+}
