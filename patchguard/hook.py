@@ -2,6 +2,7 @@ import json
 import os
 import subprocess
 import sys
+import time
 
 CACHE_DIR_NAME = '.patchguard_hook_cache'
 
@@ -12,20 +13,56 @@ def get_cache_dir(cwd):
     return d
 
 
+LOG_NAME = 'usage.jsonl'
+
+
+def log_event(cwd, record):
+    """Append one invocation record to <cwd>/.patchguard_hook_cache/usage.jsonl; never raises."""
+    try:
+        with open(os.path.join(get_cache_dir(cwd), LOG_NAME), 'a', encoding='utf-8') as f:
+            f.write(json.dumps(record, ensure_ascii=False) + '\n')
+    except Exception:
+        pass
+
+
+def summarize_log(cwd):
+    """Human-readable usage summary of the hook in cwd."""
+    path = os.path.join(cwd, CACHE_DIR_NAME, LOG_NAME)
+    if not os.path.exists(path):
+        return 'no usage log yet'
+    events = [json.loads(line) for line in open(path, encoding='utf-8') if line.strip()]
+    py = [e for e in events if e['outcome'] != 'not_python']
+    flagged = [e for e in events if e['outcome'] == 'flagged']
+    latencies = sorted(e['latency_ms'] for e in py)
+    out = [f"{len(events)} hook calls, {len(py)} on .py files, {len(flagged)} flagged, "
+           f"{sum(e['outcome'] == 'error' for e in events)} errors",
+           f"median latency {latencies[len(latencies) // 2]} ms" if latencies else 'no latency data']
+    for e in flagged:
+        out.append(f"{e['ts']}  {e['file']}")
+        for f in e['findings']:
+            out.append(f"    - {f}")
+    return '\n'.join(out)
+
+
 def get_or_create_pre_snapshot(cwd, top_package):
+    """Mined state of HEAD, cached per commit so a new commit refreshes the baseline."""
     from .mine import mine
     cache_dir = get_cache_dir(cwd)
-    cache_file = os.path.join(cache_dir, f'pre_{top_package}.json')
-    if os.path.exists(cache_file):
+    head = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=cwd, capture_output=True, text=True).stdout.strip()
+    cache_file = os.path.join(cache_dir, f'pre_{top_package}_{head[:12]}.json')
+    if head and os.path.exists(cache_file):
         return json.load(open(cache_file))
 
     worktree = os.path.join(cache_dir, f'pre_worktree_{top_package}')
-    if not os.path.exists(worktree):
+    if os.path.exists(worktree):
+        subprocess.run(['git', 'checkout', '-q', '--detach', head or 'HEAD'], cwd=worktree, capture_output=True, text=True)
+    else:
         subprocess.run(['git', 'worktree', 'add', '--detach', worktree, 'HEAD'],
-                        cwd=cwd, capture_output=True, text=True)
+                       cwd=cwd, capture_output=True, text=True)
     edges, reads = mine(worktree, top_package)
     data = {'edges': {f"{a}=>{b}": c for (a, b), c in edges.items()}, 'reads': reads}
-    json.dump(data, open(cache_file, 'w'))
+    if head:
+        json.dump(data, open(cache_file, 'w'))
     return data
 
 
@@ -80,16 +117,32 @@ def check(cwd, file_path):
 
 
 def main():
+    if '--summary' in sys.argv:
+        print(summarize_log(os.getcwd()))
+        return
+    t0 = time.time()
+    cwd, rel, tool, frame, outcome, error = os.getcwd(), None, None, None, 'silent', None
     try:
         hook_input = json.load(sys.stdin)
+        tool = hook_input.get('tool_name')
         tool_input = hook_input.get('tool_input', {})
-        cwd = hook_input.get('cwd', os.getcwd())
+        cwd = hook_input.get('cwd', cwd)
         file_path = tool_input.get('file_path')
+        if file_path:
+            rel = os.path.relpath(file_path, cwd)
         if file_path and not file_path.endswith('.py'):
             file_path = None
+            outcome = 'not_python'
         frame = check(cwd, file_path) if file_path else None
-    except Exception:
-        frame = None
+    except Exception as e:
+        frame, outcome, error = None, 'error', f"{type(e).__name__}: {str(e)[:200]}"
+
+    if frame:
+        outcome = 'flagged'
+    log_event(cwd, {'ts': time.strftime('%Y-%m-%dT%H:%M:%S%z'), 'tool': tool, 'file': rel, 'outcome': outcome,
+                    'n_frame': len(frame or []), 'latency_ms': round((time.time() - t0) * 1000), 'error': error,
+                    'findings': [f"{f.get('pair') or f.get('function', '').split('::')[-1]}: {f['reason']}"
+                                 for f in (frame or [])]})
 
     if frame:
         lines = ["⚠️ PatchGuard: этот edit мог затронуть инвариант вне заявленной области "

@@ -384,3 +384,34 @@ def test_link_regressions_cross_tabulates_flags_and_regressions(tmp_path):
     counts = summarize(cases)['overall']['counts']
     assert counts == {'regressed_flagged': 1, 'regressed_unflagged': 1, 'clean_flagged': 1, 'clean_unflagged': 1}
     assert wilson(0, 0) is None and wilson(5, 10)[0] < 0.5 < wilson(5, 10)[1]
+
+
+def test_hook_log_records_calls_and_summarizes_flags(tmp_path):
+    from patchguard.hook import log_event, summarize_log
+    log_event(str(tmp_path), {'ts': 't1', 'tool': 'Edit', 'file': 'a.md', 'outcome': 'not_python', 'n_frame': 0,
+                              'latency_ms': 5, 'error': None, 'findings': []})
+    log_event(str(tmp_path), {'ts': 't2', 'tool': 'Edit', 'file': 'pkg/a.py', 'outcome': 'flagged', 'n_frame': 1,
+                              'latency_ms': 90, 'error': None, 'findings': ['pkg.a=>pkg.b: outside scope']})
+    summary = summarize_log(str(tmp_path))
+    assert '2 hook calls, 1 on .py files, 1 flagged, 0 errors' in summary
+    assert 'pkg/a.py' in summary and 'pkg.a=>pkg.b' in summary
+    assert summarize_log(str(tmp_path / 'empty')) == 'no usage log yet'
+
+
+def test_hook_baseline_snapshot_is_refreshed_when_head_changes(tmp_path):
+    import subprocess
+    from patchguard.hook import get_or_create_pre_snapshot
+    def git(*a):
+        subprocess.run(['git', '-c', 'user.email=a@b', '-c', 'user.name=n', *a], cwd=tmp_path, check=True, capture_output=True)
+    pkg = tmp_path / 'proj'
+    pkg.mkdir()
+    (pkg / '__init__.py').write_text('')
+    (pkg / 'm.py').write_text('def f(x):\n    return x.a\n')
+    git('init', '-q')
+    git('add', '.')
+    git('commit', '-qm', 'one')
+    first = get_or_create_pre_snapshot(str(tmp_path), 'proj')
+    (pkg / 'm.py').write_text('def f(x):\n    return x.a + x.b\n')
+    git('commit', '-qam', 'two')
+    second = get_or_create_pre_snapshot(str(tmp_path), 'proj')
+    assert first['reads']['proj.m::f'] == ['x.a'] and second['reads']['proj.m::f'] == ['x.a', 'x.b']
