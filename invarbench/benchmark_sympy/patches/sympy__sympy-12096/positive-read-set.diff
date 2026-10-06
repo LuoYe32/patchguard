@@ -1,0 +1,21 @@
+diff --git a/sympy/core/function.py b/sympy/core/function.py
+index 1b8005e1d2..33a1ebfa39 100644
+--- a/sympy/core/function.py
++++ b/sympy/core/function.py
+@@ -213,6 +213,7 @@ def nargs(self):
+         >>> len(f(1).args)
+         1
+         """
++        _synthetic_readset_probe = self.__dict__
+         from sympy.sets.sets import FiniteSet
+         # XXX it would be nice to handle this in __init__ but there are import
+         # problems with trying to import FiniteSet there
+@@ -507,7 +508,7 @@ def _eval_evalf(self, prec):
+             func = getattr(mpmath, fname)
+         except (AttributeError, KeyError):
+             try:
+-                return Float(self._imp_(*self.args), prec)
++                return Float(self._imp_(*[i.evalf(prec) for i in self.args]), prec)
+             except (AttributeError, TypeError, ValueError):
+                 return
+ 

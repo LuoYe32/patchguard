@@ -1,0 +1,22 @@
+diff --git a/django/contrib/contenttypes/management/__init__.py b/django/contrib/contenttypes/management/__init__.py
+index 2b5f688136..0bb961fcb2 100644
+--- a/django/contrib/contenttypes/management/__init__.py
++++ b/django/contrib/contenttypes/management/__init__.py
+@@ -4,7 +4,7 @@ from django.db.utils import IntegrityError
+ 
+ 
+ class RenameContentType(migrations.RunPython):
+-    def __init__(self, app_label, old_model, new_model):
++    def __init__(synthetic_required_param, self, app_label, old_model, new_model):
+         self.app_label = app_label
+         self.old_model = old_model
+         self.new_model = new_model
+@@ -24,7 +24,7 @@ class RenameContentType(migrations.RunPython):
+             content_type.model = new_model
+             try:
+                 with transaction.atomic(using=db):
+-                    content_type.save(update_fields={'model'})
++                    content_type.save(using=db, update_fields={'model'})
+             except IntegrityError:
+                 # Gracefully fallback if a stale content type causes a
+                 # conflict as remove_stale_contenttypes will take care of

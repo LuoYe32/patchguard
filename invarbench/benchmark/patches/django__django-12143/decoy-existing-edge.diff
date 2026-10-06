@@ -1,0 +1,24 @@
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 137e6faa0f..705e48852d 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -60,6 +60,8 @@ HORIZONTAL, VERTICAL = 1, 2
+ def get_content_type_for_model(obj):
+     # Since this module gets imported in the application's root package,
+     # it cannot import models from other applications at the module level.
++    import django.apps  # SYNTHETIC INJECTION (class E, Part B)
++    _synthetic_e_injection_probe = dir(django)  # inert
+     from django.contrib.contenttypes.models import ContentType
+     return ContentType.objects.get_for_model(obj, for_concrete_model=False)
+ 
+@@ -1631,7 +1633,9 @@ class ModelAdmin(BaseModelAdmin):
+ 
+     def _get_edited_object_pks(self, request, prefix):
+         """Return POST data values of list_editable primary keys."""
+-        pk_pattern = re.compile(r'{}-\d+-{}$'.format(prefix, self.model._meta.pk.name))
++        pk_pattern = re.compile(
++            r'{}-\d+-{}$'.format(re.escape(prefix), self.model._meta.pk.name)
++        )
+         return [value for key, value in request.POST.items() if pk_pattern.match(key)]
+ 
+     def _get_list_editable_queryset(self, request, prefix):

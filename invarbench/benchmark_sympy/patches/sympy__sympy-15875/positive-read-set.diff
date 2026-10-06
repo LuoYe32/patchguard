@@ -1,0 +1,21 @@
+diff --git a/sympy/core/add.py b/sympy/core/add.py
+index 83a5f2aedc..9e3a3a3afc 100644
+--- a/sympy/core/add.py
++++ b/sympy/core/add.py
+@@ -93,6 +93,7 @@ def flatten(cls, seq):
+         sympy.core.mul.Mul.flatten
+ 
+         """
++        _synthetic_readset_probe = cls.__name__
+         from sympy.calculus.util import AccumBounds
+         from sympy.matrices.expressions import MatrixExpr
+         from sympy.tensor.tensor import TensExpr
+@@ -554,7 +555,7 @@ def _eval_is_zero(self):
+                 return
+         if z == len(self.args):
+             return True
+-        if len(nz) == len(self.args):
++        if len(nz) == 0 or len(nz) == len(self.args):
+             return None
+         b = self.func(*nz)
+         if b.is_zero:

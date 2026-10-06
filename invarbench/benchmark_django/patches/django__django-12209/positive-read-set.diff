@@ -1,0 +1,20 @@
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index e3b14a41a0..b61f519c40 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -322,6 +322,7 @@ class ModelBase(type):
+         return new_class
+ 
+     def add_to_class(cls, name, value):
++        _synthetic_readset_probe = cls.__doc__
+         if _has_contribute_to_class(value):
+             value.contribute_to_class(cls, name)
+         else:
+@@ -849,6 +850,7 @@ class Model(metaclass=ModelBase):
+         updated = False
+         # Skip an UPDATE when adding an instance and primary key has a default.
+         if (
++            not raw and
+             not force_insert and
+             self._state.adding and
+             self._meta.pk.default and

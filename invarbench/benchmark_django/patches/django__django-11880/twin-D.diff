@@ -1,0 +1,17 @@
+diff --git a/django/forms/fields.py b/django/forms/fields.py
+index 03cd8af8d7..7ec1c8d6c5 100644
+--- a/django/forms/fields.py
++++ b/django/forms/fields.py
+@@ -195,10 +195,11 @@ class Field:
+         """
+         return BoundField(form, self, field_name)
+ 
+-    def __deepcopy__(self, memo):
++    def __deepcopy__(synthetic_required_param, self, memo):
+         result = copy.copy(self)
+         memo[id(self)] = result
+         result.widget = copy.deepcopy(self.widget, memo)
++        result.error_messages = self.error_messages.copy()
+         result.validators = self.validators[:]
+         return result
+ 

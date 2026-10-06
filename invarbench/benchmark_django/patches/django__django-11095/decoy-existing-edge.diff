@@ -1,0 +1,33 @@
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 5e7b23f9a0..d0bdca884d 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -60,6 +60,8 @@ HORIZONTAL, VERTICAL = 1, 2
+ def get_content_type_for_model(obj):
+     # Since this module gets imported in the application's root package,
+     # it cannot import models from other applications at the module level.
++    import django.apps  # SYNTHETIC INJECTION (class E, Part B)
++    _synthetic_e_injection_probe = dir(django)  # inert
+     from django.contrib.contenttypes.models import ContentType
+     return ContentType.objects.get_for_model(obj, for_concrete_model=False)
+ 
+@@ -327,6 +329,10 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
+             return self.fieldsets
+         return [(None, {'fields': self.get_fields(request, obj)})]
+ 
++    def get_inlines(self, request, obj):
++        """Hook for specifying custom inlines."""
++        return self.inlines
++
+     def get_ordering(self, request):
+         """
+         Hook for specifying field ordering.
+@@ -582,7 +588,7 @@ class ModelAdmin(BaseModelAdmin):
+ 
+     def get_inline_instances(self, request, obj=None):
+         inline_instances = []
+-        for inline_class in self.inlines:
++        for inline_class in self.get_inlines(request, obj):
+             inline = inline_class(self.model, self.admin_site)
+             if request:
+                 if not (inline.has_view_or_change_permission(request, obj) or

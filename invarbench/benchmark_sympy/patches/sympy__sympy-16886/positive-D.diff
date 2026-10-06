@@ -1,0 +1,22 @@
+diff --git a/sympy/crypto/crypto.py b/sympy/crypto/crypto.py
+index ca552191c0..0590d4e786 100644
+--- a/sympy/crypto/crypto.py
++++ b/sympy/crypto/crypto.py
+@@ -32,7 +32,7 @@
+ from sympy.utilities.exceptions import SymPyDeprecationWarning
+ 
+ 
+-def AZ(s=None):
++def AZ(synthetic_required_param, s=None):
+     """Return the letters of ``s`` in uppercase. In case more than
+     one string is passed, each of them will be processed and a list
+     of upper case strings will be returned.
+@@ -1520,7 +1520,7 @@ def decipher_kid_rsa(msg, key):
+     "..-": "U", "...-": "V",
+     ".--": "W", "-..-": "X",
+     "-.--": "Y", "--..": "Z",
+-    "-----": "0", "----": "1",
++    "-----": "0", ".----": "1",
+     "..---": "2", "...--": "3",
+     "....-": "4", ".....": "5",
+     "-....": "6", "--...": "7",

@@ -4,6 +4,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 
 
 def detect_runner(repo_dir):
@@ -39,7 +40,12 @@ def setup_venv(venv_dir, seed_repo_dir):
     python = os.path.join(venv_dir, 'bin', 'python3')
     if not os.path.exists(python):
         subprocess.run([sys.executable, '-m', 'venv', venv_dir], check=True)
-        subprocess.run([python, '-m', 'pip', 'install', '--quiet', 'pytest'], check=True)
+        for attempt in range(3):
+            if subprocess.run([python, '-m', 'pip', 'install', '--quiet', 'pytest']).returncode == 0:
+                break
+            if attempt == 2:
+                return python, False, 'pip install pytest failed after 3 attempts'
+            time.sleep(15 * (attempt + 1))
         r = subprocess.run([python, '-m', 'pip', 'install', '--quiet', '-e', '.'],
                             cwd=seed_repo_dir, capture_output=True, text=True)
         if r.returncode != 0:

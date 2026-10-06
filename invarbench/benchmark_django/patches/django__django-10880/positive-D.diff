@@ -1,0 +1,22 @@
+diff --git a/django/db/models/aggregates.py b/django/db/models/aggregates.py
+index ac0b62d0bf..208b4b1ac0 100644
+--- a/django/db/models/aggregates.py
++++ b/django/db/models/aggregates.py
+@@ -21,7 +21,7 @@ class Aggregate(Func):
+     window_compatible = True
+     allow_distinct = False
+ 
+-    def __init__(self, *expressions, distinct=False, filter=None, **extra):
++    def __init__(synthetic_required_param, self, *expressions, distinct=False, filter=None, **extra):
+         if distinct and not self.allow_distinct:
+             raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+         self.distinct = distinct
+@@ -68,7 +68,7 @@ class Aggregate(Func):
+         return []
+ 
+     def as_sql(self, compiler, connection, **extra_context):
+-        extra_context['distinct'] = 'DISTINCT' if self.distinct else ''
++        extra_context['distinct'] = 'DISTINCT ' if self.distinct else ''
+         if self.filter:
+             if connection.features.supports_aggregate_filter_clause:
+                 filter_sql, filter_params = self.filter.as_sql(compiler, connection)

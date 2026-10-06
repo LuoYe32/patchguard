@@ -1,0 +1,21 @@
+diff --git a/sympy/simplify/simplify.py b/sympy/simplify/simplify.py
+index c6b511f206..6ef5d0d8e5 100644
+--- a/sympy/simplify/simplify.py
++++ b/sympy/simplify/simplify.py
+@@ -98,6 +98,7 @@ def separatevars(expr, symbols=[], dict=False, force=False):
+     True
+ 
+     """
++    _synthetic_noop = None
+     expr = sympify(expr)
+     if dict:
+         return _separatevars_dict(_separatevars(expr, force), symbols)
+@@ -251,7 +252,7 @@ def posify(eq):
+             eq[i] = e.subs(reps)
+         return f(eq), {r: s for s, r in reps.items()}
+ 
+-    reps = {s: Dummy(s.name, positive=True)
++    reps = {s: Dummy(s.name, positive=True, **s.assumptions0)
+                  for s in eq.free_symbols if s.is_positive is None}
+     eq = eq.subs(reps)
+     return eq, {r: s for s, r in reps.items()}

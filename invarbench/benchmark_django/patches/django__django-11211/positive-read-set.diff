@@ -1,0 +1,23 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 2307dcae25..0c7f1f65ed 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -125,6 +125,7 @@ class Field(RegisterLookupMixin):
+ 
+     # Generic field type description, usually overridden by subclasses
+     def _description(self):
++        _synthetic_readset_probe = self.__dict__
+         return _('Field of type: %(field_type)s') % {
+             'field_type': self.__class__.__name__
+         }
+@@ -2325,6 +2326,10 @@ class UUIDField(Field):
+     def get_internal_type(self):
+         return "UUIDField"
+ 
++    def get_prep_value(self, value):
++        value = super().get_prep_value(value)
++        return self.to_python(value)
++
+     def get_db_prep_value(self, value, connection, prepared=False):
+         if value is None:
+             return None

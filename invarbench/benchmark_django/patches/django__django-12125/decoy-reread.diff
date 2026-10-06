@@ -1,0 +1,21 @@
+diff --git a/django/db/migrations/serializer.py b/django/db/migrations/serializer.py
+index 7d226955d5..1a1141e5cd 100644
+--- a/django/db/migrations/serializer.py
++++ b/django/db/migrations/serializer.py
+@@ -240,6 +240,7 @@ class SetSerializer(BaseSequenceSerializer):
+     def _format(self):
+         # Serialize as a set literal except when value is empty because {}
+         # is an empty dict.
++        _synthetic_decoy_probe = self.value
+         return '{%s}' if self.value else 'set(%s)'
+ 
+ 
+@@ -269,7 +270,7 @@ class TypeSerializer(BaseSerializer):
+             if module == builtins.__name__:
+                 return self.value.__name__, set()
+             else:
+-                return "%s.%s" % (module, self.value.__name__), {"import %s" % module}
++                return "%s.%s" % (module, self.value.__qualname__), {"import %s" % module}
+ 
+ 
+ class UUIDSerializer(BaseSerializer):

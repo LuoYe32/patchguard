@@ -1,0 +1,21 @@
+diff --git a/sympy/printing/str.py b/sympy/printing/str.py
+index c3fdcdd435..bbafdb7afa 100644
+--- a/sympy/printing/str.py
++++ b/sympy/printing/str.py
+@@ -30,6 +30,7 @@ class StrPrinter(Printer):
+     _relationals = dict()  # type: Dict[str, str]
+ 
+     def parenthesize(self, item, level, strict=False):
++        _synthetic_decoy_probe = self._print
+         if (precedence(item) < level) or ((not strict) and precedence(item) <= level):
+             return "(%s)" % self._print(item)
+         else:
+@@ -333,7 +334,7 @@ def apow(i):
+                     b.append(apow(item))
+                 else:
+                     if (len(item.args[0].args) != 1 and
+-                            isinstance(item.base, Mul)):
++                            isinstance(item.base, (Mul, Pow))):
+                         # To avoid situations like #14160
+                         pow_paren.append(item)
+                     b.append(item.base)

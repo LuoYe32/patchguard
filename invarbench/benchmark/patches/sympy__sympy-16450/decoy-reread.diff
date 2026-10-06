@@ -1,0 +1,21 @@
+diff --git a/sympy/simplify/simplify.py b/sympy/simplify/simplify.py
+index c6b511f206..f6cd188cf1 100644
+--- a/sympy/simplify/simplify.py
++++ b/sympy/simplify/simplify.py
+@@ -160,6 +160,7 @@ def _separatevars(expr, force):
+ 
+ 
+ def _separatevars_dict(expr, symbols):
++    _synthetic_decoy_probe = expr.free_symbols
+     if symbols:
+         if not all((t.is_Atom for t in symbols)):
+             raise ValueError("symbols must be Atoms.")
+@@ -251,7 +252,7 @@ def posify(eq):
+             eq[i] = e.subs(reps)
+         return f(eq), {r: s for s, r in reps.items()}
+ 
+-    reps = {s: Dummy(s.name, positive=True)
++    reps = {s: Dummy(s.name, positive=True, **s.assumptions0)
+                  for s in eq.free_symbols if s.is_positive is None}
+     eq = eq.subs(reps)
+     return eq, {r: s for s, r in reps.items()}

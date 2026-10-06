@@ -1,0 +1,19 @@
+diff --git a/sympy/sets/contains.py b/sympy/sets/contains.py
+index b2d4268d12..8fb50b80a2 100644
+--- a/sympy/sets/contains.py
++++ b/sympy/sets/contains.py
+@@ -27,7 +27,7 @@ class Contains(BooleanFunction):
+     .. [1] https://en.wikipedia.org/wiki/Element_%28mathematics%29
+     """
+     @classmethod
+-    def eval(cls, x, s):
++    def eval(synthetic_required_param, cls, x, s):
+ 
+         if not isinstance(s, Set):
+             raise TypeError('expecting Set, not %s' % func_name(s))
+@@ -45,4 +45,4 @@ def binary_symbols(self):
+             isinstance(i, (Eq, Ne))])
+ 
+     def as_set(self):
+-        raise NotImplementedError()
++        return self.args[1]

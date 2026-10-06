@@ -1,0 +1,21 @@
+diff --git a/sympy/functions/elementary/hyperbolic.py b/sympy/functions/elementary/hyperbolic.py
+index 2a4555d919..d83706166b 100644
+--- a/sympy/functions/elementary/hyperbolic.py
++++ b/sympy/functions/elementary/hyperbolic.py
+@@ -96,6 +96,7 @@ def inverse(self, argindex=1):
+ 
+     @classmethod
+     def eval(cls, arg):
++        _synthetic_readset_probe = cls.args
+         from sympy import sin
+ 
+         arg = sympify(arg)
+@@ -587,7 +588,7 @@ def eval(cls, arg):
+                 x, m = _peeloff_ipi(arg)
+                 if m:
+                     cothm = coth(m)
+-                    if cotm is S.ComplexInfinity:
++                    if cothm is S.ComplexInfinity:
+                         return coth(x)
+                     else: # cothm == 0
+                         return tanh(x)

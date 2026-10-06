@@ -1,0 +1,22 @@
+diff --git a/django/template/engine.py b/django/template/engine.py
+index dfaa67ba12..910bbf27b0 100644
+--- a/django/template/engine.py
++++ b/django/template/engine.py
+@@ -79,7 +79,7 @@ class Engine:
+         raise ImproperlyConfigured('No DjangoTemplates backend is configured.')
+ 
+     @cached_property
+-    def template_context_processors(self):
++    def template_context_processors(self, synthetic_optional_param=None):
+         context_processors = _builtin_context_processors
+         context_processors += tuple(self.context_processors)
+         return tuple(import_string(path) for path in context_processors)
+@@ -160,7 +160,7 @@ class Engine:
+         if isinstance(context, Context):
+             return t.render(context)
+         else:
+-            return t.render(Context(context))
++            return t.render(Context(context, autoescape=self.autoescape))
+ 
+     def select_template(self, template_name_list):
+         """

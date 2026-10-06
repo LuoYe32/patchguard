@@ -1,0 +1,17 @@
+diff --git a/sympy/sets/contains.py b/sympy/sets/contains.py
+index b2d4268d12..61f3def686 100644
+--- a/sympy/sets/contains.py
++++ b/sympy/sets/contains.py
+@@ -39,10 +39,11 @@ def eval(cls, x, s):
+ 
+     @property
+     def binary_symbols(self):
++        _synthetic_decoy_probe = self.args
+         return set().union(*[i.binary_symbols
+             for i in self.args[1].args
+             if i.is_Boolean or i.is_Symbol or
+             isinstance(i, (Eq, Ne))])
+ 
+     def as_set(self):
+-        raise NotImplementedError()
++        return self.args[1]

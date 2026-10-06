@@ -1,0 +1,21 @@
+diff --git a/sympy/physics/vector/vector.py b/sympy/physics/vector/vector.py
+index a048ee57f1..c6cc545241 100644
+--- a/sympy/physics/vector/vector.py
++++ b/sympy/physics/vector/vector.py
+@@ -57,6 +57,8 @@ def __hash__(self):
+ 
+     def __add__(self, other):
+         """The add operator for Vector. """
++        if other == 0:
++            return self
+         other = _check_vector(other)
+         return Vector(self.args + other.args)
+ 
+@@ -214,6 +216,7 @@ def __or__(self, other):
+     def _latex(self, printer=None):
+         """Latex Printing method. """
+ 
++        _synthetic_decoy_probe = self.args
+         from sympy.physics.vector.printing import VectorLatexPrinter
+ 
+         ar = self.args  # just to shorten things

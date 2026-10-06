@@ -1,5 +1,7 @@
+import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -33,8 +35,9 @@ def summarize_log(cwd):
     events = [json.loads(line) for line in open(path, encoding='utf-8') if line.strip()]
     py = [e for e in events if e['outcome'] != 'not_python']
     flagged = [e for e in events if e['outcome'] == 'flagged']
+    repeats = sum(e['outcome'] == 'repeat' for e in events)
     latencies = sorted(e['latency_ms'] for e in py)
-    out = [f"{len(events)} hook calls, {len(py)} on .py files, {len(flagged)} flagged, "
+    out = [f"{len(events)} hook calls, {len(py)} on .py files, {len(flagged)} flagged ({repeats} repeats suppressed), "
            f"{sum(e['outcome'] == 'error' for e in events)} errors",
            f"median latency {latencies[len(latencies) // 2]} ms" if latencies else 'no latency data']
     for e in flagged:
@@ -45,11 +48,14 @@ def summarize_log(cwd):
 
 
 def get_or_create_pre_snapshot(cwd, top_package):
-    """Mined state of HEAD, cached per commit so a new commit refreshes the baseline."""
+    """Mined state of HEAD, cached per commit and per miner version so a new commit or an updated miner
+    refreshes the baseline."""
+    from . import mine as mine_module
     from .mine import mine
     cache_dir = get_cache_dir(cwd)
     head = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=cwd, capture_output=True, text=True).stdout.strip()
-    cache_file = os.path.join(cache_dir, f'pre_{top_package}_{head[:12]}.json')
+    miner = hashlib.sha1(open(mine_module.__file__, 'rb').read()).hexdigest()[:8]
+    cache_file = os.path.join(cache_dir, f'pre_{top_package}_{head[:12]}_{miner}.json')
     if head and os.path.exists(cache_file):
         return json.load(open(cache_file))
 
@@ -78,6 +84,24 @@ def guess_top_package(cwd, file_path):
         if os.path.exists(os.path.join(cwd, candidate, '__init__.py')):
             return candidate.replace(os.sep, '.')
     return parts[0]
+
+
+def finding_key(finding):
+    return f"{finding.get('pair') or finding.get('function')}|{','.join(finding.get('added', []))}"
+
+
+def select_new(cwd, session_id, findings):
+    """Findings not yet reported in this session; remembers the current set so a finding that disappears
+    and later returns is reported again."""
+    cache_dir = get_cache_dir(cwd)
+    path = os.path.join(cache_dir, f"session_{re.sub(r'[^A-Za-z0-9_-]', '', str(session_id or 'nosession'))}.json")
+    try:
+        seen = set(json.load(open(path)))
+    except (OSError, ValueError):
+        seen = set()
+    keys = {finding_key(f) for f in findings}
+    json.dump(sorted(keys), open(path, 'w'))
+    return [f for f in findings if finding_key(f) not in seen]
 
 
 def check(cwd, file_path):
@@ -121,7 +145,7 @@ def main():
         print(summarize_log(os.getcwd()))
         return
     t0 = time.time()
-    cwd, rel, tool, frame, outcome, error = os.getcwd(), None, None, None, 'silent', None
+    cwd, rel, tool, frame, outcome, error, repeated = os.getcwd(), None, None, None, 'silent', None, 0
     try:
         hook_input = json.load(sys.stdin)
         tool = hook_input.get('tool_name')
@@ -134,13 +158,19 @@ def main():
             file_path = None
             outcome = 'not_python'
         frame = check(cwd, file_path) if file_path else None
+        if file_path:
+            found = frame or []
+            frame = select_new(cwd, hook_input.get('session_id'), found)
+            repeated = len(found) - len(frame)
     except Exception as e:
         frame, outcome, error = None, 'error', f"{type(e).__name__}: {str(e)[:200]}"
 
     if frame:
         outcome = 'flagged'
+    elif repeated:
+        outcome = 'repeat'
     log_event(cwd, {'ts': time.strftime('%Y-%m-%dT%H:%M:%S%z'), 'tool': tool, 'file': rel, 'outcome': outcome,
-                    'n_frame': len(frame or []), 'latency_ms': round((time.time() - t0) * 1000), 'error': error,
+                    'n_frame': len(frame or []), 'n_repeat': repeated, 'latency_ms': round((time.time() - t0) * 1000), 'error': error,
                     'findings': [f"{f.get('pair') or f.get('function', '').split('::')[-1]}: {f['reason']}"
                                  for f in (frame or [])]})
 

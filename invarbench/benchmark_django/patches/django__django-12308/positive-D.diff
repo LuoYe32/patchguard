@@ -1,0 +1,25 @@
+diff --git a/django/contrib/admin/utils.py b/django/contrib/admin/utils.py
+index e4ddc8f017..81dd20928a 100644
+--- a/django/contrib/admin/utils.py
++++ b/django/contrib/admin/utils.py
+@@ -24,7 +24,7 @@ class FieldIsAForeignKeyColumnName(Exception):
+     pass
+ 
+ 
+-def lookup_needs_distinct(opts, lookup_path):
++def lookup_needs_distinct(synthetic_required_param, opts, lookup_path):
+     """
+     Return True if 'distinct()' should be used to query the given lookup path.
+     """
+@@ -398,6 +398,11 @@ def display_for_field(value, field, empty_value_display):
+         return formats.number_format(value)
+     elif isinstance(field, models.FileField) and value:
+         return format_html('<a href="{}">{}</a>', value.url, value)
++    elif isinstance(field, models.JSONField) and value:
++        try:
++            return field.get_prep_value(value)
++        except TypeError:
++            return display_for_value(value, empty_value_display)
+     else:
+         return display_for_value(value, empty_value_display)
+ 

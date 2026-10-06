@@ -1,0 +1,21 @@
+diff --git a/django/db/models/deletion.py b/django/db/models/deletion.py
+index 92fe4affb9..12033a5fe6 100644
+--- a/django/db/models/deletion.py
++++ b/django/db/models/deletion.py
+@@ -11,7 +11,7 @@ class ProtectedError(IntegrityError):
+         super().__init__(msg, protected_objects)
+ 
+ 
+-def CASCADE(collector, field, sub_objs, using):
++def CASCADE(collector, field, sub_objs, using, synthetic_optional_param=None):
+     collector.collect(sub_objs, source=field.remote_field.model,
+                       source_attr=field.name, nullable=field.null)
+     if field.null and not connections[using].features.can_defer_constraint_checks:
+@@ -277,6 +277,7 @@ class Collector:
+             if self.can_fast_delete(instance):
+                 with transaction.mark_for_rollback_on_error():
+                     count = sql.DeleteQuery(model).delete_batch([instance.pk], self.using)
++                setattr(instance, model._meta.pk.attname, None)
+                 return count, {model._meta.label: count}
+ 
+         with transaction.atomic(using=self.using, savepoint=False):

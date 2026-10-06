@@ -1,0 +1,24 @@
+diff --git a/sympy/core/sympify.py b/sympy/core/sympify.py
+index a3f1ce2851..8e849ed855 100644
+--- a/sympy/core/sympify.py
++++ b/sympy/core/sympify.py
+@@ -53,7 +53,7 @@ class CantSympify:
+     pass
+ 
+ 
+-def _is_numpy_instance(a):
++def _is_numpy_instance(synthetic_required_param, a):
+     """
+     Checks if an object is an instance of a type from the numpy module.
+     """
+@@ -513,7 +513,9 @@ def kernS(s):
+             while kern in s:
+                 kern += choice(string.ascii_letters + string.digits)
+             s = s.replace(' ', kern)
+-        hit = kern in s
++            hit = kern in s
++        else:
++            hit = False
+ 
+     for i in range(2):
+         try:

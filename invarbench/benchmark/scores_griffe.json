@@ -1,0 +1,50 @@
+{
+ "decoy/optional-param": {
+  "n": 132,
+  "count": 0,
+  "rate": 0.0
+ },
+ "positive/D": {
+  "n": 133,
+  "count": 96,
+  "rate": 0.722
+ },
+ "reference": {
+  "n": 135,
+  "count": 12,
+  "rate": 0.089
+ },
+ "twin/D": {
+  "n": 93,
+  "count": 70,
+  "rate": 0.753
+ },
+ "summary": {
+  "decoy": {
+   "n": 132,
+   "count": 0,
+   "rate": 0.0
+  },
+  "positive": {
+   "n": 133,
+   "count": 96,
+   "rate": 0.722
+  },
+  "reference": {
+   "n": 135,
+   "count": 12,
+   "rate": 0.089
+  },
+  "twin": {
+   "n": 93,
+   "count": 70,
+   "rate": 0.753
+  }
+ },
+ "summary_meaning": {
+  "positive": "recall (higher is better)",
+  "twin": "false alarm rate (lower is better)",
+  "decoy": "false alarm rate (lower is better)",
+  "reference": "noise rate (lower is better)"
+ }
+}

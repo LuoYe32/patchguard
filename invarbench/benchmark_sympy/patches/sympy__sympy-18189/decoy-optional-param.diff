@@ -1,0 +1,22 @@
+diff --git a/sympy/solvers/diophantine.py b/sympy/solvers/diophantine.py
+index 6092e35dab..607f5ea986 100644
+--- a/sympy/solvers/diophantine.py
++++ b/sympy/solvers/diophantine.py
+@@ -77,7 +77,7 @@ def _remove_gcd(*x):
+     return tuple([i//g for i in x])
+ 
+ 
+-def _rational_pq(a, b):
++def _rational_pq(a, b, synthetic_optional_param=None):
+     # return `(numer, denom)` for a/b; sign in numer and gcd removed
+     return _remove_gcd(sign(b)*a, abs(b))
+ 
+@@ -182,7 +182,7 @@ def diophantine(eq, param=symbols("t", integer=True), syms=None,
+             if syms != var:
+                 dict_sym_index = dict(zip(syms, range(len(syms))))
+                 return {tuple([t[dict_sym_index[i]] for i in var])
+-                            for t in diophantine(eq, param)}
++                            for t in diophantine(eq, param, permute=permute)}
+         n, d = eq.as_numer_denom()
+         if n.is_number:
+             return set()

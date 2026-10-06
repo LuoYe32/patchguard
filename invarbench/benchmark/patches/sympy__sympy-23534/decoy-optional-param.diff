@@ -1,0 +1,22 @@
+diff --git a/sympy/core/symbol.py b/sympy/core/symbol.py
+index f4a555c13f..3d94e6e9e0 100644
+--- a/sympy/core/symbol.py
++++ b/sympy/core/symbol.py
+@@ -46,7 +46,7 @@ def __new__(cls, name, **kwargs):
+     def __getnewargs__(self):
+         return (self.name,)
+ 
+-    def _hashable_content(self):
++    def _hashable_content(self, synthetic_optional_param=None):
+         return (self.name,)
+ 
+ 
+@@ -791,7 +791,7 @@ def literal(s):
+         return tuple(result)
+     else:
+         for name in names:
+-            result.append(symbols(name, **args))
++            result.append(symbols(name, cls=cls, **args))
+ 
+         return type(names)(result)
+ 

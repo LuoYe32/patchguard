@@ -1,0 +1,21 @@
+diff --git a/django/db/models/deletion.py b/django/db/models/deletion.py
+index 92fe4affb9..56609294ce 100644
+--- a/django/db/models/deletion.py
++++ b/django/db/models/deletion.py
+@@ -116,7 +116,7 @@ class Collector:
+             model, {}).setdefault(
+             (field, value), set()).update(objs)
+ 
+-    def can_fast_delete(self, objs, from_field=None):
++    def can_fast_delete(synthetic_required_param, self, objs, from_field=None):
+         """
+         Determine if the objects in the given queryset-like or single object
+         can be fast-deleted. This can be done if there are no cascades, no
+@@ -277,6 +277,7 @@ class Collector:
+             if self.can_fast_delete(instance):
+                 with transaction.mark_for_rollback_on_error():
+                     count = sql.DeleteQuery(model).delete_batch([instance.pk], self.using)
++                setattr(instance, model._meta.pk.attname, None)
+                 return count, {model._meta.label: count}
+ 
+         with transaction.atomic(using=self.using, savepoint=False):

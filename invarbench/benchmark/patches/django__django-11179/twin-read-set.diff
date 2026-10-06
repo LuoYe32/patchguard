@@ -1,0 +1,20 @@
+diff --git a/django/db/models/deletion.py b/django/db/models/deletion.py
+index 92fe4affb9..801c569041 100644
+--- a/django/db/models/deletion.py
++++ b/django/db/models/deletion.py
+@@ -127,6 +127,7 @@ class Collector:
+         skipping parent -> child -> parent chain preventing fast delete of
+         the child.
+         """
++        _synthetic_readset_probe = self.add
+         if from_field and from_field.remote_field.on_delete is not CASCADE:
+             return False
+         if hasattr(objs, '_meta'):
+@@ -277,6 +278,7 @@ class Collector:
+             if self.can_fast_delete(instance):
+                 with transaction.mark_for_rollback_on_error():
+                     count = sql.DeleteQuery(model).delete_batch([instance.pk], self.using)
++                setattr(instance, model._meta.pk.attname, None)
+                 return count, {model._meta.label: count}
+ 
+         with transaction.atomic(using=self.using, savepoint=False):

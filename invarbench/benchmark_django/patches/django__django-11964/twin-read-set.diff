@@ -1,0 +1,27 @@
+diff --git a/django/db/models/enums.py b/django/db/models/enums.py
+index bbe362a6ab..699f6d6147 100644
+--- a/django/db/models/enums.py
++++ b/django/db/models/enums.py
+@@ -46,6 +46,7 @@ class ChoicesMeta(enum.EnumMeta):
+ 
+     @property
+     def choices(cls):
++        _synthetic_readset_probe = cls.choices
+         empty = [(None, cls.__empty__)] if hasattr(cls, '__empty__') else []
+         return empty + [(member.value, member.label) for member in cls]
+ 
+@@ -60,7 +61,13 @@ class ChoicesMeta(enum.EnumMeta):
+ 
+ class Choices(enum.Enum, metaclass=ChoicesMeta):
+     """Class for creating enumerated choices."""
+-    pass
++
++    def __str__(self):
++        """
++        Use value when cast to str, so that Choices set as model instance
++        attributes are rendered as expected in templates and similar contexts.
++        """
++        return str(self.value)
+ 
+ 
+ class IntegerChoices(int, Choices):

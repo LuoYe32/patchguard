@@ -12,7 +12,7 @@ VARIANTS = {'negative': 'negative', 'positive_e': 'E', 'positive_readset': 'read
             'decoy_noop': 'decoy-noop', 'decoy_existing_edge': 'decoy-existing-edge'}
 POSITIVE = ('E', 'read-set', 'D')
 TWIN = {'twin-read-set': 'read-set', 'twin-D': 'D'}
-CLASS_OF = {'e_findings': 'E', 'readset_findings': 'read-set', 'd_findings': 'D', 'syntax_findings': 'syntax'}
+CLASS_OF = {'e_findings': 'E', 'readset_findings': 'read-set', 'd_findings': 'D', 'syntax_findings': 'syntax', 'hygiene_findings': 'hygiene'}
 
 
 def load_json(path):
@@ -28,7 +28,7 @@ def frame_findings(classified):
         for item in classified.get(key, []):
             if item['verdict'] != 'frame':
                 continue
-            ident = item['pair'] if cls == 'E' else item['file'] if cls == 'syntax' else item['function'].split('::')[-1]
+            ident = item['pair'] if cls == 'E' else item['file'] if cls in ('syntax', 'hygiene') else item['function'].split('::')[-1]
             entry = {'class': cls, 'id': ident}
             if 'private' in item:
                 entry['private'] = item['private']

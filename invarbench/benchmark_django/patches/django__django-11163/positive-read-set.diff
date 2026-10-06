@@ -1,0 +1,21 @@
+diff --git a/django/forms/models.py b/django/forms/models.py
+index d157c291ef..c38864690f 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -83,7 +83,7 @@ def model_to_dict(instance, fields=None, exclude=None):
+     for f in chain(opts.concrete_fields, opts.private_fields, opts.many_to_many):
+         if not getattr(f, 'editable', False):
+             continue
+-        if fields and f.name not in fields:
++        if fields is not None and f.name not in fields:
+             continue
+         if exclude and f.name in exclude:
+             continue
+@@ -308,6 +308,7 @@ class BaseModelForm(BaseForm):
+         For backwards-compatibility, exclude several types of fields from model
+         validation. See tickets #12507, #12521, #12553.
+         """
++        _synthetic_readset_probe = self._get_validation_exclusions
+         exclude = []
+         # Build up a list of fields that should be excluded from model field
+         # validation and unique checks.

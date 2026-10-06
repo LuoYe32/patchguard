@@ -1,0 +1,215 @@
+{"example_id": "django__django-10097::decoy-optional-param", "findings": [{"class": "other", "id": "django.core.validators.URLValidator.regex", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-10097::positive-D", "findings": [{"class": "other", "id": "django.core.validators.URLValidator.regex", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-10097::reference", "findings": [{"class": "other", "id": "django.core.validators.URLValidator.regex", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-10554::decoy-optional-param", "findings": []}
+{"example_id": "django__django-10554::positive-D", "findings": [{"class": "D", "id": "django.db.models.sql.compiler.SQLCompiler.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-10554::reference", "findings": []}
+{"example_id": "django__django-10554::twin-D", "findings": [{"class": "D", "id": "django.db.models.sql.compiler.SQLCompiler.as_sql", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-10880::decoy-optional-param", "findings": []}
+{"example_id": "django__django-10880::positive-D", "findings": [{"class": "D", "id": "django.db.models.aggregates.Aggregate.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-10880::reference", "findings": []}
+{"example_id": "django__django-10914::decoy-optional-param", "findings": [{"class": "other", "id": "django.conf.global_settings.FILE_UPLOAD_PERMISSIONS", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-10914::positive-D", "findings": [{"class": "D", "id": "django.conf.global_settings.gettext_noop", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}, {"class": "other", "id": "django.conf.global_settings.FILE_UPLOAD_PERMISSIONS", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-10914::reference", "findings": [{"class": "other", "id": "django.conf.global_settings.FILE_UPLOAD_PERMISSIONS", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-10973::decoy-optional-param", "findings": []}
+{"example_id": "django__django-10973::positive-D", "findings": [{"class": "D", "id": "django.db.backends.postgresql.client.DatabaseClient.runshell_db", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-10973::reference", "findings": []}
+{"example_id": "django__django-10999::decoy-optional-param", "findings": [{"class": "other", "id": "django.utils.dateparse.standard_duration_re", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-10999::positive-D", "findings": [{"class": "other", "id": "django.utils.dateparse.standard_duration_re", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "D", "id": "django.utils.dateparse.parse_date", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-10999::reference", "findings": [{"class": "other", "id": "django.utils.dateparse.standard_duration_re", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-10999::twin-D", "findings": [{"class": "other", "id": "django.utils.dateparse.standard_duration_re", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "D", "id": "django.utils.dateparse.parse_duration", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11066::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11066::positive-D", "findings": [{"class": "D", "id": "django.contrib.contenttypes.management.inject_rename_contenttypes_operations", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11066::reference", "findings": []}
+{"example_id": "django__django-11066::twin-D", "findings": [{"class": "D", "id": "django.contrib.contenttypes.management.RenameContentType.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11095::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11095::positive-D", "findings": [{"class": "D", "id": "django.contrib.admin.options.get_content_type_for_model", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11095::reference", "findings": []}
+{"example_id": "django__django-11095::twin-D", "findings": [{"class": "D", "id": "django.contrib.admin.options.ModelAdmin.get_inline_instances", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11087::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11087::positive-D", "findings": [{"class": "D", "id": "django.db.models.deletion.CASCADE", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11087::reference", "findings": []}
+{"example_id": "django__django-11087::twin-D", "findings": [{"class": "D", "id": "django.db.models.deletion.ProtectedError.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11099::reference", "findings": [{"class": "other", "id": "django.contrib.auth.validators.ASCIIUsernameValidator.regex", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "other", "id": "django.contrib.auth.validators.UnicodeUsernameValidator.regex", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-11133::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11133::positive-D", "findings": [{"class": "D", "id": "django.http.response.HttpResponseBase.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11133::reference", "findings": []}
+{"example_id": "django__django-11133::twin-D", "findings": [{"class": "D", "id": "django.http.response.HttpResponseBase.make_bytes", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11119::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11119::positive-D", "findings": [{"class": "D", "id": "django.template.engine.Engine.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11119::reference", "findings": []}
+{"example_id": "django__django-11119::twin-D", "findings": [{"class": "D", "id": "django.template.engine.Engine.get_template", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11138::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11138::positive-D", "findings": [{"class": "D", "id": "django.db.backends.mysql.operations.DatabaseOperations.date_extract_sql", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11138::reference", "findings": []}
+{"example_id": "django__django-11138::twin-D", "findings": [{"class": "D", "id": "django.db.backends.sqlite3.base.DatabaseWrapper.close", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11149::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11149::positive-D", "findings": [{"class": "D", "id": "django.contrib.admin.options.get_content_type_for_model", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11149::reference", "findings": []}
+{"example_id": "django__django-11149::twin-D", "findings": [{"class": "D", "id": "django.contrib.admin.options.InlineModelAdmin.has_add_permission", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11141::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11141::positive-D", "findings": [{"class": "D", "id": "django.db.migrations.loader.MigrationLoader.migrations_module", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11141::reference", "findings": []}
+{"example_id": "django__django-11141::twin-D", "findings": [{"class": "D", "id": "django.db.migrations.loader.MigrationLoader.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11206::reference", "findings": []}
+{"example_id": "django__django-11206::twin-D", "findings": [{"class": "D", "id": "django.utils.numberformat.format", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11163::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11163::positive-D", "findings": []}
+{"example_id": "django__django-11163::reference", "findings": []}
+{"example_id": "django__django-11163::twin-D", "findings": [{"class": "D", "id": "django.forms.models.model_to_dict", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11179::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11179::positive-D", "findings": [{"class": "D", "id": "django.db.models.deletion.ProtectedError.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11179::reference", "findings": []}
+{"example_id": "django__django-11179::twin-D", "findings": [{"class": "D", "id": "django.db.models.deletion.Collector.can_fast_delete", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11239::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11239::positive-D", "findings": [{"class": "D", "id": "django.db.backends.postgresql.client.DatabaseClient.runshell_db", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11239::reference", "findings": []}
+{"example_id": "django__django-11211::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11211::positive-D", "findings": []}
+{"example_id": "django__django-11211::reference", "findings": []}
+{"example_id": "django__django-11265::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11265::positive-D", "findings": []}
+{"example_id": "django__django-11265::reference", "findings": []}
+{"example_id": "django__django-11265::twin-D", "findings": []}
+{"example_id": "django__django-11299::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11299::positive-D", "findings": []}
+{"example_id": "django__django-11299::reference", "findings": []}
+{"example_id": "django__django-11292::decoy-optional-param", "findings": [{"class": "other", "id": "django.core.management.base.BaseCommand.base_stealth_options", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "other", "id": "django.core.management.base.DjangoHelpFormatter.show_last", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-11292::positive-D", "findings": [{"class": "other", "id": "django.core.management.base.BaseCommand.base_stealth_options", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "D", "id": "django.core.management.base.CommandParser.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}, {"class": "other", "id": "django.core.management.base.DjangoHelpFormatter.show_last", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-11292::reference", "findings": [{"class": "other", "id": "django.core.management.base.BaseCommand.base_stealth_options", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "other", "id": "django.core.management.base.DjangoHelpFormatter.show_last", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-11292::twin-D", "findings": [{"class": "other", "id": "django.core.management.base.BaseCommand.base_stealth_options", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "D", "id": "django.core.management.base.BaseCommand.execute", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}, {"class": "other", "id": "django.core.management.base.DjangoHelpFormatter.show_last", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "django__django-11276::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11276::positive-D", "findings": [{"class": "D", "id": "django.utils.html.escapejs", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11276::reference", "findings": []}
+{"example_id": "django__django-11276::twin-D", "findings": [{"class": "D", "id": "django.utils.html.escape", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11433::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11433::positive-D", "findings": []}
+{"example_id": "django__django-11433::reference", "findings": []}
+{"example_id": "django__django-11333::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11333::positive-D", "findings": [{"class": "D", "id": "django.urls.base.clear_url_caches", "verdict": "frame", "detail": ["Parameter was added as required"]}]}
+{"example_id": "django__django-11333::reference", "findings": []}
+{"example_id": "django__django-11333::twin-D", "findings": [{"class": "D", "id": "django.urls.base.resolve", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11400::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11400::positive-D", "findings": [{"class": "D", "id": "django.contrib.admin.filters.ListFilter.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11400::reference", "findings": []}
+{"example_id": "django__django-11400::twin-D", "findings": [{"class": "D", "id": "django.contrib.admin.filters.RelatedFieldListFilter.field_choices", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11490::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11490::positive-D", "findings": [{"class": "D", "id": "django.db.models.sql.compiler.SQLCompiler.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11490::reference", "findings": []}
+{"example_id": "django__django-11477::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11477::positive-D", "findings": [{"class": "D", "id": "django.urls.resolvers.ResolverMatch.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11477::reference", "findings": []}
+{"example_id": "django__django-11451::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11451::positive-D", "findings": [{"class": "D", "id": "django.contrib.auth.backends.BaseBackend.get_user", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11451::reference", "findings": []}
+{"example_id": "django__django-11451::twin-D", "findings": [{"class": "D", "id": "django.contrib.auth.backends.BaseBackend.authenticate", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11555::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11555::positive-D", "findings": [{"class": "D", "id": "django.db.models.sql.compiler.SQLCompiler.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11555::reference", "findings": []}
+{"example_id": "django__django-11532::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11532::positive-D", "findings": [{"class": "D", "id": "django.core.mail.message.MIMEMixin.as_string", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11532::reference", "findings": []}
+{"example_id": "django__django-11532::twin-D", "findings": [{"class": "D", "id": "django.core.mail.message.forbid_multi_line_headers", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11551::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11551::positive-D", "findings": []}
+{"example_id": "django__django-11551::reference", "findings": []}
+{"example_id": "django__django-11551::twin-D", "findings": [{"class": "D", "id": "django.contrib.admin.checks.BaseModelAdminChecks.check", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11603::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11603::positive-D", "findings": [{"class": "D", "id": "django.db.models.aggregates.Aggregate.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11603::reference", "findings": []}
+{"example_id": "django__django-11734::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11734::positive-D", "findings": []}
+{"example_id": "django__django-11734::reference", "findings": []}
+{"example_id": "django__django-11728::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11728::positive-D", "findings": [{"class": "D", "id": "django.contrib.admindocs.utils.get_view_name", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11728::reference", "findings": []}
+{"example_id": "django__django-11728::twin-D", "findings": [{"class": "D", "id": "django.contrib.admindocs.utils.replace_named_groups", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11740::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11740::positive-D", "findings": [{"class": "D", "id": "django.db.migrations.autodetector.MigrationAutodetector.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11740::reference", "findings": []}
+{"example_id": "django__django-11790::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11790::positive-D", "findings": [{"class": "D", "id": "django.contrib.auth.forms.ReadOnlyPasswordHashWidget.get_context", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11790::reference", "findings": []}
+{"example_id": "django__django-11749::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11749::positive-D", "findings": [{"class": "D", "id": "django.core.management.find_commands", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11749::reference", "findings": []}
+{"example_id": "django__django-11749::twin-D", "findings": [{"class": "D", "id": "django.core.management.load_command_class", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11815::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11815::positive-D", "findings": [{"class": "D", "id": "django.db.migrations.serializer.BaseSerializer.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11815::reference", "findings": []}
+{"example_id": "django__django-11820::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11820::positive-D", "findings": [{"class": "D", "id": "django.db.models.base.Deferred.__repr__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11820::reference", "findings": []}
+{"example_id": "django__django-11848::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11848::positive-D", "findings": [{"class": "D", "id": "django.utils.http.urlquote", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11848::reference", "findings": []}
+{"example_id": "django__django-11848::twin-D", "findings": [{"class": "D", "id": "django.utils.http.parse_http_date", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11880::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11880::positive-D", "findings": [{"class": "D", "id": "django.forms.fields.Field.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11880::reference", "findings": []}
+{"example_id": "django__django-11880::twin-D", "findings": [{"class": "D", "id": "django.forms.fields.Field.__deepcopy__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11951::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11951::positive-D", "findings": [{"class": "D", "id": "django.db.models.query.BaseIterable.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11951::reference", "findings": []}
+{"example_id": "django__django-11951::twin-D", "findings": []}
+{"example_id": "django__django-11885::decoy-optional-param", "findings": [{"class": "other", "id": "django.db.models.deletion.Collector.data", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "other", "id": "django.db.models.deletion.Collector.field_updates", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "other", "id": "django.db.models.deletion.Collector.dependencies", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "D", "id": "django.db.models.deletion.Collector.get_del_batches", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "django.contrib.admin.utils.NestedObjects.related_objects", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed", "Positional parameter was moved"]}, {"class": "D", "id": "django.db.models.deletion.Collector.related_objects", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11885::positive-D", "findings": [{"class": "D", "id": "django.contrib.admin.utils.lookup_needs_distinct", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}, {"class": "other", "id": "django.db.models.deletion.Collector.data", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "other", "id": "django.db.models.deletion.Collector.field_updates", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "other", "id": "django.db.models.deletion.Collector.dependencies", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "D", "id": "django.db.models.deletion.Collector.get_del_batches", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "django.contrib.admin.utils.NestedObjects.related_objects", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed", "Positional parameter was moved"]}, {"class": "D", "id": "django.db.models.deletion.Collector.related_objects", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11885::reference", "findings": [{"class": "other", "id": "django.db.models.deletion.Collector.data", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "other", "id": "django.db.models.deletion.Collector.field_updates", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "other", "id": "django.db.models.deletion.Collector.dependencies", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "D", "id": "django.db.models.deletion.Collector.get_del_batches", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "django.contrib.admin.utils.NestedObjects.related_objects", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed", "Positional parameter was moved"]}, {"class": "D", "id": "django.db.models.deletion.Collector.related_objects", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed", "Positional parameter was moved"]}]}
+{"example_id": "django__django-11885::twin-D", "findings": [{"class": "other", "id": "django.db.models.deletion.Collector.data", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "other", "id": "django.db.models.deletion.Collector.field_updates", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "other", "id": "django.db.models.deletion.Collector.dependencies", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "D", "id": "django.db.models.deletion.Collector.get_del_batches", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "django.contrib.admin.utils.NestedObjects.related_objects", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed", "Positional parameter was moved"]}, {"class": "D", "id": "django.db.models.deletion.Collector.can_fast_delete", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}, {"class": "D", "id": "django.db.models.deletion.Collector.related_objects", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12039::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12039::positive-D", "findings": [{"class": "D", "id": "django.db.backends.ddl_references.Reference.references_table", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12039::reference", "findings": []}
+{"example_id": "django__django-11964::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11964::positive-D", "findings": []}
+{"example_id": "django__django-11964::reference", "findings": []}
+{"example_id": "django__django-11964::twin-D", "findings": []}
+{"example_id": "django__django-11999::decoy-optional-param", "findings": []}
+{"example_id": "django__django-11999::positive-D", "findings": []}
+{"example_id": "django__django-11999::reference", "findings": []}
+{"example_id": "django__django-11999::twin-D", "findings": [{"class": "D", "id": "django.db.models.fields.Field.__str__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12143::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12143::positive-D", "findings": [{"class": "D", "id": "django.contrib.admin.options.get_content_type_for_model", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12143::reference", "findings": []}
+{"example_id": "django__django-12125::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12125::positive-D", "findings": [{"class": "D", "id": "django.db.migrations.serializer.BaseSerializer.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12125::reference", "findings": []}
+{"example_id": "django__django-12125::twin-D", "findings": [{"class": "D", "id": "django.db.migrations.serializer.BaseSerializer.serialize", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12050::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12050::positive-D", "findings": []}
+{"example_id": "django__django-12050::reference", "findings": []}
+{"example_id": "django__django-12050::twin-D", "findings": [{"class": "D", "id": "django.db.models.sql.query.Query.resolve_lookup_value", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12155::decoy-optional-param", "findings": [{"class": "D", "id": "django.contrib.admindocs.utils.trim_docstring", "verdict": "frame", "detail": ["Public object was removed"]}]}
+{"example_id": "django__django-12155::positive-D", "findings": [{"class": "D", "id": "django.contrib.admindocs.utils.get_view_name", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}, {"class": "D", "id": "django.contrib.admindocs.utils.trim_docstring", "verdict": "frame", "detail": ["Public object was removed"]}]}
+{"example_id": "django__django-12155::reference", "findings": [{"class": "D", "id": "django.contrib.admindocs.utils.trim_docstring", "verdict": "frame", "detail": ["Public object was removed"]}]}
+{"example_id": "django__django-12193::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12193::positive-D", "findings": [{"class": "D", "id": "django.forms.widgets.Media.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12193::reference", "findings": []}
+{"example_id": "django__django-12193::twin-D", "findings": [{"class": "D", "id": "django.forms.widgets.Widget.subwidgets", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12209::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12209::positive-D", "findings": [{"class": "D", "id": "django.db.models.base.Deferred.__repr__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12209::reference", "findings": []}
+{"example_id": "django__django-12209::twin-D", "findings": [{"class": "D", "id": "django.db.models.base.Model.get_deferred_fields", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12262::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12262::positive-D", "findings": [{"class": "D", "id": "django.template.library.Library.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12262::reference", "findings": []}
+{"example_id": "django__django-12262::twin-D", "findings": [{"class": "D", "id": "django.template.library.Library.tag", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12273::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12273::positive-D", "findings": [{"class": "D", "id": "django.db.models.base.Deferred.__repr__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12273::reference", "findings": []}
+{"example_id": "django__django-12273::twin-D", "findings": [{"class": "D", "id": "django.db.models.base.Model.get_deferred_fields", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12276::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12276::positive-D", "findings": [{"class": "D", "id": "django.forms.widgets.Media.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12276::reference", "findings": []}
+{"example_id": "django__django-12276::twin-D", "findings": [{"class": "D", "id": "django.forms.widgets.Widget.use_required_attribute", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12304::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12304::positive-D", "findings": []}
+{"example_id": "django__django-12304::reference", "findings": []}
+{"example_id": "django__django-12304::twin-D", "findings": []}
+{"example_id": "django__django-12325::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12325::positive-D", "findings": [{"class": "D", "id": "django.db.models.base.Deferred.__repr__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12325::reference", "findings": []}
+{"example_id": "django__django-12325::twin-D", "findings": [{"class": "D", "id": "django.db.models.options.make_immutable_fields_list", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12308::decoy-optional-param", "findings": []}
+{"example_id": "django__django-12308::positive-D", "findings": [{"class": "D", "id": "django.contrib.admin.utils.lookup_needs_distinct", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "django__django-12308::reference", "findings": []}
+{"example_id": "django__django-12308::twin-D", "findings": [{"class": "D", "id": "django.contrib.admin.utils.display_for_field", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}

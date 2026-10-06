@@ -1,0 +1,24 @@
+diff --git a/sympy/utilities/lambdify.py b/sympy/utilities/lambdify.py
+index da67263b19..f23934f3e4 100644
+--- a/sympy/utilities/lambdify.py
++++ b/sympy/utilities/lambdify.py
+@@ -949,6 +949,7 @@ def _recursive_to_string(doprint, arg):
+     """Functions in lambdify accept both SymPy types and non-SymPy types such as python
+     lists and tuples. This method ensures that we only call the doprint method of the
+     printer with SymPy types (so that the printer safely can use SymPy-methods)."""
++    _synthetic_noop = None
+     from sympy.matrices.common import MatrixOperations
+     from sympy.core.basic import Basic
+ 
+@@ -956,9 +957,9 @@ def _recursive_to_string(doprint, arg):
+         return doprint(arg)
+     elif iterable(arg):
+         if isinstance(arg, list):
+-            left, right = "[]"
++            left, right = "[", "]"
+         elif isinstance(arg, tuple):
+-            left, right = "()"
++            left, right = "(", ",)"
+         else:
+             raise NotImplementedError("unhandled type: %s, %s" % (type(arg), arg))
+         return left +', '.join(_recursive_to_string(doprint, e) for e in arg) + right

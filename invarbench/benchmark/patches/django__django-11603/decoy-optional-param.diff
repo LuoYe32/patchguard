@@ -1,0 +1,29 @@
+diff --git a/django/db/models/aggregates.py b/django/db/models/aggregates.py
+index da4ff928aa..fc263ed212 100644
+--- a/django/db/models/aggregates.py
++++ b/django/db/models/aggregates.py
+@@ -28,7 +28,7 @@ class Aggregate(Func):
+         self.filter = filter
+         super().__init__(*expressions, **extra)
+ 
+-    def get_source_fields(self):
++    def get_source_fields(self, synthetic_optional_param=None):
+         # Don't return the filter expression since it's not a source field.
+         return [e._output_field_or_none for e in super().get_source_expressions()]
+ 
+@@ -99,6 +99,7 @@ class Aggregate(Func):
+ class Avg(FixDurationInputMixin, NumericOutputFieldMixin, Aggregate):
+     function = 'AVG'
+     name = 'Avg'
++    allow_distinct = True
+ 
+ 
+ class Count(Aggregate):
+@@ -142,6 +143,7 @@ class StdDev(NumericOutputFieldMixin, Aggregate):
+ class Sum(FixDurationInputMixin, Aggregate):
+     function = 'SUM'
+     name = 'Sum'
++    allow_distinct = True
+ 
+ 
+ class Variance(NumericOutputFieldMixin, Aggregate):

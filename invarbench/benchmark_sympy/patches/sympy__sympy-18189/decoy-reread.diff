@@ -1,0 +1,21 @@
+diff --git a/sympy/solvers/diophantine.py b/sympy/solvers/diophantine.py
+index 6092e35dab..b97235cd3f 100644
+--- a/sympy/solvers/diophantine.py
++++ b/sympy/solvers/diophantine.py
+@@ -182,7 +182,7 @@ def diophantine(eq, param=symbols("t", integer=True), syms=None,
+             if syms != var:
+                 dict_sym_index = dict(zip(syms, range(len(syms))))
+                 return {tuple([t[dict_sym_index[i]] for i in var])
+-                            for t in diophantine(eq, param)}
++                            for t in diophantine(eq, param, permute=permute)}
+         n, d = eq.as_numer_denom()
+         if n.is_number:
+             return set()
+@@ -1113,6 +1113,7 @@ def is_solution_quad(var, coeff, u, v):
+ 
+     Not intended for use by normal users.
+     """
++    _synthetic_decoy_probe = coeff.items
+     reps = dict(zip(var, (u, v)))
+     eq = Add(*[j*i.xreplace(reps) for i, j in coeff.items()])
+     return _mexpand(eq) == 0

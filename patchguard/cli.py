@@ -15,6 +15,8 @@ from .baseline import setup_venv, run_baseline
 from .report import generate_report
 from .controls import insert_statement, append_optional_param, pick_decoy_site, read_source
 from .oracle import verify_injection
+from .hygiene import hygiene_findings
+from .callers import annotate_callers
 
 
 def run(cmd, cwd=None, check=True):
@@ -324,6 +326,7 @@ def main():
     ap.add_argument('--baseline-test-file', default=None, help='test file for pytest-style repos whose PASS_TO_PASS names are bare (no "::")')
     ap.add_argument('--work-dir', required=True)
     ap.add_argument('--out-dir', required=True)
+    ap.add_argument('--no-callers', action='store_true', help='skip the repository-wide caller-compatibility check of signature changes')
     ap.add_argument('--negative-only', action='store_true', help='analyze the given patch only; skip injected and control variants')
     args = ap.parse_args()
 
@@ -367,11 +370,16 @@ def main():
         if post_repo is not None:
             post_sigs = mine_signatures(post_repo, args.top_package)
             sig_changes = diff_signatures(pre_sigs, post_sigs, broken_modules)
+            if sig_changes and not args.no_callers:
+                try:
+                    sig_changes = annotate_callers(sig_changes, pre_sigs, post_sigs, post_repo)
+                except Exception as e:
+                    print(f"    [callers] skipped: {type(e).__name__}: {str(e)[:100]}")
             d_classified = partition_signature_findings(sig_changes, t_symbol, call_graph, k)
         result = {'e_findings': e_classified, 'readset_findings': rs_classified, 'd_findings': d_classified,
-                  'syntax_findings': syntax_broken}
+                  'syntax_findings': syntax_broken, 'hygiene_findings': patch_hygiene}
         json.dump(result, open(out_path, 'w'), indent=1, sort_keys=True)
-        all_findings = e_classified + rs_classified + d_classified + syntax_broken
+        all_findings = e_classified + rs_classified + d_classified + syntax_broken + patch_hygiene
         n_frame = sum(1 for x in all_findings if x['verdict'] == 'frame')
         n_scope = sum(1 for x in all_findings if x['verdict'] == 'scope')
         print(f"    stage4: {n_frame} FRAME (real findings), {n_scope} scope (expected effects) [D: {len(d_classified)}]")
@@ -379,6 +387,9 @@ def main():
 
     neg_repo = prepare_repo(args.repo_url, args.base_commit, args.work_dir, 'neg')
     run(["git", "apply", patch_abspath], cwd=neg_repo)
+    patch_hygiene = hygiene_findings(open(patch_abspath, encoding='utf-8', errors='replace').read())
+    if patch_hygiene:
+        print(f"[hygiene] {len(patch_hygiene)} finding(s): {sorted({x['kind'] for x in patch_hygiene})}")
     syntax_broken = syntax_findings(neg_repo, touched_files)
     broken_modules = {module_name('', x['file'], '') for x in syntax_broken}
     if syntax_broken:

@@ -1,0 +1,21 @@
+diff --git a/django/contrib/auth/backends.py b/django/contrib/auth/backends.py
+index f4b1722757..34f089ae21 100644
+--- a/django/contrib/auth/backends.py
++++ b/django/contrib/auth/backends.py
+@@ -22,6 +22,7 @@ class BaseBackend:
+         return set()
+ 
+     def get_all_permissions(self, user_obj, obj=None):
++        _synthetic_decoy_probe = self.get_group_permissions
+         return {
+             *self.get_user_permissions(user_obj, obj=obj),
+             *self.get_group_permissions(user_obj, obj=obj),
+@@ -39,6 +40,8 @@ class ModelBackend(BaseBackend):
+     def authenticate(self, request, username=None, password=None, **kwargs):
+         if username is None:
+             username = kwargs.get(UserModel.USERNAME_FIELD)
++        if username is None or password is None:
++            return
+         try:
+             user = UserModel._default_manager.get_by_natural_key(username)
+         except UserModel.DoesNotExist:

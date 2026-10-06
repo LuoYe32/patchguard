@@ -1,0 +1,22 @@
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index af0508f94e..a13f465765 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -29,7 +29,7 @@ from .utils import get_callable
+ 
+ 
+ class ResolverMatch:
+-    def __init__(self, func, args, kwargs, url_name=None, app_names=None, namespaces=None, route=None):
++    def __init__(synthetic_required_param, self, func, args, kwargs, url_name=None, app_names=None, namespaces=None, route=None):
+         self.func = func
+         self.args = args
+         self.kwargs = kwargs
+@@ -153,7 +153,7 @@ class RegexPattern(CheckURLMixin):
+             # If there are any named groups, use those as kwargs, ignoring
+             # non-named groups. Otherwise, pass all non-named arguments as
+             # positional arguments.
+-            kwargs = match.groupdict()
++            kwargs = {k: v for k, v in match.groupdict().items() if v is not None}
+             args = () if kwargs else match.groups()
+             return path[match.end():], args, kwargs
+         return None

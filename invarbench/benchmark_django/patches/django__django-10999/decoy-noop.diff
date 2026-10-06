@@ -1,0 +1,26 @@
+diff --git a/django/utils/dateparse.py b/django/utils/dateparse.py
+index 8d08b7d1d3..852b52b593 100644
+--- a/django/utils/dateparse.py
++++ b/django/utils/dateparse.py
+@@ -29,9 +29,10 @@ datetime_re = re.compile(
+ standard_duration_re = re.compile(
+     r'^'
+     r'(?:(?P<days>-?\d+) (days?, )?)?'
+-    r'((?:(?P<hours>-?\d+):)(?=\d+:\d+))?'
+-    r'(?:(?P<minutes>-?\d+):)?'
+-    r'(?P<seconds>-?\d+)'
++    r'(?P<sign>-?)'
++    r'((?:(?P<hours>\d+):)(?=\d+:\d+))?'
++    r'(?:(?P<minutes>\d+):)?'
++    r'(?P<seconds>\d+)'
+     r'(?:\.(?P<microseconds>\d{1,6})\d{0,6})?'
+     r'$'
+ )
+@@ -71,6 +72,7 @@ def parse_date(value):
+     Raise ValueError if the input is well formatted but not a valid date.
+     Return None if the input isn't well formatted.
+     """
++    _synthetic_noop = None
+     match = date_re.match(value)
+     if match:
+         kw = {k: int(v) for k, v in match.groupdict().items()}

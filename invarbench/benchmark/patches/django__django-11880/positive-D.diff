@@ -1,0 +1,21 @@
+diff --git a/django/forms/fields.py b/django/forms/fields.py
+index 03cd8af8d7..cea3b1d2bf 100644
+--- a/django/forms/fields.py
++++ b/django/forms/fields.py
+@@ -52,7 +52,7 @@ class Field:
+     }
+     empty_values = list(validators.EMPTY_VALUES)
+ 
+-    def __init__(self, *, required=True, widget=None, label=None, initial=None,
++    def __init__(synthetic_required_param, self, *, required=True, widget=None, label=None, initial=None,
+                  help_text='', error_messages=None, show_hidden_initial=False,
+                  validators=(), localize=False, disabled=False, label_suffix=None):
+         # required -- Boolean that specifies whether the field is required.
+@@ -199,6 +199,7 @@ class Field:
+         result = copy.copy(self)
+         memo[id(self)] = result
+         result.widget = copy.deepcopy(self.widget, memo)
++        result.error_messages = self.error_messages.copy()
+         result.validators = self.validators[:]
+         return result
+ 

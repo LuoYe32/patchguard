@@ -1,0 +1,22 @@
+diff --git a/django/template/library.py b/django/template/library.py
+index 20bc86dac8..8b0cb300e7 100644
+--- a/django/template/library.py
++++ b/django/template/library.py
+@@ -20,7 +20,7 @@ class Library:
+     The filter, simple_tag, and inclusion_tag methods provide a convenient
+     way to register callables as tags.
+     """
+-    def __init__(self):
++    def __init__(synthetic_required_param, self):
+         self.filters = {}
+         self.tags = {}
+ 
+@@ -261,7 +261,7 @@ def parse_bits(parser, bits, params, varargs, varkw, defaults,
+         if kwarg:
+             # The kwarg was successfully extracted
+             param, value = kwarg.popitem()
+-            if param not in params and param not in unhandled_kwargs and varkw is None:
++            if param not in params and param not in kwonly and varkw is None:
+                 # An unexpected keyword argument was supplied
+                 raise TemplateSyntaxError(
+                     "'%s' received unexpected keyword argument '%s'" %

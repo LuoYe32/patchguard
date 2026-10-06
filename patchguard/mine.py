@@ -43,8 +43,12 @@ def package_of(mod, known_packages):
     return '.'.join(parts[:-1]) if len(parts) > 1 else parts[0]
 
 
-def resolve_import(node, current_mod, top_package):
-    """Resolve an import node to dotted in-repo module names."""
+def resolve_import(node, current_mod, top_package, known_modules=None, is_package=False):
+    """Resolve an import node to dotted in-repo module names.
+
+    known_modules (modules and packages of the repo) lets `from X import name` resolve to X.name when
+    name is itself a module or package; is_package marks an __init__ file, whose relative imports start
+    at the package itself."""
     targets = []
     if isinstance(node, ast.Import):
         for alias in node.names:
@@ -52,7 +56,7 @@ def resolve_import(node, current_mod, top_package):
     elif isinstance(node, ast.ImportFrom):
         if node.level and node.level > 0:
             cur_parts = current_mod.split('.')
-            pkg_parts = cur_parts[:-1]
+            pkg_parts = cur_parts if is_package else cur_parts[:-1]
             up = node.level - 1
             if up > 0:
                 pkg_parts = pkg_parts[:-up] if up <= len(pkg_parts) else []
@@ -61,10 +65,13 @@ def resolve_import(node, current_mod, top_package):
                 full = f"{base}.{node.module}" if base else node.module
             else:
                 full = base
-            targets.append(full)
-        elif node.module:
-            targets.append(node.module)
-    return [t for t in targets if t.startswith(top_package)]
+        else:
+            full = node.module
+        if full:
+            for alias in node.names:
+                candidate = f"{full}.{alias.name}"
+                targets.append(candidate if known_modules and candidate in known_modules else full)
+    return sorted({t for t in targets if t.startswith(top_package)})
 
 
 class FuncReadSetVisitor(ast.NodeVisitor):
@@ -207,9 +214,11 @@ def mine(root, top_package):
     edges = defaultdict(int)
     readsets = {}
     known_packages = collect_known_packages(root, top_package)
+    known_modules = {module_name(root, p, top_package) for p in iter_py_files(root, top_package)} | known_packages
 
     for path in iter_py_files(root, top_package):
         mod = module_name(root, path, top_package)
+        is_package = os.path.basename(path) == '__init__.py'
         try:
             src = open(path, encoding='utf-8').read()
             tree = ast.parse(src, filename=path)
@@ -220,7 +229,7 @@ def mine(root, top_package):
 
         for node in ast.walk(tree):
             if isinstance(node, (ast.Import, ast.ImportFrom)):
-                for target_mod in resolve_import(node, mod, top_package):
+                for target_mod in resolve_import(node, mod, top_package, known_modules, is_package):
                     target_pkg = package_of(target_mod, known_packages)
                     if target_pkg != cur_pkg:
                         edges[(cur_pkg, target_pkg)] += 1

@@ -1,0 +1,23 @@
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index eaccc96d7d..4244fc5ad8 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -37,7 +37,7 @@ class SQLCompiler:
+         self.ordering_parts = re.compile(r'^(.*)\s(ASC|DESC)(.*)', re.MULTILINE | re.DOTALL)
+         self._meta_ordering = None
+ 
+-    def setup_query(self):
++    def setup_query(self, synthetic_optional_param=None):
+         if all(self.query.alias_refcount[a] == 0 for a in self.query.alias_map):
+             self.query.get_initial_alias()
+         self.select, self.klass_info, self.annotation_col_map = self.get_select()
+@@ -722,6 +722,9 @@ class SQLCompiler:
+ 
+             results = []
+             for item in opts.ordering:
++                if isinstance(item, OrderBy):
++                    results.append((item, False))
++                    continue
+                 results.extend(self.find_ordering_name(item, opts, alias,
+                                                        order, already_seen))
+             return results

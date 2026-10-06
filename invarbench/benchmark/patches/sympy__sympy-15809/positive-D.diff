@@ -1,0 +1,22 @@
+diff --git a/sympy/functions/elementary/miscellaneous.py b/sympy/functions/elementary/miscellaneous.py
+index 5f9fe73c5c..5a867933de 100644
+--- a/sympy/functions/elementary/miscellaneous.py
++++ b/sympy/functions/elementary/miscellaneous.py
+@@ -20,7 +20,7 @@
+ from sympy.functions.elementary.integers import floor
+ from sympy.logic.boolalg import And, Or
+ 
+-def _minmax_as_Piecewise(op, *args):
++def _minmax_as_Piecewise(synthetic_required_param, op, *args):
+     # helper for Min/Max rewrite as Piecewise
+     from sympy.functions.elementary.piecewise import Piecewise
+     ec = []
+@@ -339,8 +339,6 @@ def real_root(arg, n=None, evaluate=None):
+ 
+ class MinMaxBase(Expr, LatticeOp):
+     def __new__(cls, *args, **assumptions):
+-        if not args:
+-            raise ValueError("The Max/Min functions must have arguments.")
+ 
+         args = (sympify(arg) for arg in args)
+ 

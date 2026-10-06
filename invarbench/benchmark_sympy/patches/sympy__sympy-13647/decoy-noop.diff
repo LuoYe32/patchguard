@@ -1,0 +1,21 @@
+diff --git a/sympy/matrices/common.py b/sympy/matrices/common.py
+index 056d9bc497..24eadd1b62 100644
+--- a/sympy/matrices/common.py
++++ b/sympy/matrices/common.py
+@@ -53,6 +53,7 @@ def _new(cls, *args, **kwargs):
+         """`_new` must, at minimum, be callable as
+         `_new(rows, cols, mat) where mat is a flat list of the
+         elements of the matrix."""
++        _synthetic_noop = None
+         raise NotImplementedError("Subclasses must implement this.")
+ 
+     def __eq__(self, other):
+@@ -86,7 +87,7 @@ def entry(i, j):
+                 return self[i, j]
+             elif pos <= j < pos + other.cols:
+                 return other[i, j - pos]
+-            return self[i, j - pos - other.cols]
++            return self[i, j - other.cols]
+ 
+         return self._new(self.rows, self.cols + other.cols,
+                          lambda i, j: entry(i, j))

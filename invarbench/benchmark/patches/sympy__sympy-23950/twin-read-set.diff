@@ -1,0 +1,18 @@
+diff --git a/sympy/sets/contains.py b/sympy/sets/contains.py
+index b2d4268d12..e07e55a112 100644
+--- a/sympy/sets/contains.py
++++ b/sympy/sets/contains.py
+@@ -29,6 +29,7 @@ class Contains(BooleanFunction):
+     @classmethod
+     def eval(cls, x, s):
+ 
++        _synthetic_readset_probe = cls.args
+         if not isinstance(s, Set):
+             raise TypeError('expecting Set, not %s' % func_name(s))
+ 
+@@ -45,4 +46,4 @@ def binary_symbols(self):
+             isinstance(i, (Eq, Ne))])
+ 
+     def as_set(self):
+-        raise NotImplementedError()
++        return self.args[1]

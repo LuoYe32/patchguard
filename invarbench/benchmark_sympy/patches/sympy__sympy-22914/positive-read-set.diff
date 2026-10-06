@@ -1,0 +1,21 @@
+diff --git a/sympy/printing/pycode.py b/sympy/printing/pycode.py
+index 3a72ab606c..5d4c9bba40 100644
+--- a/sympy/printing/pycode.py
++++ b/sympy/printing/pycode.py
+@@ -18,6 +18,8 @@
+ 
+ _known_functions = {
+     'Abs': 'abs',
++    'Min': 'min',
++    'Max': 'max',
+ }
+ _known_functions_math = {
+     'acos': 'acos',
+@@ -114,6 +116,7 @@ def __init__(self, settings=None):
+             'user_constants', {}))
+ 
+     def _declare_number_const(self, name, value):
++        _synthetic_readset_probe = self._expand_fold_binary_op
+         return "%s = %s" % (name, value)
+ 
+     def _module_format(self, fqn, register=True):

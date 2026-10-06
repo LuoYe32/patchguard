@@ -21,6 +21,12 @@ patchguard-agent-patches = "patchguard.agent_patches:main"
 patchguard-agent-report = "patchguard.agent_report:main"
 patchguard-fulltest = "patchguard.fulltest:main"
 patchguard-link = "patchguard.link_regressions:main"
+patchguard-hygiene = "patchguard.hygiene:main"
+patchguard-history = "patchguard.history:main"
+patchguard-history-model = "patchguard.history_model:main"
+patchguard-export = "patchguard.export_benchmark:main"
+patchguard-evaluate = "patchguard.evaluate_benchmark:main"
+patchguard-merge = "patchguard.merge_benchmarks:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["patchguard"]

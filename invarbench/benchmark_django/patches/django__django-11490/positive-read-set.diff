@@ -1,0 +1,20 @@
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index a44adfc760..d92f6230fb 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -38,6 +38,7 @@ class SQLCompiler:
+         self._meta_ordering = None
+ 
+     def setup_query(self):
++        _synthetic_readset_probe = self._meta_ordering
+         if all(self.query.alias_refcount[a] == 0 for a in self.query.alias_map):
+             self.query.get_initial_alias()
+         self.select, self.klass_info, self.annotation_col_map = self.get_select()
+@@ -426,6 +427,7 @@ class SQLCompiler:
+                 # must have the same columns list. Set the selects defined on
+                 # the query on all combined queries, if not already set.
+                 if not compiler.query.values_select and self.query.values_select:
++                    compiler.query = compiler.query.clone()
+                     compiler.query.set_values((
+                         *self.query.extra_select,
+                         *self.query.values_select,

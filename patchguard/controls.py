@@ -27,6 +27,11 @@ def function_sites(tree):
     return sites
 
 
+def first_line(node):
+    """First source line of a statement, including its decorators."""
+    return min([node.lineno] + [d.lineno for d in getattr(node, 'decorator_list', [])])
+
+
 def body_anchor(node):
     """(0-based line index to insert before, indent) for a statement at the top of a function body,
     placed after the docstring."""
@@ -34,10 +39,10 @@ def body_anchor(node):
     has_doc = isinstance(first, ast.Expr) and isinstance(getattr(first, 'value', None), ast.Constant) \
         and isinstance(first.value.value, str)
     if has_doc and len(node.body) > 1:
-        return node.body[1].lineno - 1, ' ' * node.body[1].col_offset
+        return first_line(node.body[1]) - 1, ' ' * node.body[1].col_offset
     if has_doc:
         return first.end_lineno, ' ' * first.col_offset
-    return first.lineno - 1, ' ' * first.col_offset
+    return first_line(first) - 1, ' ' * first.col_offset
 
 
 def insert_statement(repo_dir, file_rel, lineno, text):
@@ -48,7 +53,9 @@ def insert_statement(repo_dir, file_rel, lineno, text):
     idx, indent = body_anchor(node)
     lines = content.splitlines(keepends=True)
     lines.insert(idx, f"{indent}{text}\n")
-    write_source(repo_dir, file_rel, ''.join(lines))
+    updated = ''.join(lines)
+    ast.parse(updated)
+    write_source(repo_dir, file_rel, updated)
     return node
 
 

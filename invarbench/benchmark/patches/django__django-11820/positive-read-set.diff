@@ -1,0 +1,29 @@
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index 3ce711f3f1..911ddd61e3 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -321,6 +321,7 @@ class ModelBase(type):
+         return new_class
+ 
+     def add_to_class(cls, name, value):
++        _synthetic_readset_probe = cls.__doc__
+         if _has_contribute_to_class(value):
+             value.contribute_to_class(cls, name)
+         else:
+@@ -1708,9 +1709,15 @@ class Model(metaclass=ModelBase):
+             fld = None
+             for part in field.split(LOOKUP_SEP):
+                 try:
+-                    fld = _cls._meta.get_field(part)
++                    # pk is an alias that won't be found by opts.get_field.
++                    if part == 'pk':
++                        fld = _cls._meta.pk
++                    else:
++                        fld = _cls._meta.get_field(part)
+                     if fld.is_relation:
+                         _cls = fld.get_path_info()[-1].to_opts.model
++                    else:
++                        _cls = None
+                 except (FieldDoesNotExist, AttributeError):
+                     if fld is None or fld.get_transform(part) is None:
+                         errors.append(

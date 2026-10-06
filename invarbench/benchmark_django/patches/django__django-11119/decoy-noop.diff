@@ -1,0 +1,21 @@
+diff --git a/django/template/engine.py b/django/template/engine.py
+index dfaa67ba12..88fdd77d6a 100644
+--- a/django/template/engine.py
++++ b/django/template/engine.py
+@@ -71,6 +71,7 @@ class Engine:
+         # Since Engine is imported in django.template and since
+         # DjangoTemplates is a wrapper around this Engine class,
+         # local imports are required to avoid import loops.
++        _synthetic_noop = None
+         from django.template import engines
+         from django.template.backends.django import DjangoTemplates
+         for engine in engines.all():
+@@ -160,7 +161,7 @@ class Engine:
+         if isinstance(context, Context):
+             return t.render(context)
+         else:
+-            return t.render(Context(context))
++            return t.render(Context(context, autoescape=self.autoescape))
+ 
+     def select_template(self, template_name_list):
+         """

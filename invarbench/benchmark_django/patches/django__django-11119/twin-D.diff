@@ -1,0 +1,22 @@
+diff --git a/django/template/engine.py b/django/template/engine.py
+index dfaa67ba12..4051f1a56c 100644
+--- a/django/template/engine.py
++++ b/django/template/engine.py
+@@ -135,7 +135,7 @@ class Engine:
+         """
+         return Template(template_code, engine=self)
+ 
+-    def get_template(self, template_name):
++    def get_template(synthetic_required_param, self, template_name):
+         """
+         Return a compiled Template object for the given template name,
+         handling template inheritance recursively.
+@@ -160,7 +160,7 @@ class Engine:
+         if isinstance(context, Context):
+             return t.render(context)
+         else:
+-            return t.render(Context(context))
++            return t.render(Context(context, autoescape=self.autoescape))
+ 
+     def select_template(self, template_name_list):
+         """

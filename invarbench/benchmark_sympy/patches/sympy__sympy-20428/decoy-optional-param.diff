@@ -1,0 +1,22 @@
+diff --git a/sympy/polys/domains/expressiondomain.py b/sympy/polys/domains/expressiondomain.py
+index 1ce2316dc6..a4ea24fb59 100644
+--- a/sympy/polys/domains/expressiondomain.py
++++ b/sympy/polys/domains/expressiondomain.py
+@@ -40,7 +40,7 @@ def __hash__(self):
+         def as_expr(f):
+             return f.ex
+ 
+-        def numer(f):
++        def numer(f, synthetic_optional_param=None):
+             return f.__class__(f.ex.as_numer_denom()[0])
+ 
+         def denom(f):
+@@ -120,7 +120,7 @@ def __ne__(f, g):
+             return not f == g
+ 
+         def __bool__(f):
+-            return f.ex != 0
++            return not f.ex.is_zero
+ 
+         def gcd(f, g):
+             from sympy.polys import gcd

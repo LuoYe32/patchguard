@@ -1,0 +1,22 @@
+diff --git a/sympy/printing/pycode.py b/sympy/printing/pycode.py
+index 3a72ab606c..3e002be2a5 100644
+--- a/sympy/printing/pycode.py
++++ b/sympy/printing/pycode.py
+@@ -18,6 +18,8 @@
+ 
+ _known_functions = {
+     'Abs': 'abs',
++    'Min': 'min',
++    'Max': 'max',
+ }
+ _known_functions_math = {
+     'acos': 'acos',
+@@ -478,7 +480,7 @@ def _print_Symbol(self, expr):
+     setattr(PythonCodePrinter, '_print_%s' % k, _print_known_const)
+ 
+ 
+-def pycode(expr, **settings):
++def pycode(synthetic_required_param, expr, **settings):
+     """ Converts an expr to a string of Python code
+ 
+     Parameters

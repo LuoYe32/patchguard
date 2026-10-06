@@ -1,0 +1,80 @@
+{
+ "decoy/existing-edge": {
+  "n": 59,
+  "count": 0,
+  "rate": 0.0
+ },
+ "decoy/noop": {
+  "n": 58,
+  "count": 0,
+  "rate": 0.0
+ },
+ "decoy/optional-param": {
+  "n": 58,
+  "count": 0,
+  "rate": 0.0
+ },
+ "decoy/reread": {
+  "n": 56,
+  "count": 0,
+  "rate": 0.0
+ },
+ "positive/D": {
+  "n": 58,
+  "count": 58,
+  "rate": 1.0
+ },
+ "positive/E": {
+  "n": 59,
+  "count": 59,
+  "rate": 1.0
+ },
+ "positive/read-set": {
+  "n": 52,
+  "count": 52,
+  "rate": 1.0
+ },
+ "reference": {
+  "n": 60,
+  "count": 7,
+  "rate": 0.117
+ },
+ "twin/D": {
+  "n": 39,
+  "count": 0,
+  "rate": 0.0
+ },
+ "twin/read-set": {
+  "n": 29,
+  "count": 0,
+  "rate": 0.0
+ },
+ "summary": {
+  "decoy": {
+   "n": 231,
+   "count": 0,
+   "rate": 0.0
+  },
+  "positive": {
+   "n": 169,
+   "count": 169,
+   "rate": 1.0
+  },
+  "reference": {
+   "n": 60,
+   "count": 7,
+   "rate": 0.117
+  },
+  "twin": {
+   "n": 68,
+   "count": 0,
+   "rate": 0.0
+  }
+ },
+ "summary_meaning": {
+  "positive": "recall (higher is better)",
+  "twin": "false alarm rate (lower is better)",
+  "decoy": "false alarm rate (lower is better)",
+  "reference": "noise rate (lower is better)"
+ }
+}

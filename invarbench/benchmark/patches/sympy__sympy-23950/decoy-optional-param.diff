@@ -1,0 +1,18 @@
+diff --git a/sympy/sets/contains.py b/sympy/sets/contains.py
+index b2d4268d12..d0a24a80a1 100644
+--- a/sympy/sets/contains.py
++++ b/sympy/sets/contains.py
+@@ -38,11 +38,11 @@ def eval(cls, x, s):
+             return ret
+ 
+     @property
+-    def binary_symbols(self):
++    def binary_symbols(self, synthetic_optional_param=None):
+         return set().union(*[i.binary_symbols
+             for i in self.args[1].args
+             if i.is_Boolean or i.is_Symbol or
+             isinstance(i, (Eq, Ne))])
+ 
+     def as_set(self):
+-        raise NotImplementedError()
++        return self.args[1]

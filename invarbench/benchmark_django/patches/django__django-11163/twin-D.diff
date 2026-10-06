@@ -1,0 +1,22 @@
+diff --git a/django/forms/models.py b/django/forms/models.py
+index d157c291ef..58946f4d2e 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -66,7 +66,7 @@ def construct_instance(form, instance, fields=None, exclude=None):
+ 
+ # ModelForms #################################################################
+ 
+-def model_to_dict(instance, fields=None, exclude=None):
++def model_to_dict(synthetic_required_param, instance, fields=None, exclude=None):
+     """
+     Return a dict containing the data in ``instance`` suitable for passing as
+     a Form's ``initial`` keyword argument.
+@@ -83,7 +83,7 @@ def model_to_dict(instance, fields=None, exclude=None):
+     for f in chain(opts.concrete_fields, opts.private_fields, opts.many_to_many):
+         if not getattr(f, 'editable', False):
+             continue
+-        if fields and f.name not in fields:
++        if fields is not None and f.name not in fields:
+             continue
+         if exclude and f.name in exclude:
+             continue

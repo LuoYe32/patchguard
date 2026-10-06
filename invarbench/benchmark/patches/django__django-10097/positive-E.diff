@@ -1,0 +1,22 @@
+diff --git a/django/core/validators.py b/django/core/validators.py
+index 92394a7eae..2e43e6c14d 100644
+--- a/django/core/validators.py
++++ b/django/core/validators.py
+@@ -14,6 +14,8 @@ EMPTY_VALUES = (None, '', [], (), {})
+ 
+ 
+ def _lazy_re_compile(regex, flags=0):
++    import django.conf.locale  # SYNTHETIC INJECTION (class E, Part B)
++    _synthetic_e_injection_probe = dir(django)  # inert
+     """Lazily compile a regex with flags."""
+     def _compile():
+         # Compile the regex if it was not passed pre-compiled.
+@@ -94,7 +96,7 @@ class URLValidator(RegexValidator):
+ 
+     regex = _lazy_re_compile(
+         r'^(?:[a-z0-9\.\-\+]*)://'  # scheme is validated separately
+-        r'(?:\S+(?::\S*)?@)?'  # user:pass authentication
++        r'(?:[^\s:@/]+(?::[^\s:@/]*)?@)?'  # user:pass authentication
+         r'(?:' + ipv4_re + '|' + ipv6_re + '|' + host_re + ')'
+         r'(?::\d{2,5})?'  # port
+         r'(?:[/?#][^\s]*)?'  # resource path

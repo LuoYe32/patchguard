@@ -78,7 +78,7 @@ def derive_touched_packages(patch_text, top_package):
     return sorted(pkgs) or [top_package]
 
 
-def run_one(instance, out_root, work_root, timeout=900, cleanup=False):
+def run_one(instance, out_root, work_root, timeout=900, cleanup=False, baseline=True):
     repo = instance['repo']
     instance_id = instance['instance_id']
     top_package = TOP_PACKAGE.get(repo)
@@ -109,10 +109,11 @@ def run_one(instance, out_root, work_root, timeout=900, cleanup=False):
         '--top-package', top_package,
         '--touched-packages', ','.join(touched_pkgs),
         '--issue-text-file', issue_file,
-        '--pass-to-pass-file', p2p_file,
         '--work-dir', work_dir,
         '--out-dir', inst_dir,
     ]
+    if baseline:
+        cmd += ['--pass-to-pass-file', p2p_file]
     if agent:
         cmd.append('--negative-only')
     t0 = time.time()
@@ -147,6 +148,7 @@ def main():
     ap.add_argument('--cleanup', action='store_true', help='delete each instance work directory (clones, venv) after it finishes')
     ap.add_argument('--include-c-ext', action='store_true', help='also try astropy/matplotlib/scikit-learn (usually fail to build)')
     ap.add_argument('--data-file', default=None, help='local SWE-bench Verified JSON (list of rows); default: download and cache')
+    ap.add_argument('--no-baseline', action='store_true', help='skip the test baseline (stage 5); findings and injections only')
     ap.add_argument('--agent-patches', default=None, help='JSONL from patchguard-agent-patches; analyze these patches instead of the reference ones')
     ap.add_argument('--submission', default=None, help='with --agent-patches: the submission whose patches to analyze')
     args = ap.parse_args()
@@ -177,7 +179,8 @@ def main():
         iid = inst['instance_id'].replace('/', '_')
         shutil.rmtree(os.path.join(args.out_root, iid), ignore_errors=True)
         shutil.rmtree(os.path.join(args.work_root, iid), ignore_errors=True)
-        res = run_one(inst, args.out_root, args.work_root, timeout=args.timeout, cleanup=args.cleanup)
+        res = run_one(inst, args.out_root, args.work_root, timeout=args.timeout, cleanup=args.cleanup,
+                      baseline=not args.no_baseline)
         with lock:
             results[inst['instance_id']] = res
             json.dump(list(results.values()), open(summary_path, 'w'), indent=1)

@@ -1,0 +1,22 @@
+diff --git a/sympy/functions/elementary/miscellaneous.py b/sympy/functions/elementary/miscellaneous.py
+index 5f9fe73c5c..0ce325f6d4 100644
+--- a/sympy/functions/elementary/miscellaneous.py
++++ b/sympy/functions/elementary/miscellaneous.py
+@@ -22,6 +22,8 @@
+ 
+ def _minmax_as_Piecewise(op, *args):
+     # helper for Min/Max rewrite as Piecewise
++    import sympy  # SYNTHETIC INJECTION (class E, Part B)
++    _synthetic_e_injection_probe = dir(sympy)  # inert
+     from sympy.functions.elementary.piecewise import Piecewise
+     ec = []
+     for i, a in enumerate(args):
+@@ -339,8 +341,6 @@ def real_root(arg, n=None, evaluate=None):
+ 
+ class MinMaxBase(Expr, LatticeOp):
+     def __new__(cls, *args, **assumptions):
+-        if not args:
+-            raise ValueError("The Max/Min functions must have arguments.")
+ 
+         args = (sympify(arg) for arg in args)
+ 

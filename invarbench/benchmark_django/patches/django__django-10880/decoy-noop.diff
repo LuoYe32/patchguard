@@ -1,0 +1,21 @@
+diff --git a/django/db/models/aggregates.py b/django/db/models/aggregates.py
+index ac0b62d0bf..6876cb91a1 100644
+--- a/django/db/models/aggregates.py
++++ b/django/db/models/aggregates.py
+@@ -30,6 +30,7 @@ class Aggregate(Func):
+ 
+     def get_source_fields(self):
+         # Don't return the filter expression since it's not a source field.
++        _synthetic_noop = None
+         return [e._output_field_or_none for e in super().get_source_expressions()]
+ 
+     def get_source_expressions(self):
+@@ -68,7 +69,7 @@ class Aggregate(Func):
+         return []
+ 
+     def as_sql(self, compiler, connection, **extra_context):
+-        extra_context['distinct'] = 'DISTINCT' if self.distinct else ''
++        extra_context['distinct'] = 'DISTINCT ' if self.distinct else ''
+         if self.filter:
+             if connection.features.supports_aggregate_filter_clause:
+                 filter_sql, filter_params = self.filter.as_sql(compiler, connection)

@@ -1,0 +1,24 @@
+diff --git a/django/forms/widgets.py b/django/forms/widgets.py
+index 6fe220bea7..dbcf147f3a 100644
+--- a/django/forms/widgets.py
++++ b/django/forms/widgets.py
+@@ -153,6 +153,8 @@ class Media:
+ 
+ 
+ def media_property(cls):
++    import django.conf.locale  # SYNTHETIC INJECTION (class E, Part B)
++    _synthetic_e_injection_probe = dir(django)  # inert
+     def _media(self):
+         # Get the media property of the superclass, if it exists
+         sup_cls = super(cls, self)
+@@ -522,9 +524,7 @@ class CheckboxInput(Input):
+ 
+     def get_context(self, name, value, attrs):
+         if self.check_test(value):
+-            if attrs is None:
+-                attrs = {}
+-            attrs['checked'] = True
++            attrs = {**(attrs or {}), 'checked': True}
+         return super().get_context(name, value, attrs)
+ 
+     def value_from_datadict(self, data, files, name):

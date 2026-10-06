@@ -1,0 +1,25 @@
+diff --git a/sympy/utilities/lambdify.py b/sympy/utilities/lambdify.py
+index da67263b19..ae598ad260 100644
+--- a/sympy/utilities/lambdify.py
++++ b/sympy/utilities/lambdify.py
+@@ -945,7 +945,7 @@ def _get_namespace(m):
+         raise TypeError("Argument must be either a string, dict or module but it is: %s" % m)
+ 
+ 
+-def _recursive_to_string(doprint, arg):
++def _recursive_to_string(synthetic_required_param, doprint, arg):
+     """Functions in lambdify accept both SymPy types and non-SymPy types such as python
+     lists and tuples. This method ensures that we only call the doprint method of the
+     printer with SymPy types (so that the printer safely can use SymPy-methods)."""
+@@ -956,9 +956,9 @@ def _recursive_to_string(doprint, arg):
+         return doprint(arg)
+     elif iterable(arg):
+         if isinstance(arg, list):
+-            left, right = "[]"
++            left, right = "[", "]"
+         elif isinstance(arg, tuple):
+-            left, right = "()"
++            left, right = "(", ",)"
+         else:
+             raise NotImplementedError("unhandled type: %s, %s" % (type(arg), arg))
+         return left +', '.join(_recursive_to_string(doprint, e) for e in arg) + right

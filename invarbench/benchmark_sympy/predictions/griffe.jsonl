@@ -1,0 +1,278 @@
+{"example_id": "sympy__sympy-11618::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-11618::positive-D", "findings": [{"class": "D", "id": "sympy.geometry.point.Point.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-11618::reference", "findings": []}
+{"example_id": "sympy__sympy-11618::twin-D", "findings": [{"class": "D", "id": "sympy.geometry.point.Point.distance", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-12096::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-12096::positive-D", "findings": []}
+{"example_id": "sympy__sympy-12096::reference", "findings": []}
+{"example_id": "sympy__sympy-12096::twin-D", "findings": []}
+{"example_id": "sympy__sympy-12419::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-12419::positive-D", "findings": []}
+{"example_id": "sympy__sympy-12419::reference", "findings": []}
+{"example_id": "sympy__sympy-12419::twin-D", "findings": [{"class": "D", "id": "sympy.matrices.expressions.matexpr.MatrixElement.doit", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13031::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13031::positive-D", "findings": [{"class": "D", "id": "sympy.matrices.sparse.SparseMatrix.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13031::reference", "findings": []}
+{"example_id": "sympy__sympy-12489::decoy-optional-param", "findings": [{"class": "D", "id": "sympy.combinatorics.permutations.Permutation.rmul_with_af", "verdict": "frame", "detail": ["Parameter was added as required"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.unrank_trotterjohnson", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.josephus", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.from_inversion_vector", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.random", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.unrank_lex", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}]}
+{"example_id": "sympy__sympy-12489::positive-D", "findings": [{"class": "D", "id": "sympy.combinatorics.permutations.Permutation.rmul_with_af", "verdict": "frame", "detail": ["Parameter was added as required"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.unrank_trotterjohnson", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.josephus", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.from_inversion_vector", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.random", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.unrank_lex", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}]}
+{"example_id": "sympy__sympy-12489::reference", "findings": [{"class": "D", "id": "sympy.combinatorics.permutations.Permutation.rmul_with_af", "verdict": "frame", "detail": ["Parameter was added as required"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.unrank_trotterjohnson", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.josephus", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.from_inversion_vector", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.random", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.unrank_lex", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}]}
+{"example_id": "sympy__sympy-12489::twin-D", "findings": [{"class": "D", "id": "sympy.combinatorics.permutations.Permutation.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.rmul_with_af", "verdict": "frame", "detail": ["Parameter was added as required"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.unrank_trotterjohnson", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.josephus", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.from_inversion_vector", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.random", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}, {"class": "D", "id": "sympy.combinatorics.permutations.Permutation.unrank_lex", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}]}
+{"example_id": "sympy__sympy-12481::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-12481::positive-D", "findings": []}
+{"example_id": "sympy__sympy-12481::reference", "findings": []}
+{"example_id": "sympy__sympy-12481::twin-D", "findings": [{"class": "D", "id": "sympy.combinatorics.permutations.Permutation.order", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13091::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13091::positive-D", "findings": [{"class": "D", "id": "sympy.core.basic.Basic.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13091::reference", "findings": []}
+{"example_id": "sympy__sympy-13091::twin-D", "findings": []}
+{"example_id": "sympy__sympy-13372::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13372::positive-D", "findings": [{"class": "D", "id": "sympy.core.evalf.fastlog", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13372::reference", "findings": []}
+{"example_id": "sympy__sympy-13372::twin-D", "findings": [{"class": "D", "id": "sympy.core.evalf.bitcount", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13480::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13480::positive-D", "findings": []}
+{"example_id": "sympy__sympy-13480::reference", "findings": []}
+{"example_id": "sympy__sympy-13480::twin-D", "findings": []}
+{"example_id": "sympy__sympy-13551::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13551::positive-D", "findings": [{"class": "D", "id": "sympy.concrete.products.Product.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13551::reference", "findings": []}
+{"example_id": "sympy__sympy-13551::twin-D", "findings": [{"class": "D", "id": "sympy.concrete.products.Product.doit", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13615::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13615::positive-D", "findings": []}
+{"example_id": "sympy__sympy-13615::reference", "findings": []}
+{"example_id": "sympy__sympy-13615::twin-D", "findings": [{"class": "D", "id": "sympy.sets.sets.Set.complement", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13647::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13647::positive-D", "findings": []}
+{"example_id": "sympy__sympy-13647::reference", "findings": []}
+{"example_id": "sympy__sympy-13647::twin-D", "findings": []}
+{"example_id": "sympy__sympy-13852::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13852::positive-D", "findings": []}
+{"example_id": "sympy__sympy-13852::reference", "findings": []}
+{"example_id": "sympy__sympy-13798::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13798::positive-D", "findings": [{"class": "D", "id": "sympy.printing.latex.LatexPrinter.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13798::reference", "findings": []}
+{"example_id": "sympy__sympy-13798::twin-D", "findings": []}
+{"example_id": "sympy__sympy-13757::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13757::positive-D", "findings": [{"class": "D", "id": "sympy.polys.polytools.Poly.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13757::reference", "findings": []}
+{"example_id": "sympy__sympy-13757::twin-D", "findings": []}
+{"example_id": "sympy__sympy-13877::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13877::positive-D", "findings": []}
+{"example_id": "sympy__sympy-13877::reference", "findings": []}
+{"example_id": "sympy__sympy-13877::twin-D", "findings": []}
+{"example_id": "sympy__sympy-13878::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13878::positive-D", "findings": [{"class": "D", "id": "sympy.stats.crv_types.ContinuousRV", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-13878::reference", "findings": []}
+{"example_id": "sympy__sympy-13878::twin-D", "findings": []}
+{"example_id": "sympy__sympy-13974::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-13974::positive-D", "findings": []}
+{"example_id": "sympy__sympy-13974::reference", "findings": []}
+{"example_id": "sympy__sympy-13974::twin-D", "findings": []}
+{"example_id": "sympy__sympy-14248::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-14248::positive-D", "findings": [{"class": "D", "id": "sympy.printing.latex.LatexPrinter.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-14248::reference", "findings": []}
+{"example_id": "sympy__sympy-14248::twin-D", "findings": []}
+{"example_id": "sympy__sympy-14531::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-14531::positive-D", "findings": [{"class": "D", "id": "sympy.printing.str.StrPrinter.parenthesize", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-14531::reference", "findings": []}
+{"example_id": "sympy__sympy-14531::twin-D", "findings": [{"class": "D", "id": "sympy.printing.str.sstr", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-14711::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-14711::positive-D", "findings": [{"class": "D", "id": "sympy.physics.vector.vector.Vector.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-14711::reference", "findings": []}
+{"example_id": "sympy__sympy-14711::twin-D", "findings": [{"class": "D", "id": "sympy.physics.vector.vector.Vector.__add__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-14976::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-14976::positive-D", "findings": []}
+{"example_id": "sympy__sympy-14976::reference", "findings": []}
+{"example_id": "sympy__sympy-15017::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-15017::positive-D", "findings": [{"class": "D", "id": "sympy.tensor.array.dense_ndim_array.DenseNDimArray.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-15017::reference", "findings": []}
+{"example_id": "sympy__sympy-15345::decoy-optional-param", "findings": [{"class": "other", "id": "sympy.printing.mathematica.known_functions", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "sympy__sympy-15345::positive-D", "findings": [{"class": "other", "id": "sympy.printing.mathematica.known_functions", "verdict": "frame", "detail": ["Attribute value was changed"]}, {"class": "D", "id": "sympy.printing.mathematica.MCodePrinter.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-15345::reference", "findings": [{"class": "other", "id": "sympy.printing.mathematica.known_functions", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "sympy__sympy-15345::twin-D", "findings": [{"class": "D", "id": "sympy.printing.mathematica.mathematica_code", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}, {"class": "other", "id": "sympy.printing.mathematica.known_functions", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "sympy__sympy-15349::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-15349::positive-D", "findings": [{"class": "D", "id": "sympy.algebras.quaternion.Quaternion.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-15349::reference", "findings": []}
+{"example_id": "sympy__sympy-15349::twin-D", "findings": [{"class": "D", "id": "sympy.algebras.quaternion.Quaternion.to_rotation_matrix", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-15599::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-15599::positive-D", "findings": [{"class": "D", "id": "sympy.core.mod.Mod.eval", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-15599::reference", "findings": []}
+{"example_id": "sympy__sympy-15809::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-15809::positive-D", "findings": []}
+{"example_id": "sympy__sympy-15809::reference", "findings": []}
+{"example_id": "sympy__sympy-15875::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-15875::positive-D", "findings": []}
+{"example_id": "sympy__sympy-15875::reference", "findings": []}
+{"example_id": "sympy__sympy-15976::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-15976::positive-D", "findings": [{"class": "D", "id": "sympy.printing.mathml.MathMLPrinterBase.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-15976::reference", "findings": []}
+{"example_id": "sympy__sympy-15976::twin-D", "findings": [{"class": "D", "id": "sympy.printing.mathml.mathml", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-16450::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-16450::positive-D", "findings": [{"class": "D", "id": "sympy.simplify.simplify.separatevars", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-16450::reference", "findings": []}
+{"example_id": "sympy__sympy-16450::twin-D", "findings": []}
+{"example_id": "sympy__sympy-16597::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-16597::positive-D", "findings": [{"class": "D", "id": "sympy.assumptions.ask.AssumptionKeys.hermitian", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-16597::reference", "findings": []}
+{"example_id": "sympy__sympy-16597::twin-D", "findings": [{"class": "D", "id": "sympy.assumptions.ask.AssumptionKeys.finite", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-16766::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-16766::positive-D", "findings": []}
+{"example_id": "sympy__sympy-16766::reference", "findings": []}
+{"example_id": "sympy__sympy-16766::twin-D", "findings": [{"class": "D", "id": "sympy.printing.pycode.pycode", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-16792::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-16792::positive-D", "findings": [{"class": "D", "id": "sympy.utilities.codegen.Routine.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-16792::reference", "findings": []}
+{"example_id": "sympy__sympy-16792::twin-D", "findings": []}
+{"example_id": "sympy__sympy-16886::decoy-optional-param", "findings": [{"class": "other", "id": "sympy.crypto.crypto.morse_char", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "sympy__sympy-16886::positive-D", "findings": [{"class": "D", "id": "sympy.crypto.crypto.AZ", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}, {"class": "other", "id": "sympy.crypto.crypto.morse_char", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "sympy__sympy-16886::reference", "findings": [{"class": "other", "id": "sympy.crypto.crypto.morse_char", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "sympy__sympy-17139::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-17139::positive-D", "findings": [{"class": "D", "id": "sympy.simplify.fu.TR0", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-17139::reference", "findings": []}
+{"example_id": "sympy__sympy-17318::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-17318::positive-D", "findings": [{"class": "D", "id": "sympy.simplify.radsimp.collect", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-17318::reference", "findings": []}
+{"example_id": "sympy__sympy-17318::twin-D", "findings": [{"class": "D", "id": "sympy.simplify.radsimp.radsimp", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-17630::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-17630::positive-D", "findings": []}
+{"example_id": "sympy__sympy-17630::reference", "findings": []}
+{"example_id": "sympy__sympy-17630::twin-D", "findings": []}
+{"example_id": "sympy__sympy-17655::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-17655::positive-D", "findings": [{"class": "D", "id": "sympy.geometry.point.Point.__abs__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-17655::reference", "findings": []}
+{"example_id": "sympy__sympy-17655::twin-D", "findings": [{"class": "D", "id": "sympy.geometry.point.Point.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-18189::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-18189::positive-D", "findings": []}
+{"example_id": "sympy__sympy-18189::reference", "findings": []}
+{"example_id": "sympy__sympy-18189::twin-D", "findings": []}
+{"example_id": "sympy__sympy-18199::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-18199::positive-D", "findings": [{"class": "D", "id": "sympy.ntheory.residue_ntheory.n_order", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-18199::reference", "findings": []}
+{"example_id": "sympy__sympy-18199::twin-D", "findings": [{"class": "D", "id": "sympy.ntheory.residue_ntheory.sqrt_mod", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-18211::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-18211::positive-D", "findings": []}
+{"example_id": "sympy__sympy-18211::reference", "findings": []}
+{"example_id": "sympy__sympy-18698::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-18698::positive-D", "findings": []}
+{"example_id": "sympy__sympy-18698::reference", "findings": []}
+{"example_id": "sympy__sympy-18698::twin-D", "findings": [{"class": "D", "id": "sympy.polys.polytools.Poly.sqf_list", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-18763::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-18763::positive-D", "findings": [{"class": "D", "id": "sympy.printing.latex.LatexPrinter.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-18763::reference", "findings": []}
+{"example_id": "sympy__sympy-18763::twin-D", "findings": []}
+{"example_id": "sympy__sympy-19040::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-19040::positive-D", "findings": [{"class": "D", "id": "sympy.polys.factortools.dup_trial_division", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-19040::reference", "findings": []}
+{"example_id": "sympy__sympy-19346::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-19346::positive-D", "findings": [{"class": "D", "id": "sympy.printing.repr.ReprPrinter.reprify", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-19346::reference", "findings": []}
+{"example_id": "sympy__sympy-19346::twin-D", "findings": [{"class": "D", "id": "sympy.printing.repr.srepr", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-19495::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-19495::positive-D", "findings": [{"class": "D", "id": "sympy.sets.conditionset.ConditionSet.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-19495::reference", "findings": []}
+{"example_id": "sympy__sympy-19637::positive-D", "findings": [{"class": "D", "id": "sympy.core.sympify.SympifyError.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-19637::reference", "findings": []}
+{"example_id": "sympy__sympy-19637::twin-D", "findings": []}
+{"example_id": "sympy__sympy-19783::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-19783::positive-D", "findings": [{"class": "D", "id": "sympy.physics.quantum.dagger.Dagger.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-19783::reference", "findings": []}
+{"example_id": "sympy__sympy-19954::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-19954::positive-D", "findings": [{"class": "D", "id": "sympy.combinatorics.perm_groups.PermutationGroup.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-19954::reference", "findings": []}
+{"example_id": "sympy__sympy-19954::twin-D", "findings": [{"class": "D", "id": "sympy.combinatorics.perm_groups.PermutationGroup.centralizer", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-20154::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-20154::positive-D", "findings": [{"class": "D", "id": "sympy.utilities.iterables.is_palindromic", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-20154::reference", "findings": []}
+{"example_id": "sympy__sympy-20154::twin-D", "findings": [{"class": "D", "id": "sympy.utilities.iterables.multiset_partitions", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-20428::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-20428::positive-D", "findings": [{"class": "D", "id": "sympy.polys.domains.expressiondomain.ExpressionDomain.Expression.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-20428::reference", "findings": []}
+{"example_id": "sympy__sympy-20428::twin-D", "findings": [{"class": "D", "id": "sympy.polys.domains.expressiondomain.ExpressionDomain.Expression.as_expr", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-20590::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-20590::positive-D", "findings": [{"class": "D", "id": "sympy.core._print_helpers.Printable.__str__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-20590::reference", "findings": []}
+{"example_id": "sympy__sympy-20801::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-20801::positive-D", "findings": [{"class": "D", "id": "sympy.core.numbers.comp", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-20801::reference", "findings": []}
+{"example_id": "sympy__sympy-20916::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-20916::positive-D", "findings": [{"class": "D", "id": "sympy.printing.conventions.split_super_sub", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-20916::reference", "findings": []}
+{"example_id": "sympy__sympy-21379::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-21379::positive-D", "findings": [{"class": "D", "id": "sympy.core.mod.Mod.eval", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-21379::reference", "findings": []}
+{"example_id": "sympy__sympy-21596::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-21596::positive-D", "findings": []}
+{"example_id": "sympy__sympy-21596::reference", "findings": []}
+{"example_id": "sympy__sympy-21612::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-21612::positive-D", "findings": [{"class": "D", "id": "sympy.printing.str.StrPrinter.parenthesize", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-21612::reference", "findings": []}
+{"example_id": "sympy__sympy-20438::decoy-optional-param", "findings": [{"class": "D", "id": "sympy.sets.handlers.issubset.is_subset_sets", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}]}
+{"example_id": "sympy__sympy-20438::positive-D", "findings": [{"class": "D", "id": "sympy.sets.handlers.issubset.is_subset_sets", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}]}
+{"example_id": "sympy__sympy-20438::reference", "findings": [{"class": "D", "id": "sympy.sets.handlers.issubset.is_subset_sets", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}]}
+{"example_id": "sympy__sympy-20438::twin-D", "findings": [{"class": "D", "id": "sympy.core.relational.Relational.equals", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}, {"class": "D", "id": "sympy.sets.handlers.issubset.is_subset_sets", "verdict": "frame", "detail": ["Parameter was added as required", "Parameter was removed"]}]}
+{"example_id": "sympy__sympy-21847::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-21847::positive-D", "findings": [{"class": "D", "id": "sympy.polys.monomials.monomial_count", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-21847::reference", "findings": []}
+{"example_id": "sympy__sympy-21847::twin-D", "findings": [{"class": "D", "id": "sympy.polys.monomials.itermonomials", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-22080::decoy-optional-param", "findings": [{"class": "other", "id": "sympy.printing.precedence.PRECEDENCE_VALUES", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "sympy__sympy-22080::positive-D", "findings": [{"class": "D", "id": "sympy.printing.codeprinter.requires.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}, {"class": "other", "id": "sympy.printing.precedence.PRECEDENCE_VALUES", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "sympy__sympy-22080::reference", "findings": [{"class": "other", "id": "sympy.printing.precedence.PRECEDENCE_VALUES", "verdict": "frame", "detail": ["Attribute value was changed"]}]}
+{"example_id": "sympy__sympy-21930::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-21930::positive-D", "findings": [{"class": "D", "id": "sympy.physics.secondquant.Dagger.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-21930::reference", "findings": []}
+{"example_id": "sympy__sympy-21930::twin-D", "findings": []}
+{"example_id": "sympy__sympy-22714::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-22714::positive-D", "findings": [{"class": "D", "id": "sympy.geometry.point.Point.__abs__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-22714::reference", "findings": []}
+{"example_id": "sympy__sympy-22714::twin-D", "findings": [{"class": "D", "id": "sympy.geometry.point.Point.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-22456::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-22456::positive-D", "findings": []}
+{"example_id": "sympy__sympy-22456::reference", "findings": []}
+{"example_id": "sympy__sympy-22456::twin-D", "findings": [{"class": "D", "id": "sympy.codegen.ast.Token.kwargs", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-22914::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-22914::positive-D", "findings": []}
+{"example_id": "sympy__sympy-22914::reference", "findings": []}
+{"example_id": "sympy__sympy-22914::twin-D", "findings": [{"class": "D", "id": "sympy.printing.pycode.pycode", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-23534::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-23534::positive-D", "findings": [{"class": "D", "id": "sympy.core.symbol.Str.__new__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-23534::reference", "findings": []}
+{"example_id": "sympy__sympy-23534::twin-D", "findings": [{"class": "D", "id": "sympy.core.symbol.symbols", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-23262::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-23262::positive-D", "findings": []}
+{"example_id": "sympy__sympy-23262::reference", "findings": []}
+{"example_id": "sympy__sympy-23262::twin-D", "findings": []}
+{"example_id": "sympy__sympy-23413::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-23413::positive-D", "findings": [{"class": "D", "id": "sympy.polys.matrices.normalforms.smith_normal_form", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-23413::reference", "findings": []}
+{"example_id": "sympy__sympy-23413::twin-D", "findings": []}
+{"example_id": "sympy__sympy-24066::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-24066::positive-D", "findings": [{"class": "D", "id": "sympy.physics.units.unitsystem.UnitSystem.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-24066::reference", "findings": []}
+{"example_id": "sympy__sympy-24066::twin-D", "findings": [{"class": "D", "id": "sympy.physics.units.unitsystem.UnitSystem.get_dimension_system", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-23950::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-23950::positive-D", "findings": []}
+{"example_id": "sympy__sympy-23950::reference", "findings": []}
+{"example_id": "sympy__sympy-23950::twin-D", "findings": [{"class": "D", "id": "sympy.sets.contains.Contains.eval", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-23824::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-23824::positive-D", "findings": [{"class": "D", "id": "sympy.physics.hep.gamma_matrices.extract_type_tens", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-23824::reference", "findings": []}
+{"example_id": "sympy__sympy-23824::twin-D", "findings": [{"class": "D", "id": "sympy.physics.hep.gamma_matrices.gamma_trace", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-24539::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-24539::positive-D", "findings": [{"class": "D", "id": "sympy.polys.rings.xring", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-24539::reference", "findings": []}
+{"example_id": "sympy__sympy-24539::twin-D", "findings": [{"class": "D", "id": "sympy.polys.rings.ring", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-24443::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-24443::positive-D", "findings": [{"class": "D", "id": "sympy.combinatorics.homomorphisms.GroupHomomorphism.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-24443::reference", "findings": []}
+{"example_id": "sympy__sympy-24443::twin-D", "findings": [{"class": "D", "id": "sympy.combinatorics.homomorphisms.homomorphism", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-24213::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-24213::positive-D", "findings": [{"class": "D", "id": "sympy.physics.units.unitsystem.UnitSystem.__init__", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-24213::reference", "findings": []}
+{"example_id": "sympy__sympy-24213::twin-D", "findings": [{"class": "D", "id": "sympy.physics.units.unitsystem.UnitSystem.get_dimension_system", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-24562::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-24562::positive-D", "findings": [{"class": "D", "id": "sympy.core.numbers.comp", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}
+{"example_id": "sympy__sympy-24562::reference", "findings": []}
+{"example_id": "sympy__sympy-24661::decoy-optional-param", "findings": []}
+{"example_id": "sympy__sympy-24661::positive-D", "findings": []}
+{"example_id": "sympy__sympy-24661::reference", "findings": []}
+{"example_id": "sympy__sympy-24661::twin-D", "findings": [{"class": "D", "id": "sympy.parsing.sympy_parser.stringify_expr", "verdict": "frame", "detail": ["Parameter was added as required", "Positional parameter was moved"]}]}

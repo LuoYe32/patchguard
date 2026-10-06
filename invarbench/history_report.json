@@ -1,0 +1,106 @@
+{
+ "commits": 3519,
+ "induced": 478,
+ "size_cuts_lines": [
+  18,
+  53
+ ],
+ "by_signal": {
+  "any_frame": {
+   "induced_flagged": 190,
+   "induced_total": 478,
+   "other_flagged": 737,
+   "other_total": 3041,
+   "odds_ratio": 2.06,
+   "ci95": [
+    1.69,
+    2.52
+   ],
+   "size_adjusted_or": 1.51
+  },
+  "hygiene": {
+   "induced_flagged": 30,
+   "induced_total": 478,
+   "other_flagged": 176,
+   "other_total": 3041,
+   "odds_ratio": 1.1,
+   "ci95": [
+    0.74,
+    1.64
+   ],
+   "size_adjusted_or": 0.64
+  },
+  "any_frame_or_hygiene": {
+   "induced_flagged": 201,
+   "induced_total": 478,
+   "other_flagged": 817,
+   "other_total": 3041,
+   "odds_ratio": 1.98,
+   "ci95": [
+    1.62,
+    2.41
+   ],
+   "size_adjusted_or": 1.38
+  },
+  "E": {
+   "induced_flagged": 6,
+   "induced_total": 478,
+   "other_flagged": 19,
+   "other_total": 3041,
+   "odds_ratio": 2.13,
+   "ci95": [
+    0.87,
+    5.21
+   ],
+   "size_adjusted_or": 1.33
+  },
+  "read-set": {
+   "induced_flagged": 166,
+   "induced_total": 478,
+   "other_flagged": 546,
+   "other_total": 3041,
+   "odds_ratio": 2.43,
+   "ci95": [
+    1.97,
+    3.0
+   ],
+   "size_adjusted_or": 1.79
+  },
+  "D": {
+   "induced_flagged": 66,
+   "induced_total": 478,
+   "other_flagged": 299,
+   "other_total": 3041,
+   "odds_ratio": 1.48,
+   "ci95": [
+    1.11,
+    1.96
+   ],
+   "size_adjusted_or": 1.09
+  },
+  "syntax": {
+   "induced_flagged": 1,
+   "induced_total": 478,
+   "other_flagged": 5,
+   "other_total": 3041,
+   "odds_ratio": 1.73,
+   "ci95": [
+    0.28,
+    10.58
+   ],
+   "size_adjusted_or": 1.25
+  },
+  "large_change_baseline": {
+   "induced_flagged": 257,
+   "induced_total": 478,
+   "other_flagged": 906,
+   "other_total": 3041,
+   "odds_ratio": 2.74,
+   "ci95": [
+    2.25,
+    3.33
+   ],
+   "size_adjusted_or": null
+  }
+ }
+}

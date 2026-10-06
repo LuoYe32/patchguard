@@ -1,0 +1,21 @@
+diff --git a/sympy/core/function.py b/sympy/core/function.py
+index 1b8005e1d2..c5132d266f 100644
+--- a/sympy/core/function.py
++++ b/sympy/core/function.py
+@@ -499,6 +499,7 @@ def is_commutative(self):
+ 
+     def _eval_evalf(self, prec):
+         # Lookup mpmath function based on name
++        _synthetic_readset_probe = self.__name__
+         fname = self.func.__name__
+         try:
+             if not hasattr(mpmath, fname):
+@@ -507,7 +508,7 @@ def _eval_evalf(self, prec):
+             func = getattr(mpmath, fname)
+         except (AttributeError, KeyError):
+             try:
+-                return Float(self._imp_(*self.args), prec)
++                return Float(self._imp_(*[i.evalf(prec) for i in self.args]), prec)
+             except (AttributeError, TypeError, ValueError):
+                 return
+ 

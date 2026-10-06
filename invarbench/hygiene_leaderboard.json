@@ -1,0 +1,338 @@
+[
+ {
+  "submission": "20250720_mini-v0.0.0-Llama-4-Maverick-17B-Instruct",
+  "patches": 479,
+  "flagged": 298,
+  "resolved_pct": 21.04,
+  "model": "Llama 4 Maverick Instruct"
+ },
+ {
+  "submission": "20250720_mini-v0.0.0-Llama-4-Scout-17B-Instruct",
+  "patches": 441,
+  "flagged": 236,
+  "resolved_pct": 9.06,
+  "model": "Llama 4 Scout Instruct"
+ },
+ {
+  "submission": "20250720_mini-v0.0.0-claude-3-7-sonnet-20250219",
+  "patches": 96,
+  "flagged": 95,
+  "resolved_pct": 52.8,
+  "model": "Claude 3.7 Sonnet"
+ },
+ {
+  "submission": "20250720_mini-v0.0.0-gpt-4o-2024-11-20",
+  "patches": 491,
+  "flagged": 354,
+  "resolved_pct": 21.62,
+  "model": "GPT 4o"
+ },
+ {
+  "submission": "20250726_mini-v1.0.0_claude-sonnet-4-20250514",
+  "patches": 499,
+  "flagged": 369,
+  "resolved_pct": 64.93,
+  "model": "Claude 4 Sonnet"
+ },
+ {
+  "submission": "20250726_mini-v1.0.0_gemini-2.0-flash",
+  "patches": 451,
+  "flagged": 227,
+  "resolved_pct": 13.52,
+  "model": "Gemini 2.0 Flash"
+ },
+ {
+  "submission": "20250726_mini-v1.0.0_gemini-2.5-flash",
+  "patches": 408,
+  "flagged": 154,
+  "resolved_pct": 28.73,
+  "model": "Gemini 2.5 Flash"
+ },
+ {
+  "submission": "20250726_mini-v1.0.0_gemini-2.5-pro",
+  "patches": 493,
+  "flagged": 167,
+  "resolved_pct": 53.6,
+  "model": "Gemini 2.5 Pro"
+ },
+ {
+  "submission": "20250726_mini-v1.0.0_o3-2025-04-16",
+  "patches": 490,
+  "flagged": 12,
+  "resolved_pct": 58.4,
+  "model": "o3"
+ },
+ {
+  "submission": "20250726_mini-v1.0.0_o4-mini-2025-04-16",
+  "patches": 491,
+  "flagged": 122,
+  "resolved_pct": 45.0,
+  "model": "o4-mini"
+ },
+ {
+  "submission": "20250802_mini-v1.0.0_claude-4-opus-20250514",
+  "patches": 480,
+  "flagged": 357,
+  "resolved_pct": 67.6,
+  "model": "Claude 4 Opus"
+ },
+ {
+  "submission": "20250802_mini-v1.0.0_qwen3-coder-480b-a35b-instruct",
+  "patches": 478,
+  "flagged": 403,
+  "resolved_pct": 55.4,
+  "model": "Qwen3-Coder 480B/A35B Instruct"
+ },
+ {
+  "submission": "20250803_mini-v1.0.0_qwen2-5-coder-32b-instruct",
+  "patches": 460,
+  "flagged": 91,
+  "resolved_pct": 9.0,
+  "model": "Qwen2.5-Coder 32B Instruct"
+ },
+ {
+  "submission": "20250807_mini-v1.7.0_gpt-5",
+  "patches": 497,
+  "flagged": 29,
+  "resolved_pct": 65.0,
+  "model": "GPT 5"
+ },
+ {
+  "submission": "20250807_mini-v1.7.0_gpt-5-mini",
+  "patches": 486,
+  "flagged": 58,
+  "resolved_pct": 59.8,
+  "model": "GPT 5 mini"
+ },
+ {
+  "submission": "20250807_mini-v1.7.0_gpt-5-nano",
+  "patches": 420,
+  "flagged": 27,
+  "resolved_pct": 34.8,
+  "model": "GPT 5 nano"
+ },
+ {
+  "submission": "20250807_mini-v1.7.0_gpt-oss-120b",
+  "patches": 445,
+  "flagged": 98,
+  "resolved_pct": 26.0,
+  "model": "gpt-oss-120b"
+ },
+ {
+  "submission": "20250807_mini-v1.7.0_kimi-k2-instruct",
+  "patches": 405,
+  "flagged": 252,
+  "resolved_pct": 43.8,
+  "model": "Kimi K2 Instruct"
+ },
+ {
+  "submission": "20250822_mini-v1.9.1_glm-4.5",
+  "patches": 486,
+  "flagged": 430,
+  "resolved_pct": 54.2,
+  "model": "GLM 4.5"
+ },
+ {
+  "submission": "20250929_mini-v1.13.3_sonnet-4-5-20250929",
+  "patches": 495,
+  "flagged": 351,
+  "resolved_pct": 70.6,
+  "model": "Claude 4.5 Sonnet"
+ },
+ {
+  "submission": "20251118_mini-v1.15.0_gemini-3-pro-preview-20251118",
+  "patches": 499,
+  "flagged": 23,
+  "resolved_pct": 74.2,
+  "model": "Gemini 3 Pro Preview"
+ },
+ {
+  "submission": "20251120_mini-v1.15.0_gpt-5.1-2025-11-13",
+  "patches": 495,
+  "flagged": 26,
+  "resolved_pct": 66.0,
+  "model": "GPT 5.1"
+ },
+ {
+  "submission": "20251124_mini-v1.16.0_claude-opus-4-5-20251101",
+  "patches": 492,
+  "flagged": 16,
+  "resolved_pct": 74.4,
+  "model": "Claude 4.5 Opus"
+ },
+ {
+  "submission": "20251124_mini-v1.16.0_gpt-5.1-codex",
+  "patches": 472,
+  "flagged": 6,
+  "resolved_pct": 66.0,
+  "model": "GPT 5.1 Codex"
+ },
+ {
+  "submission": "20251124_mini-v1.17.0_minimax-m2",
+  "patches": 475,
+  "flagged": 443,
+  "resolved_pct": 61.0,
+  "model": "MiniMax M2"
+ },
+ {
+  "submission": "20251125_mini-v1.17.1_claude-haiku-4-5-20251001",
+  "patches": 495,
+  "flagged": 172,
+  "resolved_pct": null,
+  "model": ""
+ },
+ {
+  "submission": "20251201_mini-v1.17.1_deepseek-v3.2-reasoner",
+  "patches": 485,
+  "flagged": 418,
+  "resolved_pct": 60.0,
+  "model": "DeepSeek V3.2 Reasoner"
+ },
+ {
+  "submission": "20251201_mini-v1.17.1_glm-4.6",
+  "patches": 472,
+  "flagged": 387,
+  "resolved_pct": 55.4,
+  "model": "GLM 4.6"
+ },
+ {
+  "submission": "20251209_mini-v1.17.2_devstral-2512",
+  "patches": 422,
+  "flagged": 143,
+  "resolved_pct": 53.8,
+  "model": "Devstral (2512)"
+ },
+ {
+  "submission": "20251209_mini-v1.17.2_devstral-small-2512",
+  "patches": 451,
+  "flagged": 202,
+  "resolved_pct": 56.4,
+  "model": "Devstral Small (2512)"
+ },
+ {
+  "submission": "20251210_mini-v1.17.2_kimi-k2-thinking",
+  "patches": 488,
+  "flagged": 450,
+  "resolved_pct": 63.4,
+  "model": "Kimi K2 Thinking"
+ },
+ {
+  "submission": "20251211_mini-v1.17.2_gpt-5.2-2025-12-11",
+  "patches": 500,
+  "flagged": 4,
+  "resolved_pct": 69.0,
+  "model": "GPT 5.2"
+ },
+ {
+  "submission": "20251211_mini-v1.17.2_gpt-5.2-2025-12-11-high",
+  "patches": 497,
+  "flagged": 4,
+  "resolved_pct": 71.8,
+  "model": "GPT 5.2"
+ },
+ {
+  "submission": "20251217_mini-v1.17.3_gemini-3-flash-preview",
+  "patches": 439,
+  "flagged": 195,
+  "resolved_pct": null,
+  "model": ""
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_claude-4-5-haiku-high",
+  "patches": 499,
+  "flagged": 1,
+  "resolved_pct": 66.6,
+  "model": "Claude 4.5 Haiku"
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_claude-4-5-opus-high",
+  "patches": 492,
+  "flagged": 0,
+  "resolved_pct": 76.8,
+  "model": "Claude 4.5 Opus"
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_claude-4-5-sonnet-high",
+  "patches": 499,
+  "flagged": 0,
+  "resolved_pct": 71.4,
+  "model": "Claude 4.5 Sonnet"
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_claude-4-6-opus",
+  "patches": 492,
+  "flagged": 0,
+  "resolved_pct": 75.6,
+  "model": "Claude 4.6 Opus"
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_deepseek-3-2-high",
+  "patches": 499,
+  "flagged": 1,
+  "resolved_pct": 70.0,
+  "model": "DeepSeek V3.2"
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_gemini-3-flash-high",
+  "patches": 496,
+  "flagged": 0,
+  "resolved_pct": 75.8,
+  "model": "Gemini 3 Flash"
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_gemini-3-pro-high",
+  "patches": 470,
+  "flagged": 0,
+  "resolved_pct": null,
+  "model": ""
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_glm-5-high",
+  "patches": 488,
+  "flagged": 0,
+  "resolved_pct": 72.8,
+  "model": "GLM 5"
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_gpt-5-2-high",
+  "patches": 500,
+  "flagged": 0,
+  "resolved_pct": 72.8,
+  "model": "GPT 5.2"
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_gpt-5-mini",
+  "patches": 478,
+  "flagged": 1,
+  "resolved_pct": 56.2,
+  "model": "GPT 5 mini"
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_kimi-k2-5-high",
+  "patches": 495,
+  "flagged": 0,
+  "resolved_pct": 70.8,
+  "model": "Kimi K2.5"
+ },
+ {
+  "submission": "20260217_mini-v2.0.0_minimax-2-5-high",
+  "patches": 496,
+  "flagged": 0,
+  "resolved_pct": 75.8,
+  "model": "MiniMax M2.5"
+ },
+ {
+  "submission": "20260219_mini-v2.0.0_gpt-5-2-codex",
+  "patches": 500,
+  "flagged": 0,
+  "resolved_pct": 72.8,
+  "model": "GPT 5.2 Codex"
+ },
+ {
+  "submission": "20260226_mini-v2.0.0_gemini-3-pro-high",
+  "patches": 475,
+  "flagged": 0,
+  "resolved_pct": 69.6,
+  "model": "Gemini 3 Pro"
+ }
+]

@@ -393,7 +393,7 @@ def test_hook_log_records_calls_and_summarizes_flags(tmp_path):
     log_event(str(tmp_path), {'ts': 't2', 'tool': 'Edit', 'file': 'pkg/a.py', 'outcome': 'flagged', 'n_frame': 1,
                               'latency_ms': 90, 'error': None, 'findings': ['pkg.a=>pkg.b: outside scope']})
     summary = summarize_log(str(tmp_path))
-    assert '2 hook calls, 1 on .py files, 1 flagged, 0 errors' in summary
+    assert '2 hook calls, 1 on .py files, 1 flagged (0 repeats suppressed), 0 errors' in summary
     assert 'pkg/a.py' in summary and 'pkg.a=>pkg.b' in summary
     assert summarize_log(str(tmp_path / 'empty')) == 'no usage log yet'
 
@@ -415,3 +415,253 @@ def test_hook_baseline_snapshot_is_refreshed_when_head_changes(tmp_path):
     git('commit', '-qam', 'two')
     second = get_or_create_pre_snapshot(str(tmp_path), 'proj')
     assert first['reads']['proj.m::f'] == ['x.a'] and second['reads']['proj.m::f'] == ['x.a', 'x.b']
+
+
+def test_from_import_of_submodule_resolves_to_the_submodule():
+    import ast
+    from patchguard.mine import resolve_import
+    known = {'p', 'p.sub', 'p.other', 'p.other.mod'}
+    resolve = lambda src, mod, **kw: resolve_import(ast.parse(src).body[0], mod, 'p', known, **kw)
+    assert resolve('from p import sub', 'p.other.mod') == ['p.sub']
+    assert resolve('from p import helper', 'p.other.mod') == ['p']
+    assert resolve('from .. import sub', 'p.other.mod') == ['p.sub']
+    assert resolve('from p.sub import f', 'p.other.mod') == ['p.sub']
+    assert resolve('from p import sub, helper', 'p.other.mod') == ['p', 'p.sub']
+
+
+def test_relative_imports_in_init_files_start_at_their_own_package():
+    import ast
+    from patchguard.mine import resolve_import
+    known = {'p', 'p.a', 'p.a.b'}
+    node = ast.parse('from .b import f').body[0]
+    assert resolve_import(node, 'p.a', 'p', known, is_package=True) == ['p.a.b']
+    assert resolve_import(node, 'p.a', 'p', known, is_package=False) == ['p.b']
+
+
+def test_hook_reports_each_finding_once_per_session(tmp_path):
+    from patchguard.hook import select_new
+    f1 = {'pair': 'a=>b', 'reason': 'r'}
+    f2 = {'function': 'm::f', 'added': ['self.x'], 'reason': 'r'}
+    assert select_new(str(tmp_path), 's1', [f1]) == [f1]
+    assert select_new(str(tmp_path), 's1', [f1, f2]) == [f2]
+    assert select_new(str(tmp_path), 's1', [f1, f2]) == []
+    assert select_new(str(tmp_path), 's2', [f1]) == [f1]
+    assert select_new(str(tmp_path), 's1', []) == []
+    assert select_new(str(tmp_path), 's1', [f1]) == [f1]
+
+
+def _file_diff(path, removed, added, new=False, old_len=None):
+    head = f"diff --git a/{path} b/{path}\n" + ("new file mode 100644\n" if new else "") + f"--- a/{path}\n+++ b/{path}\n"
+    old_len = removed if old_len is None else old_len
+    body = ''.join(f"-old{i}\n" for i in range(removed)) + ''.join(f"+new{i}\n" for i in range(added))
+    return head + f"@@ -1,{old_len} +1,{added} @@\n" + body
+
+
+def test_hygiene_flags_removed_test_content_and_stray_files():
+    from patchguard.hygiene import hygiene_findings
+    patch = (_file_diff('tests/postgres_tests/__init__.py', 22, 4)
+             + _file_diff('reproduce_issue.py', 0, 12, new=True)
+             + _file_diff('testapp/models.py', 0, 8, new=True)
+             + _file_diff('db.sqlite3', 0, 1, new=True)
+             + _file_diff('django/db/models/query.py', 3, 5, old_len=900)
+             + _file_diff('tests/queries/tests.py', 2, 30))
+    kinds = {(f['kind'], f['file']) for f in hygiene_findings(patch)}
+    assert kinds == {('test_content_removed', 'tests/postgres_tests/__init__.py'),
+                     ('stray_file', 'reproduce_issue.py'), ('stray_directory', 'testapp'),
+                     ('stray_artifact', 'db.sqlite3')}
+
+
+def test_hygiene_flags_whole_file_rewrites_but_not_small_edits():
+    from patchguard.hygiene import hygiene_findings
+    rewrite = _file_diff('django/db/models/sql/query.py', 1953, 1988)
+    assert [f['kind'] for f in hygiene_findings(rewrite)] == ['file_rewritten']
+    small = _file_diff('django/db/models/sql/query.py', 12, 14, old_len=2000)
+    assert hygiene_findings(small) == []
+    assert hygiene_findings(_file_diff('tests/queries/tests.py', 3, 40)) == []
+
+
+def _write_repo(tmp_path, files):
+    for rel, text in files.items():
+        path = tmp_path / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text)
+
+
+def _sigs(root, top):
+    from patchguard.mine import mine_signatures
+    return mine_signatures(str(root), top)
+
+
+def test_callers_flags_call_sites_broken_by_a_new_required_parameter(tmp_path):
+    from patchguard.callers import annotate_callers
+    from patchguard.partition import diff_signatures
+    pre = {'pkg/__init__.py': '', 'pkg/util.py': 'def f(a):\n    return a\n',
+           'pkg/use.py': 'from pkg.util import f\nfrom pkg import util\n\ndef g():\n    f(1)\n    util.f(2)\n    f(*[3])\n',
+           'tests/test_u.py': 'from pkg.util import f\n\ndef test():\n    f(1)\n'}
+    post = dict(pre, **{'pkg/util.py': 'def f(a, b):\n    return a\n'})
+    pre_dir, post_dir = tmp_path / 'pre', tmp_path / 'post'
+    _write_repo(pre_dir, pre)
+    _write_repo(post_dir, post)
+    pre_sigs, post_sigs = _sigs(pre_dir, 'pkg'), _sigs(post_dir, 'pkg')
+    items = annotate_callers(diff_signatures(pre_sigs, post_sigs), pre_sigs, post_sigs, str(post_dir))
+    assert sorted((c['file'], c['line']) for c in items[0]['broken_callers']) == [('pkg/use.py', 5), ('pkg/use.py', 6)]
+    assert items[0]['broken_total'] == 2 and items[0]['broken_in_tests'] == 1
+
+
+def test_callers_ignores_call_sites_the_patch_updated_and_flags_removed_functions(tmp_path):
+    from patchguard.callers import annotate_callers
+    from patchguard.partition import diff_signatures
+    pre = {'pkg/__init__.py': '', 'pkg/util.py': 'def f(a):\n    return a\n\ndef gone():\n    pass\n',
+           'pkg/use.py': 'from pkg.util import f, gone\n\ndef g():\n    f(1)\n    gone()\n'}
+    post = {'pkg/__init__.py': '', 'pkg/util.py': 'def f(a, b=None):\n    return a\n',
+            'pkg/use.py': 'from pkg.util import f, gone\n\ndef g():\n    f(1)\n    gone()\n'}
+    pre_dir, post_dir = tmp_path / 'pre', tmp_path / 'post'
+    _write_repo(pre_dir, pre)
+    _write_repo(post_dir, post)
+    pre_sigs, post_sigs = _sigs(pre_dir, 'pkg'), _sigs(post_dir, 'pkg')
+    items = annotate_callers(diff_signatures(pre_sigs, post_sigs), pre_sigs, post_sigs, str(post_dir))
+    assert [i['function'] for i in items] == ['pkg.util::gone']
+    assert [(c['file'], c['line']) for c in items[0]['broken_callers']] == [('pkg/use.py', 5)]
+
+
+def test_callers_resolves_methods_through_self_and_subclasses(tmp_path):
+    from patchguard.callers import annotate_callers
+    from patchguard.partition import diff_signatures
+    pre = {'pkg/__init__.py': '', 'pkg/m.py': (
+        'class Base:\n    def run(self, x):\n        return x\n\n    def go(self):\n        return self.run(1)\n\n'
+        'class Child(Base):\n    def other(self):\n        return self.run(2)\n\n'
+        'class Unrelated:\n    def other(self):\n        return self.run(3)\n\n    def run(self, a, b):\n        pass\n')}
+    post = {'pkg/__init__.py': '', 'pkg/m.py': pre['pkg/m.py'].replace('def run(self, x):', 'def run(self, x, extra):')}
+    pre_dir, post_dir = tmp_path / 'pre', tmp_path / 'post'
+    _write_repo(pre_dir, pre)
+    _write_repo(post_dir, post)
+    pre_sigs, post_sigs = _sigs(pre_dir, 'pkg'), _sigs(post_dir, 'pkg')
+    items = annotate_callers(diff_signatures(pre_sigs, post_sigs), pre_sigs, post_sigs, str(post_dir))
+    assert sorted(c['line'] for c in items[0]['broken_callers']) == [6, 10]
+
+
+def test_callers_removed_override_with_inherited_fallback_is_not_broken(tmp_path):
+    from patchguard.callers import annotate_callers
+    from patchguard.partition import diff_signatures
+    pre = {'pkg/__init__.py': '', 'pkg/m.py': (
+        'class Base:\n    def prep(self, v):\n        return v\n\n'
+        'class Child(Base):\n    def prep(self, v):\n        return super().prep(v)\n\n'
+        'class User(Child):\n    def go(self):\n        return self.prep(1)\n')}
+    post = {'pkg/__init__.py': '', 'pkg/m.py': pre['pkg/m.py'].replace(
+        'class Child(Base):\n    def prep(self, v):\n        return super().prep(v)\n', 'class Child(Base):\n    pass\n')}
+    pre_dir, post_dir = tmp_path / 'pre', tmp_path / 'post'
+    _write_repo(pre_dir, pre)
+    _write_repo(post_dir, post)
+    pre_sigs, post_sigs = _sigs(pre_dir, 'pkg'), _sigs(post_dir, 'pkg')
+    items = annotate_callers(diff_signatures(pre_sigs, post_sigs), pre_sigs, post_sigs, str(post_dir))
+    assert [(i['function'], i['broken_total'], i.get('inherited')) for i in items] == [('pkg.m::Child.prep', 0, True)]
+
+
+def test_callers_unknown_receiver_calls_count_when_all_definitions_share_a_family(tmp_path):
+    from patchguard.callers import annotate_callers
+    from patchguard.partition import diff_signatures
+    pre = {'pkg/__init__.py': '', 'pkg/m.py': (
+        'class Base:\n    def fetch(self, a):\n        pass\n\nclass Child(Base):\n    def fetch(self, a):\n        pass\n'),
+        'pkg/use.py': 'def go(obj):\n    obj.fetch(1)\n'}
+    post = dict(pre, **{'pkg/m.py': pre['pkg/m.py'].replace('class Base:\n    def fetch(self, a):', 'class Base:\n    def fetch(self, a, b):')})
+    pre_dir, post_dir = tmp_path / 'pre', tmp_path / 'post'
+    _write_repo(pre_dir, pre)
+    _write_repo(post_dir, post)
+    pre_sigs, post_sigs = _sigs(pre_dir, 'pkg'), _sigs(post_dir, 'pkg')
+    items = annotate_callers(diff_signatures(pre_sigs, post_sigs), pre_sigs, post_sigs, str(post_dir))
+    assert [(c['file'], c['line']) for c in items[0]['broken_callers']] == [('pkg/use.py', 2)]
+
+
+def test_evaluate_benchmark_scores_recall_false_alarms_and_noise():
+    from patchguard.evaluate_benchmark import score
+    examples = [
+        {'example_id': 'a::E', 'instance_id': 'a', 'family': 'positive', 'kind': 'E', 'target': {'class': 'E', 'id': 'p.a=>p.b'}},
+        {'example_id': 'b::E', 'family': 'positive', 'kind': 'E', 'target': {'class': 'E', 'id': 'p.a=>p.c'}},
+        {'example_id': 'a::rs', 'family': 'positive', 'kind': 'read-set',
+         'target': {'class': 'read-set', 'id': 'C.run', 'attr': 'self.x'}},
+        {'example_id': 'a::twin', 'family': 'twin', 'kind': 'D', 'target': {'class': 'D', 'id': 'C.run'}},
+        {'example_id': 'b::twin', 'family': 'twin', 'kind': 'D', 'target': {'class': 'D', 'id': 'C.go'}},
+        {'example_id': 'a::decoy', 'family': 'decoy', 'kind': 'noop', 'target': {'class': 'read-set', 'id': 'C.run'}},
+        {'example_id': 'a::ref', 'family': 'reference', 'kind': 'reference', 'target': None},
+        {'example_id': 'b::ref', 'family': 'reference', 'kind': 'reference', 'target': None},
+    ]
+    predictions = [
+        {'example_id': 'a::E', 'findings': [{'class': 'E', 'id': 'p.a=>p.b', 'verdict': 'frame'}]},
+        {'example_id': 'b::E', 'findings': [{'class': 'E', 'id': 'p.a=>p.c', 'verdict': 'scope'}]},
+        {'example_id': 'a::rs', 'findings': [{'class': 'read-set', 'id': 'm::C.run', 'verdict': 'frame', 'detail': ['self.x']}]},
+        {'example_id': 'a::twin', 'findings': [{'class': 'D', 'id': 'm::C.run', 'verdict': 'frame'}]},
+        {'example_id': 'b::twin', 'findings': [{'class': 'D', 'id': 'm::C.go', 'verdict': 'scope'}]},
+        {'example_id': 'a::decoy', 'findings': []},
+        {'example_id': 'a::ref', 'findings': [{'class': 'D', 'id': 'm::C.other', 'verdict': 'frame'}]},
+        {'example_id': 'b::ref', 'findings': []},
+    ]
+    result = score(examples, predictions)['summary']
+    assert result['positive'] == {'n': 3, 'count': 2, 'rate': 0.667}
+    assert result['twin'] == {'n': 2, 'count': 1, 'rate': 0.5}
+    assert result['decoy'] == {'n': 1, 'count': 0, 'rate': 0.0}
+    assert result['reference'] == {'n': 2, 'count': 1, 'rate': 0.5}
+
+
+def test_export_reapplies_variants_and_builds_targets():
+    from patchguard.export_benchmark import predictions_from_report, target_of
+    assert target_of('positive', 'E', {'source_pkg': 'p.a', 'target_pkg': 'p.b'}) == {'class': 'E', 'id': 'p.a=>p.b'}
+    assert target_of('positive', 'read-set', {'qualname': 'C.f', 'param': 'self', 'attr': 'x'}) == \
+        {'class': 'read-set', 'id': 'C.f', 'attr': 'self.x'}
+    report = {'e_findings': [{'pair': 'a=>b', 'verdict': 'frame'}],
+              'readset_findings': [{'function': 'm::C.f', 'added': ['self.x'], 'verdict': 'scope'}],
+              'd_findings': [{'function': 'm::g', 'changes': [{'kind': 'removed_function'}], 'verdict': 'frame'}]}
+    got = predictions_from_report(report)
+    assert [(g['class'], g['verdict']) for g in got] == [('E', 'frame'), ('read-set', 'scope'), ('D', 'frame')]
+
+
+def test_history_model_recovers_a_planted_effect_and_chi2_tail():
+    import random
+    from patchguard.history_model import auc, chi2_sf, fit, sigmoid
+    rnd = random.Random(0)
+    X, y = [], []
+    for _ in range(2000):
+        flag = float(rnd.random() < 0.3)
+        X.append([1.0, flag])
+        y.append(int(rnd.random() < sigmoid(-1.0 + 1.5 * flag)))
+    beta = fit(X, y)
+    assert abs(beta[0] + 1.0) < 0.25 and abs(beta[1] - 1.5) < 0.35
+    assert abs(chi2_sf(3.841, 1) - 0.05) < 0.002 and abs(chi2_sf(5.991, 2) - 0.05) < 0.002
+    assert auc([0.9, 0.8, 0.3, 0.2], [1, 1, 0, 0]) == 1.0 and auc([0.5, 0.5], [1, 0]) == 0.5
+
+
+def test_report_shows_caller_breakage_and_hygiene_findings():
+    from patchguard.report import generate_report
+    classified = {
+        'e_findings': [], 'readset_findings': [], 'syntax_findings': [],
+        'd_findings': [{'function': 'm::f', 'changes': [{'kind': 'added_required_param'}], 'verdict': 'frame',
+                        'reason': 'r', 'broken_total': 3}],
+        'hygiene_findings': [{'kind': 'stray_file', 'file': 'reproduce.py', 'verdict': 'frame', 'reason': 'scratch'}]}
+    text = generate_report(classified)
+    assert '3 вызов' in text and 'reproduce.py' in text and 'stray_file' in text
+
+
+def test_evaluate_does_not_blame_decoys_for_findings_the_reference_already_has():
+    from patchguard.evaluate_benchmark import score
+    examples = [
+        {'example_id': 'i::reference', 'instance_id': 'i', 'family': 'reference', 'kind': 'reference', 'target': None},
+        {'example_id': 'i::decoy-noop', 'instance_id': 'i', 'family': 'decoy', 'kind': 'noop',
+         'target': {'class': 'read-set', 'id': 'C.f'}},
+        {'example_id': 'j::decoy-noop', 'instance_id': 'j', 'family': 'decoy', 'kind': 'noop',
+         'target': {'class': 'read-set', 'id': 'C.f'}},
+    ]
+    finding = {'class': 'read-set', 'id': 'm::C.f', 'verdict': 'frame', 'detail': ['self.x']}
+    predictions = [{'example_id': 'i::reference', 'findings': [dict(finding, id='C.f')]},
+                   {'example_id': 'i::decoy-noop', 'findings': [dict(finding, id='C.f')]},
+                   {'example_id': 'j::decoy-noop', 'findings': [finding]}]
+    assert score(examples, predictions)['summary']['decoy'] == {'n': 2, 'count': 1, 'rate': 0.5}
+
+
+def test_statement_insertion_respects_decorators_and_refuses_broken_files(tmp_path):
+    import ast
+    from patchguard.controls import insert_statement
+    src = 'def outer(f):\n    @wraps(f)\n    def wrapper(x):\n        return f(x)\n    return wrapper\n'
+    path = tmp_path / 'm.py'
+    path.write_text(src)
+    insert_statement(str(tmp_path), 'm.py', 1, '_noop = None')
+    ast.parse(path.read_text())
+    assert path.read_text().index('_noop') < path.read_text().index('@wraps')

@@ -1,0 +1,21 @@
+diff --git a/sympy/polys/domains/expressiondomain.py b/sympy/polys/domains/expressiondomain.py
+index 1ce2316dc6..08cc1a6a75 100644
+--- a/sympy/polys/domains/expressiondomain.py
++++ b/sympy/polys/domains/expressiondomain.py
+@@ -41,6 +41,7 @@ def as_expr(f):
+             return f.ex
+ 
+         def numer(f):
++            _synthetic_noop = None
+             return f.__class__(f.ex.as_numer_denom()[0])
+ 
+         def denom(f):
+@@ -120,7 +121,7 @@ def __ne__(f, g):
+             return not f == g
+ 
+         def __bool__(f):
+-            return f.ex != 0
++            return not f.ex.is_zero
+ 
+         def gcd(f, g):
+             from sympy.polys import gcd

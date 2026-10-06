@@ -1,0 +1,22 @@
+diff --git a/django/contrib/contenttypes/management/__init__.py b/django/contrib/contenttypes/management/__init__.py
+index 2b5f688136..b5d83377c0 100644
+--- a/django/contrib/contenttypes/management/__init__.py
++++ b/django/contrib/contenttypes/management/__init__.py
+@@ -24,7 +24,7 @@ class RenameContentType(migrations.RunPython):
+             content_type.model = new_model
+             try:
+                 with transaction.atomic(using=db):
+-                    content_type.save(update_fields={'model'})
++                    content_type.save(using=db, update_fields={'model'})
+             except IntegrityError:
+                 # Gracefully fallback if a stale content type causes a
+                 # conflict as remove_stale_contenttypes will take care of
+@@ -43,6 +43,8 @@ class RenameContentType(migrations.RunPython):
+ 
+ 
+ def inject_rename_contenttypes_operations(plan=None, apps=global_apps, using=DEFAULT_DB_ALIAS, **kwargs):
++    import django.conf.locale  # SYNTHETIC INJECTION (class E, Part B)
++    _synthetic_e_injection_probe = dir(django)  # inert
+     """
+     Insert a `RenameContentType` operation after every planned `RenameModel`
+     operation.

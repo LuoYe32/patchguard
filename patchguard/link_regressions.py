@@ -6,6 +6,7 @@ import os
 from collections import defaultdict
 
 from .agent_report import frame_items, load_json
+from .hygiene import hygiene_findings
 
 
 def wilson(k, n, z=1.96):
@@ -27,7 +28,17 @@ def findings_dir(variant, reference_dir, agents_dir):
     return reference_dir if variant == 'gold' else os.path.join(agents_dir, variant)
 
 
-def build_cases(fulltest_dir, reference_dir, agents_dir):
+def load_patches(paths):
+    """{(variant, instance_id): patch} from JSONL files with submission, instance_id and patch."""
+    patches = {}
+    for path in paths or []:
+        for line in open(path, encoding='utf-8'):
+            rec = json.loads(line)
+            patches[(rec['submission'], rec['instance_id'])] = rec['patch']
+    return patches
+
+
+def build_cases(fulltest_dir, reference_dir, agents_dir, patches=None):
     cases = []
     for path in sorted(glob.glob(os.path.join(fulltest_dir, '*', '*.json'))):
         variant = os.path.splitext(os.path.basename(path))[0]
@@ -40,13 +51,15 @@ def build_cases(fulltest_dir, reference_dir, agents_dir):
         if run.get('status') not in ('ok', 'crashed') or classified is None:
             continue
         findings = frame_items(classified)
+        hygiene = [f['kind'] for f in hygiene_findings(patches[(variant, iid)])] if patches and (variant, iid) in patches else []
         confirmed = run.get('confirmed_regressions', [])
         cases.append({'instance_id': iid, 'variant': variant,
                       'crashed': run['status'] == 'crashed',
                       'regressed': run['status'] == 'crashed' or bool(confirmed),
                       'confirmed_regressions': confirmed,
-                      'flagged': bool(findings),
-                      'finding_classes': sorted({f['class'] for f in findings}),
+                      'flagged': bool(findings or hygiene), 'flagged_source_only': bool(findings),
+                      'hygiene': hygiene,
+                      'finding_classes': sorted({f['class'] for f in findings} | ({'hygiene'} if hygiene else set())),
                       'findings': [{'class': f['class'], 'id': f['id']} for f in findings]})
     return cases
 
@@ -75,9 +88,10 @@ def main():
     ap.add_argument('--fulltest', required=True, help='patchguard-fulltest output directory')
     ap.add_argument('--reference', required=True, help='batch directory of reference-patch runs (negative branch)')
     ap.add_argument('--agents', required=True, help='directory holding one batch directory per submission')
+    ap.add_argument('--patches', nargs='*', default=None, help='JSONL files with the evaluated patches, to add hygiene findings')
     ap.add_argument('--out', required=True)
     args = ap.parse_args()
-    cases = build_cases(args.fulltest, args.reference, args.agents)
+    cases = build_cases(args.fulltest, args.reference, args.agents, load_patches(args.patches))
     summary = summarize(cases)
     os.makedirs(args.out, exist_ok=True)
     with open(os.path.join(args.out, 'regressions_vs_findings.json'), 'w', encoding='utf-8') as f:

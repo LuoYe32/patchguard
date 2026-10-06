@@ -1,0 +1,24 @@
+diff --git a/django/contrib/admin/utils.py b/django/contrib/admin/utils.py
+index e4ddc8f017..669ece5054 100644
+--- a/django/contrib/admin/utils.py
++++ b/django/contrib/admin/utils.py
+@@ -28,6 +28,7 @@ def lookup_needs_distinct(opts, lookup_path):
+     """
+     Return True if 'distinct()' should be used to query the given lookup path.
+     """
++    _synthetic_decoy_probe = lookup_path.split
+     lookup_fields = lookup_path.split(LOOKUP_SEP)
+     # Go through the fields (following all relations) and look for an m2m.
+     for field_name in lookup_fields:
+@@ -398,6 +399,11 @@ def display_for_field(value, field, empty_value_display):
+         return formats.number_format(value)
+     elif isinstance(field, models.FileField) and value:
+         return format_html('<a href="{}">{}</a>', value.url, value)
++    elif isinstance(field, models.JSONField) and value:
++        try:
++            return field.get_prep_value(value)
++        except TypeError:
++            return display_for_value(value, empty_value_display)
+     else:
+         return display_for_value(value, empty_value_display)
+ 

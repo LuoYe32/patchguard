@@ -1,0 +1,107 @@
+{
+ "commits": 3519,
+ "induced": 478,
+ "models": {
+  "size only": {
+   "cv_auc": [
+    0.671,
+    0.001
+   ],
+   "features": [
+    "log_lines",
+    "log_files"
+   ],
+   "odds_ratios": {
+    "log_lines": 1.67,
+    "log_files": 0.75
+   }
+  },
+  "size + any flag": {
+   "cv_auc": [
+    0.67,
+    0.001
+   ],
+   "features": [
+    "log_lines",
+    "log_files",
+    "any_frame"
+   ],
+   "odds_ratios": {
+    "log_lines": 1.6,
+    "log_files": 0.77,
+    "any_frame": 1.5
+   }
+  },
+  "size + classes": {
+   "cv_auc": [
+    0.672,
+    0.001
+   ],
+   "features": [
+    "log_lines",
+    "log_files",
+    "read_set",
+    "d",
+    "e"
+   ],
+   "odds_ratios": {
+    "log_lines": 1.59,
+    "log_files": 0.77,
+    "read_set": 1.82,
+    "d": 0.89,
+    "e": 1.32
+   }
+  },
+  "size + classes + count": {
+   "cv_auc": [
+    0.671,
+    0.001
+   ],
+   "features": [
+    "log_lines",
+    "log_files",
+    "read_set",
+    "d",
+    "e",
+    "n_frame"
+   ],
+   "odds_ratios": {
+    "log_lines": 1.59,
+    "log_files": 0.77,
+    "read_set": 1.87,
+    "d": 0.92,
+    "e": 1.33,
+    "n_frame": 0.97
+   }
+  },
+  "flags only (no size)": {
+   "cv_auc": [
+    0.56,
+    0.003
+   ],
+   "features": [
+    "any_frame"
+   ],
+   "odds_ratios": {
+    "any_frame": 2.06
+   }
+  }
+ },
+ "likelihood_ratio_vs_size_only": {
+  "size + any flag": {
+   "chi2": 13.94,
+   "df": 1,
+   "p": 0.000189
+  },
+  "size + classes": {
+   "chi2": 26.94,
+   "df": 3,
+   "p": 6.07e-06
+  },
+  "size + classes + count": {
+   "chi2": 26.96,
+   "df": 4,
+   "p": 2.02e-05
+  }
+ }
+}

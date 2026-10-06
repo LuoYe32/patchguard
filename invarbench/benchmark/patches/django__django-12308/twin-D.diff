@@ -1,0 +1,25 @@
+diff --git a/django/contrib/admin/utils.py b/django/contrib/admin/utils.py
+index e4ddc8f017..70210d4ef1 100644
+--- a/django/contrib/admin/utils.py
++++ b/django/contrib/admin/utils.py
+@@ -377,7 +377,7 @@ def help_text_for_field(name, model):
+     return help_text
+ 
+ 
+-def display_for_field(value, field, empty_value_display):
++def display_for_field(synthetic_required_param, value, field, empty_value_display):
+     from django.contrib.admin.templatetags.admin_list import _boolean_icon
+ 
+     if getattr(field, 'flatchoices', None):
+@@ -398,6 +398,11 @@ def display_for_field(value, field, empty_value_display):
+         return formats.number_format(value)
+     elif isinstance(field, models.FileField) and value:
+         return format_html('<a href="{}">{}</a>', value.url, value)
++    elif isinstance(field, models.JSONField) and value:
++        try:
++            return field.get_prep_value(value)
++        except TypeError:
++            return display_for_value(value, empty_value_display)
+     else:
+         return display_for_value(value, empty_value_display)
+ 

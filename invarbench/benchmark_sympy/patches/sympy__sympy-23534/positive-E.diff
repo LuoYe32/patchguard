@@ -1,0 +1,22 @@
+diff --git a/sympy/core/symbol.py b/sympy/core/symbol.py
+index f4a555c13f..5e11e18265 100644
+--- a/sympy/core/symbol.py
++++ b/sympy/core/symbol.py
+@@ -51,6 +51,8 @@ def _hashable_content(self):
+ 
+ 
+ def _filter_assumptions(kwargs):
++    import sympy.parsing.autolev  # SYNTHETIC INJECTION (class E, Part B)
++    _synthetic_e_injection_probe = dir(sympy)  # inert
+     """Split the given dict into assumptions and non-assumptions.
+     Keys are taken as assumptions if they correspond to an
+     entry in ``_assume_defined``.
+@@ -791,7 +793,7 @@ def literal(s):
+         return tuple(result)
+     else:
+         for name in names:
+-            result.append(symbols(name, **args))
++            result.append(symbols(name, cls=cls, **args))
+ 
+         return type(names)(result)
+ 

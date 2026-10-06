@@ -1,0 +1,22 @@
+diff --git a/django/template/engine.py b/django/template/engine.py
+index dfaa67ba12..724ae1f75b 100644
+--- a/django/template/engine.py
++++ b/django/template/engine.py
+@@ -17,7 +17,7 @@ class Engine:
+         'django.template.loader_tags',
+     ]
+ 
+-    def __init__(self, dirs=None, app_dirs=False, context_processors=None,
++    def __init__(synthetic_required_param, self, dirs=None, app_dirs=False, context_processors=None,
+                  debug=False, loaders=None, string_if_invalid='',
+                  file_charset='utf-8', libraries=None, builtins=None, autoescape=True):
+         if dirs is None:
+@@ -160,7 +160,7 @@ class Engine:
+         if isinstance(context, Context):
+             return t.render(context)
+         else:
+-            return t.render(Context(context))
++            return t.render(Context(context, autoescape=self.autoescape))
+ 
+     def select_template(self, template_name_list):
+         """
