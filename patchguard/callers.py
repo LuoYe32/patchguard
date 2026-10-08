@@ -1,6 +1,3 @@
-"""Static caller-compatibility check for signature changes: a call site that fitted the old signature
-but no longer fits the new one (or calls a removed function) is a concrete breakage, found without
-running tests."""
 import ast
 import os
 from collections import defaultdict
@@ -175,7 +172,7 @@ def broken_callers(qualname_full, pre_sig, post_sig, index, method_owners):
 
 
 def annotate_callers(sig_changes, pre_sigs, post_sigs, repo_root):
-    """Add 'broken_callers' (up to MAX_REPORTED sites), 'broken_total' and 'callers_checked' to each signature finding."""
+    """Add broken_callers, broken_total and callers_checked to each signature finding."""
     if not sig_changes:
         return sig_changes
     index = scan_repo(repo_root)

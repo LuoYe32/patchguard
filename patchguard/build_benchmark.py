@@ -12,7 +12,7 @@ VARIANTS = {'negative': 'negative', 'positive_e': 'E', 'positive_readset': 'read
             'decoy_noop': 'decoy-noop', 'decoy_existing_edge': 'decoy-existing-edge'}
 POSITIVE = ('E', 'read-set', 'D')
 TWIN = {'twin-read-set': 'read-set', 'twin-D': 'D'}
-CLASS_OF = {'e_findings': 'E', 'readset_findings': 'read-set', 'd_findings': 'D', 'syntax_findings': 'syntax', 'hygiene_findings': 'hygiene'}
+CLASS_OF = {'e_findings': 'E', 'readset_findings': 'read-set', 'd_findings': 'D', 'syntax_findings': 'syntax', 'hygiene_findings': 'hygiene', 'protocol_findings': 'protocol'}
 
 
 def load_json(path):

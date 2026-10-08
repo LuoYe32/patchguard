@@ -27,6 +27,8 @@ patchguard-history-model = "patchguard.history_model:main"
 patchguard-export = "patchguard.export_benchmark:main"
 patchguard-evaluate = "patchguard.evaluate_benchmark:main"
 patchguard-merge = "patchguard.merge_benchmarks:main"
+patchguard-severity = "patchguard.severity:main"
+patchguard-check = "patchguard.check:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["patchguard"]

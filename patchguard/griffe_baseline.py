@@ -1,5 +1,3 @@
-"""Run griffe's API-breakage detection on every signature-related example of an exported benchmark and
-write predictions in the benchmark format (run in an environment with griffe installed)."""
 import argparse
 import json
 import os

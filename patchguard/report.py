@@ -6,7 +6,8 @@ import os
 CLASS_LABELS = {'e_findings': 'E — архитектурная зависимость', 'readset_findings':
                 'read-set — новое чтение атрибута', 'd_findings': 'D — сигнатура функции',
                 'syntax_findings': 'syntax — файл больше не разбирается',
-                'hygiene_findings': 'hygiene — состав патча'}
+                'hygiene_findings': 'hygiene — состав патча',
+                'protocol_findings': 'protocol — новый протокольный метод класса'}
 
 
 def _finding_title(cls_key, item):
@@ -19,6 +20,8 @@ def _finding_title(cls_key, item):
         broken = item.get('broken_total')
         suffix = f"; {broken} вызов(ов) в коде больше не подходят к новой сигнатуре" if broken else ''
         return f"`{item['function'].split('::')[-1]}` — {kinds}{suffix}"
+    if cls_key == 'protocol_findings':
+        return f"`{item['owner']}.{item['method']}`"
     if cls_key == 'hygiene_findings':
         return f"`{item['file']}` — {item['kind']}"
     if cls_key == 'syntax_findings':
@@ -28,7 +31,7 @@ def _finding_title(cls_key, item):
 
 def generate_report(classified_report, baseline_report=None, instance_label=None):
     frame, scope = [], []
-    for cls_key in ('e_findings', 'readset_findings', 'd_findings', 'syntax_findings', 'hygiene_findings'):
+    for cls_key in ('e_findings', 'readset_findings', 'd_findings', 'syntax_findings', 'hygiene_findings', 'protocol_findings'):
         for item in classified_report.get(cls_key, []):
             bucket = frame if item['verdict'] == 'frame' else scope
             bucket.append((cls_key, item))

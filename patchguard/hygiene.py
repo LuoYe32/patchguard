@@ -1,6 +1,3 @@
-"""Patch hygiene checks that need only the diff: content removed from existing test files, whole-file
-rewrites, and stray files an agent left behind. They cover what the source-level analysis excludes
-(test directories, non-code artifacts)."""
 import argparse
 import json
 import os

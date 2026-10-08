@@ -1,6 +1,3 @@
-"""Evaluate the caller-compatibility check on reference patches and on injected breaking signature
-changes: how many injected breakages does it find statically, and how many natural signature findings
-have a broken call site?"""
 import argparse
 import json
 import os

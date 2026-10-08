@@ -4,7 +4,7 @@ import json
 import os
 from collections import defaultdict
 
-CLASSES = (('e_findings', 'E'), ('readset_findings', 'read-set'), ('d_findings', 'D'), ('syntax_findings', 'syntax'), ('hygiene_findings', 'hygiene'))
+CLASSES = (('e_findings', 'E'), ('readset_findings', 'read-set'), ('d_findings', 'D'), ('syntax_findings', 'syntax'), ('hygiene_findings', 'hygiene'), ('protocol_findings', 'protocol'))
 
 
 def load_json(path):
@@ -27,6 +27,8 @@ def frame_items(classified):
                 detail = {'error': it['error']}
             elif cls == 'hygiene':
                 detail = {'kind': it['kind']}
+            elif cls == 'protocol':
+                detail = {'method': it['method']}
             elif cls == 'read-set':
                 detail = {'added': it['added'], 'removed': it['removed']}
             else:

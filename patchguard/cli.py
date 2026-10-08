@@ -9,7 +9,7 @@ import time
 
 from .mine import mine, collect_known_packages, package_of, harvest_known_attrs, module_name, mine_signatures
 from .partition import (compute_t_module, compute_t_symbol, classify_intent,
-                        build_call_graph, partition_e_findings, partition_readset_findings,
+                        build_call_graph, partition_e_findings, partition_readset_findings, protocol_findings,
                         diff_signatures, partition_signature_findings)
 from .baseline import setup_venv, run_baseline
 from .report import generate_report
@@ -120,7 +120,7 @@ def siblings_of(pkg, all_pkgs):
 
 
 def find_e_injection_target(pre_edges_raw, touched_pkgs, t_module, k=1, known_pkgs=None):
-    """Pick an isolated (source, target) pair outside the scope and its k-hop neighborhood; targets must be real packages."""
+    """Pick an isolated package pair outside the scope and its k-hop neighborhood."""
     from .partition import n_hop_import_graph
     fwd = {}
     for kk, v in pre_edges_raw.items():
@@ -191,8 +191,7 @@ def inject_e_violation(repo_dir, source_pkg, target_pkg, touched_file_rel):
 
 def find_readset_injection_target(repo_dir, touched_file_rel, t_symbol_names, known_attrs, pre_reads,
                                    call_graph=None, module_dotted_for_calls=None, k=1, inside=False):
-    """Find an existing non-dunder method outside the scope (inside it, if inside=True) and an unread
-    self/cls attribute that other methods of the same class already read."""
+    """Find a non-dunder method outside the scope (inside, if inside=True) and an unread self/cls attribute."""
     excluded = set(t_symbol_names)
     if call_graph is not None and module_dotted_for_calls:
         from .partition import n_hop_call_graph
@@ -262,7 +261,7 @@ def inject_readset_violation(repo_dir, touched_file_rel, qualname, lineno, param
 
 def find_d_injection_target(repo_dir, touched_file_rel, t_symbol_names, pre_sigs,
                              call_graph=None, module_dotted_for_calls=None, k=1, inside=False):
-    """Find an existing function outside the scope and its call-graph neighborhood (inside it, if inside=True)."""
+    """Find an existing function outside the scope (inside, if inside=True)."""
     excluded = set(t_symbol_names)
     if call_graph is not None and module_dotted_for_calls:
         from .partition import n_hop_call_graph
@@ -313,6 +312,9 @@ def inject_d_violation(repo_dir, touched_file_rel, func_name, lineno):
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == 'check':
+        from .check import main as check_main
+        return check_main(sys.argv[2:])
     ap = argparse.ArgumentParser()
     ap.add_argument('--repo-url', required=True)
     ap.add_argument('--base-commit', required=True)
@@ -366,9 +368,10 @@ def main():
         t_symbol = compute_t_symbol(pre_reads, post_reads, issue_text, touched_modules)
         e_classified = partition_e_findings(diff_report['new_package_pairs'], t_module_computed, b_pkgs, pre_edges_raw, k)
         rs_classified = partition_readset_findings(diff_report['read_set_changes'], t_symbol, call_graph, k)
-        d_classified = []
+        d_classified, protocol_classified = [], []
         if post_repo is not None:
             post_sigs = mine_signatures(post_repo, args.top_package)
+            protocol_classified = protocol_findings(pre_sigs, post_sigs, issue_text)
             sig_changes = diff_signatures(pre_sigs, post_sigs, broken_modules)
             if sig_changes and not args.no_callers:
                 try:
@@ -377,9 +380,10 @@ def main():
                     print(f"    [callers] skipped: {type(e).__name__}: {str(e)[:100]}")
             d_classified = partition_signature_findings(sig_changes, t_symbol, call_graph, k)
         result = {'e_findings': e_classified, 'readset_findings': rs_classified, 'd_findings': d_classified,
-                  'syntax_findings': syntax_broken, 'hygiene_findings': patch_hygiene}
+                  'syntax_findings': syntax_broken, 'hygiene_findings': patch_hygiene,
+                  'protocol_findings': protocol_classified}
         json.dump(result, open(out_path, 'w'), indent=1, sort_keys=True)
-        all_findings = e_classified + rs_classified + d_classified + syntax_broken + patch_hygiene
+        all_findings = e_classified + rs_classified + d_classified + syntax_broken + patch_hygiene + protocol_classified
         n_frame = sum(1 for x in all_findings if x['verdict'] == 'frame')
         n_scope = sum(1 for x in all_findings if x['verdict'] == 'scope')
         print(f"    stage4: {n_frame} FRAME (real findings), {n_scope} scope (expected effects) [D: {len(d_classified)}]")

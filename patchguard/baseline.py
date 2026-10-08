@@ -14,8 +14,7 @@ def detect_runner(repo_dir):
 
 
 def convert_django_labels(ids):
-    """Convert 'test_x (pkg.Class)' IDs to dotted Django labels; returns (labels, skipped). IDs
-    that are bare docstrings cannot be resolved and are skipped with a warning."""
+    """Convert 'test_x (pkg.Class)' IDs to dotted Django labels; returns (labels, skipped)."""
     labels, skipped = [], []
     for tid in ids:
         m = re.match(r'^(\w+)\s+\(([\w.]+)\)$', tid.strip())
@@ -33,8 +32,7 @@ def convert_django_labels(ids):
 
 
 def setup_venv(venv_dir, seed_repo_dir):
-    """Create a venv with one editable install to pull in dependencies; returns (python, ok,
-    error)."""
+    """Create a venv with one editable install to pull in dependencies; returns (python, ok, error)."""
     venv_dir = os.path.abspath(venv_dir)
     seed_repo_dir = os.path.abspath(seed_repo_dir)
     python = os.path.join(venv_dir, 'bin', 'python3')
@@ -58,8 +56,7 @@ def setup_venv(venv_dir, seed_repo_dir):
 
 
 def run_baseline(repo_dir, venv_python, pass_to_pass_ids, runner=None, test_file=None, timeout=300):
-    """Run the PASS_TO_PASS tests against repo_dir with the Django runner or pytest; returns a
-    result dict."""
+    """Run the PASS_TO_PASS tests against repo_dir with the Django runner or pytest; returns a result dict."""
     repo_dir = os.path.abspath(repo_dir)
     runner = runner or detect_runner(repo_dir)
     env = os.environ.copy()

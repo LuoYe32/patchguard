@@ -1,6 +1,3 @@
-"""Does a PatchGuard flag add predictive information about later regressions beyond the size of the
-change? Logistic regression (no external dependencies) with repeated cross-validated AUC and
-likelihood-ratio tests on the output of patchguard-history."""
 import argparse
 import json
 import math

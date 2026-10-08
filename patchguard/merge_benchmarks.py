@@ -1,4 +1,3 @@
-"""Merge exported InvarBench directories (one per project) into a single benchmark directory."""
 import argparse
 import json
 import os

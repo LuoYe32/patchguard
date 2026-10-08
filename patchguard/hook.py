@@ -48,8 +48,7 @@ def summarize_log(cwd):
 
 
 def get_or_create_pre_snapshot(cwd, top_package):
-    """Mined state of HEAD, cached per commit and per miner version so a new commit or an updated miner
-    refreshes the baseline."""
+    """Mined state of HEAD, cached per commit and per miner version."""
     from . import mine as mine_module
     from .mine import mine
     cache_dir = get_cache_dir(cwd)
@@ -91,8 +90,7 @@ def finding_key(finding):
 
 
 def select_new(cwd, session_id, findings):
-    """Findings not yet reported in this session; remembers the current set so a finding that disappears
-    and later returns is reported again."""
+    """Findings not yet reported in this session; a finding that disappears and returns is reported again."""
     cache_dir = get_cache_dir(cwd)
     path = os.path.join(cache_dir, f"session_{re.sub(r'[^A-Za-z0-9_-]', '', str(session_id or 'nosession'))}.json")
     try:

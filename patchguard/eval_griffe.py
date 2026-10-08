@@ -1,5 +1,3 @@
-"""Baseline comparison: griffe's API-breakage detection on the same reference patches and injected
-signature changes as the caller-compatibility check (run in an environment with griffe installed)."""
 import argparse
 import ast
 import json

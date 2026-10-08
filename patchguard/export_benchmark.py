@@ -1,5 +1,3 @@
-"""Export InvarBench: materialize every variant as a patch against the base commit, together with its
-ground truth, so any tool can be scored without our pipeline (see evaluate_benchmark)."""
 import argparse
 import ast
 import json
@@ -30,7 +28,7 @@ def lineno_of(repo, file_rel, qualname):
 
 
 def apply_variant(repo, info):
-    """Re-apply the recorded mutation on top of the already patched repo; returns False when it cannot be placed."""
+    """Re-apply a recorded mutation to the patched repo; False when it cannot be placed."""
     kind, file_rel = info['type'], info['file']
     if kind == 'E':
         return inject_e_violation(repo, info['source_pkg'], info['target_pkg'], file_rel) is not None
@@ -85,6 +83,8 @@ def predictions_from_report(classified):
     for finding in classified.get('d_findings', []):
         out.append({'class': 'D', 'id': finding['function'], 'verdict': finding['verdict'],
                     'detail': [c['kind'] for c in finding['changes']]})
+    for finding in classified.get('protocol_findings', []):
+        out.append({'class': 'protocol', 'id': finding['function'], 'verdict': finding['verdict'], 'detail': finding['method']})
     for finding in classified.get('syntax_findings', []):
         out.append({'class': 'syntax', 'id': finding['file'], 'verdict': finding['verdict'], 'detail': finding['error']})
     return out

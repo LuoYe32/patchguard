@@ -17,7 +17,6 @@ def write(root, rel, body=""):
         f.write(textwrap.dedent(body))
 
 
-
 def test_package_of_uses_containing_directory_not_fixed_depth():
     assert package_of("pkg.sub.mod", set()) == "pkg.sub"
     assert package_of("pkg.top_level_mod", set()) == "pkg"
@@ -32,7 +31,6 @@ def test_import_from_package_init_is_not_collapsed_to_parent(tmp_path):
     edges, _ = mine(root, "pkg")
     assert ("pkg.frames", "pkg.cosmology") in edges
     assert ("pkg.frames", "pkg") not in edges
-
 
 
 def test_e_partition_checks_target_not_source():
@@ -63,7 +61,6 @@ def test_n_hop_propagation_uses_the_graph_it_is_given():
     assert "c" in n_hop_import_graph({"a"}, {**pre, "a=>c": 1}, 1)
 
 
-
 def sig(code, tmp_path, name):
     write(str(tmp_path), f"{name}/__init__.py")
     write(str(tmp_path), f"{name}/m.py", code)
@@ -76,7 +73,6 @@ def test_added_required_param_is_breaking_but_optional_is_compatible(tmp_path):
     opt = sig("def f(a, b=1): pass\n", tmp_path, "opt")
     assert [c["severity"] for c in classify_signature_change(old, req)] == ["breaking"]
     assert [c["severity"] for c in classify_signature_change(old, opt)] == ["compatible"]
-
 
 
 def test_pick_injection_file_skips_docs_and_function_less_files(tmp_path):
@@ -665,3 +661,81 @@ def test_statement_insertion_respects_decorators_and_refuses_broken_files(tmp_pa
     insert_statement(str(tmp_path), 'm.py', 1, '_noop = None')
     ast.parse(path.read_text())
     assert path.read_text().index('_noop') < path.read_text().index('@wraps')
+
+
+def test_severity_ranks_concrete_breakage_above_coupling_above_private_changes():
+    from patchguard.severity import commit_tier, record_of, severity
+    d = lambda name, broken, checked, kind='added_required_param': record_of('D', {
+        'function': name, 'changes': [{'kind': kind}], 'broken_total': broken, 'callers_checked': checked})
+    assert severity(d('m::C.run', 2, 2)) == 3
+    assert severity(d('m::C.run', None, None)) == 2
+    assert severity(d('m::C.run', 0, 3)) == 1
+    assert severity(d('m::_helper', 0, 0)) == 1
+    assert severity(record_of('read-set', {'function': 'm::f', 'added': ['self.a']})) == 2
+    assert severity(record_of('read-set', {'function': 'm::f', 'added': ['a.x', 'a.y', 'a.z']})) == 3
+    assert severity(record_of('read-set', {'function': 'm::f', 'added': ['self.__class__']})) == 1
+    assert severity(record_of('syntax', {'file': 'a.py'})) == 3
+    assert severity({'class': 'hygiene', 'kind': 'stray_file'}) == 1
+    assert commit_tier([]) == 0 and commit_tier([d('m::_h', 0, 0), record_of('E', {'pair': 'a=>b'})]) == 2
+
+
+def _git_repo(tmp_path, files):
+    import subprocess
+    for rel, text in files.items():
+        path = tmp_path / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text)
+    def git(*a):
+        subprocess.run(['git', '-c', 'user.email=a@b', '-c', 'user.name=n', *a], cwd=tmp_path, check=True, capture_output=True)
+    git('init', '-q')
+    git('add', '.')
+    git('commit', '-qm', 'base')
+    return git
+
+
+def test_check_reports_new_dependency_and_stray_file_in_working_tree(tmp_path):
+    from patchguard.check import analyze, discover_packages
+    base = {'proj/__init__.py': '', 'proj/a/__init__.py': '', 'proj/a/m.py': 'def f(x):\n    return x.v\n',
+            'proj/b/__init__.py': '', 'proj/b/n.py': 'def g():\n    return 1\n',
+            'proj/c/__init__.py': '', 'proj/c/o.py': 'def h():\n    return 2\n',
+            'proj/b/p.py': 'from proj.c import o\n\ndef k():\n    return o.h()\n'}
+    _git_repo(tmp_path, base)
+    assert discover_packages(str(tmp_path)) == [('', 'proj')]
+    (tmp_path / 'proj/a/m.py').write_text('def f(x):\n    from proj.b import n\n    return x.v + n.g()\n')
+    (tmp_path / 'reproduce.py').write_text('print(1)\n')
+    findings = analyze(str(tmp_path), intent='fix f', callers=False)
+    pairs = {(f['class'], f['id']) for f in findings}
+    assert ('E', 'proj.a=>proj.b') in pairs and ('hygiene', 'reproduce.py') in pairs
+
+
+def test_check_flags_a_signature_change_with_broken_callers_and_supports_src_layout(tmp_path):
+    from patchguard.check import analyze, discover_packages
+    base = {'src/lib/__init__.py': '', 'src/lib/core.py': 'def f(a):\n    return a\n',
+            'src/lib/use.py': 'from lib.core import f\n\ndef g():\n    return f(1)\n'}
+    _git_repo(tmp_path, base)
+    assert discover_packages(str(tmp_path)) == [('src', 'lib')]
+    (tmp_path / 'src/lib/core.py').write_text('def f(a, b):\n    return a\n')
+    findings = analyze(str(tmp_path), intent='unrelated change')
+    d = [f for f in findings if f['class'] == 'D']
+    assert d and d[0]['tier'] == 3 and d[0]['detail']['broken'] == 1
+    assert analyze(str(tmp_path), intent='unrelated change', callers=False)[0]['class'] == 'D'
+
+
+def test_protocol_findings_flag_new_semantic_methods_on_existing_classes():
+    from patchguard.partition import protocol_findings
+    sig = {'positional': [], 'vararg': None, 'kwonly': [], 'kwarg': None}
+    pre = {'m::Deferred.get': sig, 'm::Deferred.helper': sig}
+    post = dict(pre, **{'m::Deferred.__set__': sig, 'm::Deferred.__repr__': sig, 'm::Brand.__set__': sig, 'm::Deferred.extra': sig})
+    found = protocol_findings(pre, post, 'The enum value type differs')
+    assert [(f['function'], f['verdict']) for f in found] == [('m::Deferred.__set__', 'frame')]
+    named = protocol_findings(pre, post, 'Make Deferred a data descriptor')
+    assert [f['verdict'] for f in named] == ['scope']
+
+
+def test_protocol_findings_reach_severity_and_report():
+    from patchguard.report import generate_report
+    from patchguard.severity import record_of, severity
+    finding = {'function': 'm::C.__set__', 'owner': 'C', 'method': '__set__', 'verdict': 'frame', 'reason': 'r'}
+    assert severity(record_of('protocol', finding)) == 2
+    text = generate_report({'e_findings': [], 'readset_findings': [], 'd_findings': [], 'protocol_findings': [finding]})
+    assert 'C.__set__' in text

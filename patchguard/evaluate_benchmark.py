@@ -1,16 +1,3 @@
-"""Score any tool's predictions on InvarBench.
-
-Predictions: JSONL, one line per example: {"example_id": ..., "findings": [{"class": "E|read-set|D|...",
-"id": ..., "verdict": "frame|scope", "detail": ...}]}. "frame" means the tool reports the change as outside
-the intended scope of the patch; "scope" means it reports it as an expected effect. Ids: E "pkg.a=>pkg.b";
-read-set and D "module::Class.func" (the module part is optional); read-set detail lists the attributes read.
-
-Metrics (per variant family):
-  positives (inserted out-of-scope change)   recall: reported as "frame" on the inserted change
-  twins (same change inside the scope)       false alarm: reported as "frame"
-  decoys (neutral edits)                     false alarm: reported as "frame" on the edited site
-Findings that the reference patch of the same instance already has are not attributed to a twin or decoy edit.
-  reference patches                          noise: share with at least one "frame" finding"""
 import argparse
 import json
 import os

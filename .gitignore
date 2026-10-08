@@ -7,3 +7,7 @@ __pycache__/
 invarbench_*/
 
 *.md
+
+# Blind annotation material (the key must not be published before the annotation is finished)
+annotation/
+.DS_Store

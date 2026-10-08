@@ -6,7 +6,6 @@ from collections import deque, defaultdict
 from .mine import module_name, package_of, collect_known_packages
 
 
-
 def compute_t_module(touched_files, issue_text, known_packages, top_package):
     """Packages touched by the diff plus packages named in the issue."""
     t_module = set()
@@ -26,7 +25,6 @@ def compute_t_module(touched_files, issue_text, known_packages, top_package):
     return t_module
 
 
-
 def compute_t_symbol(pre_reads, post_reads, issue_text, touched_modules=None):
     """New functions plus functions in touched modules that the issue names."""
     t_symbol = set()
@@ -42,7 +40,6 @@ def compute_t_symbol(pre_reads, post_reads, issue_text, touched_modules=None):
         if len(func_name) >= 4 and re.search(r'\b' + re.escape(func_name) + r'\b', issue_lower):
             t_symbol.add(qn)
     return t_symbol
-
 
 
 def classify_intent(issue_text):
@@ -61,7 +58,6 @@ def classify_intent(issue_text):
     if any(k in title for k in feature_kw) or 'description' in text[:200].lower():
         return 'feature', None, 1
     return 'bugfix', None, 1
-
 
 
 def build_call_graph(repo_root, top_package):
@@ -170,7 +166,6 @@ def n_hop_import_graph(seed_pkgs, import_edges, k):
     return visited
 
 
-
 def partition_e_findings(new_pairs, t_module, b_pkgs, import_edges, k):
     """Classify new package edges by whether the target is within the declared scope."""
     licensed = t_module | b_pkgs | n_hop_import_graph(t_module | b_pkgs, import_edges, k)
@@ -201,14 +196,38 @@ def partition_readset_findings(read_changes, t_symbol, call_graph, k):
     return results
 
 
+PROTOCOL_METHODS = {
+    '__get__', '__set__', '__delete__', '__getattr__', '__getattribute__', '__setattr__', '__delattr__',
+    '__eq__', '__hash__', '__bool__', '__len__', '__iter__', '__contains__', '__call__', '__new__',
+    '__init_subclass__', '__instancecheck__', '__subclasscheck__'}
+
+
+def protocol_findings(pre_sigs, post_sigs, intent_text=''):
+    """New protocol methods added to existing classes; out of scope unless the intent names the class."""
+    pre_owners = {(q.split('::')[0], q.split('::')[1].rsplit('.', 1)[0]) for q in pre_sigs if '.' in q.split('::')[1]}
+    text = (intent_text or '').lower()
+    out = []
+    for qn in sorted(set(post_sigs) - set(pre_sigs)):
+        module, qual = qn.split('::')
+        if '.' not in qual:
+            continue
+        owner, method = qual.rsplit('.', 1)
+        if method not in PROTOCOL_METHODS or (module, owner) not in pre_owners:
+            continue
+        named = owner.split('.')[-1].lower() in text
+        out.append({'function': qn, 'owner': owner, 'method': method, 'verdict': 'scope' if named else 'frame',
+                    'reason': f"'{owner}' gains the protocol method {method}, which changes how all its instances behave"
+                              + (" (the class is named in the intent)" if named else '')})
+    return out
+
+
 def is_private(qualname):
     name = qualname.split('::')[-1].split('.')[-1]
     return name.startswith('_') and not (name.startswith('__') and name.endswith('__'))
 
 
 def diff_signatures(pre_sigs, post_sigs, skip_modules=()):
-    """Breaking signature changes of surviving functions and removals of functions (with a rename hint);
-    modules in skip_modules (no longer parseable) are not compared."""
+    """Breaking signature changes and removals (with a rename hint); skip_modules are not compared."""
     from .mine import classify_signature_change
     findings = []
     for qn in sorted(set(pre_sigs) & set(post_sigs)):

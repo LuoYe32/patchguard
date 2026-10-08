@@ -44,11 +44,7 @@ def package_of(mod, known_packages):
 
 
 def resolve_import(node, current_mod, top_package, known_modules=None, is_package=False):
-    """Resolve an import node to dotted in-repo module names.
-
-    known_modules (modules and packages of the repo) lets `from X import name` resolve to X.name when
-    name is itself a module or package; is_package marks an __init__ file, whose relative imports start
-    at the package itself."""
+    """Resolve an import node to dotted in-repo module names."""
     targets = []
     if isinstance(node, ast.Import):
         for alias in node.names:

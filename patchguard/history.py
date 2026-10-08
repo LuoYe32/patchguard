@@ -1,6 +1,3 @@
-"""Historical study on real commits: do the out-of-scope changes PatchGuard flags precede later
-regression fixes? Regression-inducing commits are taken from explicit hashes in "regression" commit
-messages of the project (no manual labels)."""
 import argparse
 import json
 import math
@@ -11,11 +8,13 @@ import subprocess
 from multiprocessing import Pool
 
 from .cli import extend_call_graph, syntax_findings
+from .callers import annotate_callers
 from .hygiene import hygiene_findings
+from .severity import record_of
 from .mine import collect_known_packages, mine, mine_signatures, module_name
 from .partition import (build_call_graph, classify_intent, compute_t_module, compute_t_symbol,
                         diff_signatures, partition_e_findings, partition_readset_findings,
-                        partition_signature_findings)
+                        partition_signature_findings, protocol_findings)
 
 HASH_RE = re.compile(r'\b[0-9a-f]{7,40}\b')
 
@@ -48,8 +47,7 @@ PR_SUFFIX_RE = re.compile(r'\(#(\d+)\)\s*$')
 
 
 def regression_links_by_pr(git_dir):
-    """{induced commit hash: [fix commit hashes]} for projects that squash-merge pull requests: a commit that
-    mentions a regression and a pull request number links to the commit that merged that pull request."""
+    """{induced commit: [fix commits]} from regression messages that cite a merged pull request number."""
     log = git(git_dir, 'log', '--no-merges', '--format=%H%x1f%s%x1f%b%x1e')
     pr_commit, candidates = {}, []
     for entry in log.split('\x1e'):
@@ -100,7 +98,7 @@ def read_changes(pre_reads, post_reads):
     return out
 
 
-def classify(pre, post, touched, message, worktree, top_package):
+def classify(pre, post, touched, message, worktree, top_package, callers=True):
     """Out-of-scope findings of a commit, partitioned like the offline pipeline."""
     t_module = compute_t_module(touched, message, pre['pkgs'], top_package)
     intent, boundary, k = classify_intent(message)
@@ -111,9 +109,15 @@ def classify(pre, post, touched, message, worktree, top_package):
     new_pairs = [{'pair': p, 'count': post['edges'][p]} for p in sorted(set(post['edges']) - set(pre['edges']))]
     broken = syntax_findings(worktree, touched)
     sig_changes = diff_signatures(pre['sigs'], post['sigs'], {module_name('', x['file'], '') for x in broken})
+    if sig_changes and callers:
+        try:
+            sig_changes = annotate_callers(sig_changes, pre['sigs'], post['sigs'], worktree)
+        except Exception:
+            pass
     findings = (partition_e_findings(new_pairs, t_module, b_pkgs, pre['edges'], k)
                 + partition_readset_findings(read_changes(pre['reads'], post['reads']), t_symbol, graph, k)
-                + partition_signature_findings(sig_changes, t_symbol, graph, k) + broken)
+                + partition_signature_findings(sig_changes, t_symbol, graph, k) + broken
+                + protocol_findings(pre['sigs'], post['sigs'], message))
     return [f for f in findings if f['verdict'] == 'frame'], intent
 
 
@@ -133,9 +137,8 @@ def analyze_commit(job):
         subprocess.run(['git', 'checkout', '-q', '--detach', commit], cwd=worktree, check=True, capture_output=True)
         post = state(worktree, top_package)
         frame, intent = classify(pre, post, touched, meta['message'], worktree, top_package)
-        row.update({'intent': intent, 'frame': [{'class': ('E' if 'pair' in f else 'syntax' if 'file' in f else
-                                                            'read-set' if 'added' in f else 'D'),
-                                                 'id': f.get('pair') or f.get('function') or f.get('file')} for f in frame]})
+        row.update({'intent': intent, 'frame': [record_of('E' if 'pair' in f else 'protocol' if 'method' in f else 'syntax' if 'file' in f else
+                                                            'read-set' if 'added' in f else 'D', f) for f in frame]})
     except Exception as e:
         row['error'] = f"{type(e).__name__}: {str(e)[:160]}"
     return row
@@ -160,8 +163,14 @@ def sample_commits(git_dir, links, since, until, prefix, n_other, seed, n_induce
 
 def cmd_run(args):
     git_dir = os.path.abspath(args.git_dir)
-    links = regression_links(git_dir)
-    induced, others = sample_commits(git_dir, links, args.since, args.until, args.top, args.others, args.seed, args.induced_limit)
+    if args.commits_from:
+        previous = [json.loads(l) for l in open(args.commits_from, encoding='utf-8')]
+        links = {r['commit']: [] for r in previous if r['induced']}
+        induced = [r['commit'] for r in previous if r['induced']]
+        others = [r['commit'] for r in previous if not r['induced']]
+    else:
+        links = regression_links(git_dir)
+        induced, others = sample_commits(git_dir, links, args.since, args.until, args.top, args.others, args.seed, args.induced_limit)
     print(f"[history] {len(links)} induced commits in history, {len(induced)} in window, {len(others)} sampled others", flush=True)
     worktrees = []
     for i in range(args.workers):
@@ -202,7 +211,7 @@ def woolf(a, b, c, d):
 
 
 def mantel_haenszel(strata):
-    """Pooled odds ratio over strata of (a, b, c, d) = flagged&induced, flagged&clean, unflagged&induced, unflagged&clean."""
+    """Pooled odds ratio over strata of (flagged&induced, flagged&clean, unflagged&induced, unflagged&clean)."""
     num = sum(a * d / (a + b + c + d) for a, b, c, d in strata if a + b + c + d)
     den = sum(b * c / (a + b + c + d) for a, b, c, d in strata if a + b + c + d)
     return round(num / den, 2) if den else None
@@ -255,6 +264,7 @@ def main():
     r.add_argument('--others', type=int, default=1500)
     r.add_argument('--seed', type=int, default=0)
     r.add_argument('--induced-limit', type=int, default=None)
+    r.add_argument('--commits-from', default=None, help='re-analyze exactly the commits (and labels) of an earlier output file')
     r.add_argument('--workers', type=int, default=3)
     r.set_defaults(func=cmd_run)
     p = sub.add_parser('report')

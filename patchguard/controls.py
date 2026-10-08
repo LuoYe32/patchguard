@@ -33,8 +33,7 @@ def first_line(node):
 
 
 def body_anchor(node):
-    """(0-based line index to insert before, indent) for a statement at the top of a function body,
-    placed after the docstring."""
+    """Line index and indent for a new first statement of a function body, after the docstring."""
     first = node.body[0]
     has_doc = isinstance(first, ast.Expr) and isinstance(getattr(first, 'value', None), ast.Constant) \
         and isinstance(first.value.value, str)
@@ -83,10 +82,7 @@ def append_optional_param(repo_dir, file_rel, lineno, name='synthetic_optional_p
 
 
 def pick_decoy_site(src, excluded, module_dotted, known, need_read=False, need_signature=False):
-    """First deterministic out-of-scope function usable for a decoy.
-
-    known: pre-patch read sets (need_read) or signatures (need_signature) keyed by module::qualname.
-    Returns (qualname, lineno, param, attr) with param/attr set when need_read."""
+    """First deterministic out-of-scope function usable for a decoy."""
     for qualname, node in function_sites(ast.parse(src)):
         if qualname in excluded or node.name.startswith('__') or not node.body:
             continue

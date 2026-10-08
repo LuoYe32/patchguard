@@ -59,7 +59,7 @@ def submission_info(name):
 
 
 def fetch_instance(submission, instance_id, collection=COLLECTION, cache_dir=CACHE_DIR):
-    """{'patch', 'resolved', 'applied'} for one submission/instance, or None if the submission has no entry."""
+    """Patch, resolved flag and applied flag for one submission and instance, or None."""
     local = os.path.join(cache_dir, submission, instance_id)
     cached = os.path.join(local, 'record.json')
     if os.path.exists(cached):
